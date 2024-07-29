@@ -49,6 +49,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 Claims claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
                         .getBody();
                 JWTUserDetails jwtUser = new JWTUserDetails();
+                jwtUser.setUsername(claims.getSubject());
                 jwtUser.setId(Integer.valueOf(claims.getId()));
                 jwtUser.setRole(Role.valueOf(claims.get("role", String.class)));
                 if (jwtService.isTokenValid(token, jwtUser)) {
