@@ -121,7 +121,15 @@ const Registration = () => {
             <MenuItem value="PROFESSOR">Profesor</MenuItem>
             </Select>
         </FormControl>
-        <Button type="submit" variant="contained" color="primary" fullWidth> Potvrdi</Button>
+        <Button type="submit" variant="contained"  fullWidth sx={{
+                        backgroundColor: '#3c3c3c', 
+                        color: '#fff', 
+                        borderRadius: '50px', 
+                        cursor: 'pointer', 
+                        '&:hover': {
+                            backgroundColor: '#606060'
+                        }
+                    }}> Potvrdi</Button>
         </Box>
 
     </Box>
