@@ -58,6 +58,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers(HttpMethod.POST,"/api/authentication/login").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/authentication/register").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/authentication/change-password").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/authentication/reset-password-request/**").permitAll()
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

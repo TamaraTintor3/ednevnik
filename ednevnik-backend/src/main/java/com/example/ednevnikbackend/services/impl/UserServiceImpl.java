@@ -26,4 +26,28 @@ public class UserServiceImpl implements UserService {
     public User findByUsername(String username) {
         return modelMapper.map(userDAO.findByUsername(username),User.class);
     }
+
+    @Override
+    public User setUserToken(Integer id,String token) {
+        User user=modelMapper.map(userDAO.findByUserId(id),User.class);
+        user.setToken(token);
+        user=userDAO.saveAndFlush(user);
+        return user;
+    }
+
+    @Override
+    public User removeUserToken(Integer id) {
+        User user=modelMapper.map(userDAO.findByUserId(id),User.class);
+        user.setToken(null);
+        user=userDAO.saveAndFlush(user);
+        return user;
+    }
+
+    @Override
+    public User updateUserPassword(Integer id,String password) {
+        User user=userDAO.findByUserId(id);
+        user.setPassword(password);
+        user=userDAO.saveAndFlush(user);
+        return user;
+    }
 }
