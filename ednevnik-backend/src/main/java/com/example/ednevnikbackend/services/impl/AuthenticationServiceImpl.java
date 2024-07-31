@@ -2,28 +2,32 @@ package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.config.JWTUserDetails;
 import com.example.ednevnikbackend.daos.UserDAO;
+import com.example.ednevnikbackend.dtos.EmailData;
 import com.example.ednevnikbackend.dtos.LoginDTO;
 import com.example.ednevnikbackend.dtos.RegistrationDto;
+import com.example.ednevnikbackend.dtos.ResetPasswordDTO;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
 import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.User;
 import com.example.ednevnikbackend.services.AuthenticationService;
+import com.example.ednevnikbackend.services.EmailService;
 import com.example.ednevnikbackend.services.UserService;
+import com.fasterxml.uuid.Generators;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.mail.MessagingException;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.UUID;
 
 
 @Service
@@ -44,11 +48,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     UserDAO userDAO;
 
+    @Autowired
+    private EmailService emailService;
+
     @Value("90000")
     private String tokenExpirationTime;
 
     @Value("${authorization.token.secret}")
     private String tokenSecert;
+
+    @Value("${frontend.password.change.url}")
+    private String url;
 
     @Override
     public JWTUserDetails login(LoginDTO loginDTO) {
@@ -68,7 +78,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         return jwtUser;
     }
-
 
     private String generateJWT(JWTUserDetails user) {
         return Jwts.builder().setId(user.getId().toString()).setSubject(user.getUsername()).claim("role", user.getRole().toString()).setExpiration(new Date(System.currentTimeMillis() + Long.parseLong(tokenExpirationTime))).signWith(SignatureAlgorithm.HS512, tokenSecert).compact();
@@ -95,4 +104,32 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     }
 
+    @Override
+    public void forgottenPassword(String username) {
+        User user=userService.findByUsername(username);
+
+        String token= Generators.timeBasedGenerator().generate().toString();
+        UUID.fromString(token).getMostSignificantBits();
+
+        EmailData emailData=new EmailData(user.getEmail(),"Vraćanje pristupa nalogu","<p>Za promjenu kredencijala naloga sa korisničkim imenom <b>"+user.getUsername()+"</b> kliknite na sljedeći link: <a href='"+url+token+"'>Promjena lozinke</a></p>");
+        try {
+            emailService.sendEmail(emailData);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        userService.setUserToken(user.getUserId(),token);
+    }
+
+    @Override
+    public boolean updatePassword(ResetPasswordDTO resetPasswordDTO) {
+        User user=userService.findByUsername(resetPasswordDTO.getUsername());
+        long tokenTimestamp=UUID.fromString(resetPasswordDTO.getToken()).timestamp()/ 10000L - 12219292800000L;
+        if(resetPasswordDTO.getToken().equals(user.getToken()) && new Timestamp(System.currentTimeMillis()).before(new Timestamp(tokenTimestamp+20*60*1000))){
+            userService.updateUserPassword(user.getUserId(),passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
+            userService.removeUserToken(user.getUserId());
+            return true;
+        }
+        return false;
+    }
 }
