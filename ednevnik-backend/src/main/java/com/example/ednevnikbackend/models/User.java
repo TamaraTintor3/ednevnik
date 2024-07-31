@@ -32,6 +32,9 @@ public class User {
     @Basic
     @Column(name = "role")
     private String role;
+    @Basic
+    @Column(name = "token")
+    private String token;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Parent> parents;

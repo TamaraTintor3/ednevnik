@@ -1,3 +1,5 @@
 databaseChangeLog:
 - include:
     file: db/changelog/01-initial-database-schema.sql
+- include:
+      file: db/changelog/02-user-token-column.sql
