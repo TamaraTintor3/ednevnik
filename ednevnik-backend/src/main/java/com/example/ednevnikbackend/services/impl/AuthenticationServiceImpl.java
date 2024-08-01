@@ -100,8 +100,27 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             throw new IllegalArgumentException("Invalid role provided.");
         }
 
-        return userDAO.save(user);
+        User savedUser = userDAO.save(user);
 
+        sendRegistrationEmail(savedUser, registrationDto.getPassword());
+
+        return savedUser;
+
+    }
+
+    private void sendRegistrationEmail(User user, String rawPassword){
+        String subject = "Uspješna registracija";
+        String content = "<p>Poštovani " + user.getUsername() + ",</p>"
+                + "<p>Vaša registracija je uspješno obavljena. Ovdje su Vaši kredencijali:</p>"
+                + "<p><b>Korisničko ime:</b> " + user.getUsername() + "</p>"
+                + "<p><b>Lozinka:</b> " + rawPassword + "</p>";
+
+        EmailData emailData = new EmailData(user.getEmail(), subject, content);
+        try {
+            emailService.sendEmail(emailData);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Failed to send registration email.", e);
+        }
     }
 
     @Override
