@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
-import axiosInstance from '../services/axiosConfig'
-import { Box, FormControl, InputLabel, Select, TextField, Typography, SelectChangeEvent as MuiSelectChangeEvent, MenuItem, Button } from '@mui/material';
+import axiosInstance from '../../services/axiosConfig'
+import { Box, FormControl, InputLabel, Select,  Typography, SelectChangeEvent as MuiSelectChangeEvent, MenuItem, Button } from '@mui/material';
+import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
+import './RegistrationStyle.css'
 
 const Registration = () => {
     const [firstName, setFirstName] = useState<string>("");
@@ -55,81 +57,101 @@ const Registration = () => {
             return Object.keys(newErrors).length === 0;
           };
   return (
-    <Box component="div" sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
-        <Typography variant='h4' component="h2" gutterBottom>
-            Registracija korisnika
+    <Box  component="div" className="registrationContainer">
+        <Typography variant='h4' component="h2" className="registrationTitle">
+            Registracija 
         </Typography>
         <Box component="form" onSubmit={handleRegister} noValidate autoComplete="off">
-        <TextField
+          <Box pt={2}>
+        <label>IME</label>
+        <StyledTxtField
           fullWidth
-          label="Ime"
+          variant="outlined"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
-          margin="normal"
+          
           required
+          margin="none"
           error={!!errors.firstName}
           helperText={errors.firstName}
         />
-        <TextField
+        </Box>
+        <Box pt={2}>
+        <label>PREZIME</label>
+        <StyledTxtField
           fullWidth
-          label="Prezime"
+          variant="outlined"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
-          margin="normal"
+          margin="none"
           required
           error={!!errors.lastName}
           helperText={errors.lastName}
         />
-        <TextField
+        </Box>
+        <Box pt={2}>
+        <label>KORISNIČKO IME</label>
+        <StyledTxtField
           fullWidth
-          label="Korisničko ime"
+          variant="outlined"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          margin="normal"
+          margin="none"
           required
           error={!!errors.username}
             helperText={errors.username}
         />
-        <TextField
+        </Box>
+        <Box pt={2}>
+        <label>LOZINKA</label>
+        <StyledTxtField
           fullWidth
+          variant="outlined"
           type="password"
-          label="Lozinka"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          margin="normal"
+          margin="none"
           required
           error={!!errors.password}
             helperText={errors.password}
         />
-        <TextField
+        </Box>
+        <Box pt={2}>
+        <label>EMAIL</label>
+        <StyledTxtField
           fullWidth
-          label="Email"
+          variant="outlined"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          margin="normal"
+          margin="none"
           required
           error={!!errors.email}
             helperText={errors.email}
         />
-        <FormControl fullWidth margin="normal" required>
-            <InputLabel>Uloga</InputLabel>
+        </Box>
+        <Box pt={2}>
+        <FormControl  fullWidth className="formControl" variant="outlined" required>
+        <label>ULOGA</label>
             <Select value={role}
-            onChange={handleRoleChange}>
+            onChange={handleRoleChange}
+            className="selectInput">
                 <MenuItem value="ADMIN">Administrator</MenuItem>
             <MenuItem value="STAFF">Nenastavno osoblje</MenuItem>
             <MenuItem value="PARENT">Roditelj</MenuItem>
             <MenuItem value="PROFESSOR">Profesor</MenuItem>
             </Select>
         </FormControl>
-        <Button type="submit" variant="contained"  fullWidth sx={{
-                        backgroundColor: '#3c3c3c', 
-                        color: '#fff', 
-                        borderRadius: '50px', 
-                        cursor: 'pointer', 
-                        '&:hover': {
-                            backgroundColor: '#606060'
-                        }
-                    }}> Potvrdi</Button>
+        </Box>
+        <Button className='submitButton'  type="submit" variant="contained" fullWidth sx={{
+                                                marginTop: '20px',
+                                                backgroundColor: '#3c3c3c',
+                                                color: '#fff',
+                                                borderRadius: '50px',
+                                                cursor: 'pointer',
+                                                '&:hover': {
+                                                    backgroundColor: '#606060'
+                                                }
+                                            }}> Potvrdi</Button>
         </Box>
 
     </Box>

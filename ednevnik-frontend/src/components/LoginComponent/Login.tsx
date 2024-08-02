@@ -22,6 +22,7 @@ const LoginComponent = () => {
     };
 
     const login = async (e: React.FormEvent) => {
+        e.preventDefault();
 
         if (!formValidation()) {
             return;
