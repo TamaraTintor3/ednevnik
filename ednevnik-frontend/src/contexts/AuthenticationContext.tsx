@@ -14,7 +14,7 @@ interface AuthContextType {
   isLogedIn: any;
   isTokenExpired: any;
   getRole: any;
-  setRole : any;
+  setRole: any;
 }
 
 
@@ -97,10 +97,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   function isLogedIn() {
 
     const tokken = sessionStorage.getItem("token");
-    if (token != null && !isTokenExpired()) {
+    getRole();
+    if (tokken != null && !isTokenExpired()) {
+  
       return true;
     }
-    else return false;
+    else {
+      return false;
+      
+    }
+
 
   }
 
@@ -117,7 +123,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ userId, role, token, logOut, login, isTokenExpired, isLogedIn, getRole, setRole  }}>
+    <AuthContext.Provider value={{ userId, role, token, logOut, login, isTokenExpired, isLogedIn, getRole, setRole }}>
       {children}
     </AuthContext.Provider>
   );
