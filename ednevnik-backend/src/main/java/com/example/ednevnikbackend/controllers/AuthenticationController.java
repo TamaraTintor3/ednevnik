@@ -27,10 +27,11 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    public ResponseEntity<JWTUserDetails> login(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<String> login(@RequestBody LoginDTO loginDTO) {
 
+        System.out.println(loginDTO);
         JWTUserDetails user = authenticationService.login(loginDTO);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return new ResponseEntity<>(user.getToken(),HttpStatus.OK);
 
 
     }
