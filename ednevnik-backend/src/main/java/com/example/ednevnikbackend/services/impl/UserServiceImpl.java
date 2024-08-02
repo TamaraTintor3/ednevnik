@@ -50,4 +50,9 @@ public class UserServiceImpl implements UserService {
         user=userDAO.saveAndFlush(user);
         return user;
     }
+
+    @Override
+    public User findByToken(String token) {
+        return userDAO.findByToken(token);
+    }
 }

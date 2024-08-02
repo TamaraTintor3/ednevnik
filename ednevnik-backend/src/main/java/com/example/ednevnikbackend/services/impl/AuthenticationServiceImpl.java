@@ -142,7 +142,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public boolean updatePassword(ResetPasswordDTO resetPasswordDTO) {
-        User user=userService.findByUsername(resetPasswordDTO.getUsername());
+        User user=userService.findByToken(resetPasswordDTO.getToken());
         long tokenTimestamp=UUID.fromString(resetPasswordDTO.getToken()).timestamp()/ 10000L - 12219292800000L;
         if(resetPasswordDTO.getToken().equals(user.getToken()) && new Timestamp(System.currentTimeMillis()).before(new Timestamp(tokenTimestamp+20*60*1000))){
             userService.updateUserPassword(user.getUserId(),passwordEncoder.encode(resetPasswordDTO.getNewPassword()));
