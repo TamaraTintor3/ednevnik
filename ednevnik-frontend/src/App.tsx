@@ -1,18 +1,34 @@
 import React from 'react';
-import {BrowserRouter ,Route,  Routes } from 'react-router-dom';
+import {BrowserRouter ,Navigate,Outlet,Route,  Routes, useNavigate } from 'react-router-dom';
 import Registration from './components/Registration';
+import LoginComponent from './components/LoginComponent/Login';
+import HomeComponent from './components/HomeComponent/Home';
+import AuthProvider, { useAuth } from './contexts/AuthenticationContext';
 
 
 
+function App(props:any) {
+  
+  const authentication = useAuth();
 
+  function AdminPrivateRoute() {
+  
+   alert("privvvv" + authentication?.getRole())
 
-function App() {
+    return (authentication?.isLogedIn() && authentication.getRole() == "ADMIN") == true ? <Outlet /> : <Navigate to="/login" replace />;
+  }
+  
   return (
-    <BrowserRouter>
+   
+   
       <Routes>
-        <Route path='/' element={<Registration/>} />
+        <Route path='/' element={<LoginComponent/>} />
+        <Route path='/login' element={<LoginComponent/>} />
+        <Route path="/home" element={<HomeComponent/>} />
+        <Route element={<AdminPrivateRoute />}>
+        <Route path='/register' element={<Registration/>} /></Route>
       </Routes>
-    </BrowserRouter>
+      
   );
 }
 
