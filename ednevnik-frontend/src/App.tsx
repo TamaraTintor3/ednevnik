@@ -3,7 +3,8 @@ import {BrowserRouter ,Navigate,Outlet,Route,  Routes, useNavigate } from 'react
 import Registration from './components/RegisterComponent/Registration';
 import LoginComponent from './components/LoginComponent/Login';
 import HomeComponent from './components/HomeComponent/Home';
-import AuthProvider, { useAuth } from './contexts/AuthenticationContext';
+import { useAuth } from './contexts/AuthenticationContext';
+
 
 
 
@@ -13,9 +14,9 @@ function App(props:any) {
 
   function AdminPrivateRoute() {
   
-   alert("privvvv" + authentication?.getRole())
-
-    return (authentication?.isLogedIn() && authentication.getRole() == "ADMIN") == true ? <Outlet /> : <Navigate to="/login" replace />;
+    if(authentication)
+    authentication.role = authentication.getRole();
+    return (authentication?.isLogedIn() && authentication?.role== "ADMIN") == true ? <Outlet /> : <Navigate to="/home" replace />;
   }
   
   return (
@@ -24,7 +25,7 @@ function App(props:any) {
       <Routes>
         <Route path='/' element={<LoginComponent/>} />
         <Route path='/login' element={<LoginComponent/>} />
-        <Route path="/home" element={<HomeComponent/>} />
+        <Route path="/home" element={<HomeComponent/>}/>
         <Route element={<AdminPrivateRoute />}>
         <Route path='/register' element={<Registration/>} /></Route>
       </Routes>
