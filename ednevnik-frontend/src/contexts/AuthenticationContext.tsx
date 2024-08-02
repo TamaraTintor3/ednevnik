@@ -1,18 +1,20 @@
-import { createContext, useState, useContext, ReactNode, FC, useEffect } from "react";
+import { createContext, useState, useContext, ReactNode, FC, useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginAxiosInstance from "../services/LoginAxios";
 import { jwtDecode } from 'jwt-decode'
 
 interface AuthContextType {
 
-//  user :any;
-//  token:any;
-//  role:any;
+  //  user :any;
+  userId: any;
+  token: any;
+  role: any;
   login: any;
   logOut: any;
   isLogedIn: any;
   isTokenExpired: any;
-  getRole:any;
+  getRole: any;
+  setRole: any;
 }
 
 
@@ -22,20 +24,23 @@ interface AuthProviderProps {
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 
   // const [user, setUser] = useState(null);
-  // const [token, setToken] = useState("");
-  // const [role, setRole] = useState("");
+  const [userId, setUserId] = useState("");
+  const [token, setToken] = useState("");
+  const [role, setRole] = useState("");
   const navigate = useNavigate();
 
-  
+
 
   const logOut = () => {
     // setUser(null);
-    // setToken("");
-    // setRole("");
+    setToken("");
+    setRole("");
     sessionStorage.clear();
     navigate("/login");
   };
@@ -44,7 +49,8 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 
     try {
-      const response = await LoginAxiosInstance.post("/api/authentication/login", { username, password });
+      await LoginAxiosInstance.post("/api/authentication/login", { username: username, password: password });
+
       decodeToken();
     } catch (err) {
       alert("Neusjpešna prijava, pokušajte ponovo");
@@ -60,6 +66,10 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       const tok = jwtDecode(tokken);
       const tokenString = JSON.stringify(tok);
       rolle = JSON.parse(tokenString).role;
+      setRole(rolle);
+      setToken(tokken);
+      if (tok.jti)
+        setUserId(tok.jti);
     }
     return rolle;
   }
@@ -72,7 +82,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       const tok = jwtDecode(tokken);
       if (tok.exp)
         if (current_time > tok.exp) {
-          alert("Vaša sesija je sitekla, prijavite se ponovo")
+          alert("Vaša sesija je istekla, prijavite se ponovo")
           logOut();
           return true;
         }
@@ -84,13 +94,19 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 
 
-  function isLogedIn () {
+  function isLogedIn() {
 
     const tokken = sessionStorage.getItem("token");
+    getRole();
     if (tokken != null && !isTokenExpired()) {
+  
       return true;
     }
-    else return false;
+    else {
+      return false;
+      
+    }
+
 
   }
 
@@ -98,15 +114,16 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const tokken = sessionStorage.getItem("token");
     if (tokken != null) {
-      const tok = jwtDecode(tokken);
-      const tokenString = JSON.stringify(tok)
-      
-
+      // setToken(tokken);
     }
+
+
+
+
   }
 
   return (
-    <AuthContext.Provider value={{ logOut, login,  isTokenExpired,isLogedIn , getRole}}>
+    <AuthContext.Provider value={{ userId, role, token, logOut, login, isTokenExpired, isLogedIn, getRole, setRole }}>
       {children}
     </AuthContext.Provider>
   );
