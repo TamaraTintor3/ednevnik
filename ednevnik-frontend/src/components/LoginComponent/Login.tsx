@@ -89,7 +89,7 @@ const LoginComponent = () => {
                                             />
                                         </Grid>
                                         <Grid item>
-                                            <a className="aClass" href="/home">Zaboravljena lozinka?</a>
+                                            <a className="aClass" href="/password-reset">Zaboravljena lozinka?</a>
                                         </Grid>
                                         <Grid item>
                                             <Button type="submit" variant="contained" fullWidth sx={{

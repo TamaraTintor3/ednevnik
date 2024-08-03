@@ -51,15 +51,15 @@ public class AuthenticationController {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok("Email with reset link is sent!");
+        return ResponseEntity.ok("Link za promjenu lozinke je poslat na Vašu email adresu!");
     }
 
     @PostMapping("/change-password")
     public ResponseEntity<String> changePassword(@RequestBody ResetPasswordDTO resetPasswordDTO){
         boolean status=authenticationService.updatePassword(resetPasswordDTO);
         if(status)
-            return ResponseEntity.ok("Password updated!");
-        return new ResponseEntity<>("Password not updated!",HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseEntity.ok("Lozinka je promijenjena!");
+        return new ResponseEntity<>("Došlo je do greške, lozinka nije sačuvana!",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

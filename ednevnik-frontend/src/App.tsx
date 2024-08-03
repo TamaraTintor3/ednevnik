@@ -3,9 +3,9 @@ import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate } from 'rea
 import Registration from './components/RegisterComponent/Registration';
 import LoginComponent from './components/LoginComponent/Login';
 import HomeComponent from './components/HomeComponent/Home';
+import ResetPasswordForm from './components/password-change/ResetPasswordForm';
+import ChangePasswordForm from './components/password-change/ChangePasswordForm';
 import { useAuth } from './contexts/AuthenticationContext';
-
-
 
 
 function App(props: any) {
@@ -26,8 +26,6 @@ function App(props: any) {
   }
 
   return (
-
-
     <Routes>
       <Route path='/' element={<LoginComponent />} />
       <Route path='/login' element={<LoginComponent />} />
@@ -36,8 +34,9 @@ function App(props: any) {
       </Route>
       <Route element={<AdminPrivateRoute/>}>
         <Route path='/register' element={<Registration />} /></Route>
+      <Route path="/password-reset" element={<ResetPasswordForm />}></Route>
+      <Route path="/password-change/:token" element={<ChangePasswordForm />}></Route>
     </Routes>
-
   );
 }
 

@@ -9,4 +9,5 @@ public interface UserService {
     User setUserToken(Integer id,String token);
     User removeUserToken(Integer id);
     User updateUserPassword(Integer id, String password);
+    User findByToken(String token);
 }
