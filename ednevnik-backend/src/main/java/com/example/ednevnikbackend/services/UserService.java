@@ -1,6 +1,10 @@
 package com.example.ednevnikbackend.services;
 
+import com.example.ednevnikbackend.dtos.ShowUsersDTO;
+import com.example.ednevnikbackend.dtos.UserDTO;
 import com.example.ednevnikbackend.models.User;
+
+import java.util.List;
 
 public interface UserService {
 
@@ -10,4 +14,5 @@ public interface UserService {
     User removeUserToken(Integer id);
     User updateUserPassword(Integer id, String password);
     User findByToken(String token);
+    List<ShowUsersDTO> getAllUsers();
 }

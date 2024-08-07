@@ -1,12 +1,16 @@
 package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.daos.UserDAO;
+import com.example.ednevnikbackend.dtos.ShowUsersDTO;
 import com.example.ednevnikbackend.dtos.UserDTO;
 import com.example.ednevnikbackend.models.User;
 import com.example.ednevnikbackend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ModelMapper modelMapper;
+
 
     @Override
     public User getUserById(Integer id) {
@@ -54,5 +59,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByToken(String token) {
         return userDAO.findByToken(token);
+    }
+
+    @Override
+    public List<ShowUsersDTO> getAllUsers() {
+        List<User> users = userDAO.findAll();
+        return users.stream()
+                .map(user -> modelMapper.map(user, ShowUsersDTO.class))
+                .collect(Collectors.toList());
     }
 }

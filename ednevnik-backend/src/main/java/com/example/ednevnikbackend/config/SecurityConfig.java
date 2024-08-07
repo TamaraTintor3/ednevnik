@@ -60,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/authentication/register").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/api/authentication/change-password").permitAll()
                         .requestMatchers(HttpMethod.POST,"/api/authentication/reset-password-request/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "api/users/showAll").hasAuthority("ADMIN")
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
