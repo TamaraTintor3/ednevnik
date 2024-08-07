@@ -3,6 +3,8 @@ package com.example.ednevnikbackend.services;
 import com.example.ednevnikbackend.dtos.ShowUsersDTO;
 import com.example.ednevnikbackend.dtos.UserDTO;
 import com.example.ednevnikbackend.models.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
