@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Navigate, Outlet, Route, Routes, } from "react-router-dom";
 import Registration from "./components/RegisterComponent/Registration";
@@ -8,6 +9,8 @@ import ChangePasswordForm from "./components/password-change/ChangePasswordForm"
 import { useAuth, } from "./contexts/AuthenticationContext";
 import MainComponent from "./components/MainComponent/MainComponent";
 import ClassesComponent from "./components/AdministratorComponents/ClassesComponent";
+import ShowAllUsers from './components/AllUsersComponent/ShowAllUsers';
+
 
 function App(props: any) {
 
@@ -31,6 +34,7 @@ function App(props: any) {
       <Route path="/login" element={<LoginComponent />} />
       <Route element={<AdminPrivateRoute />}>
         <Route path="/register" element={<Registration />} />
+        <Route path='/showAllUsers' element={<ShowAllUsers />}/>
       </Route>
       <Route path="/password-reset" element={<ResetPasswordForm />} />
       <Route path="/password-change/:token" element={<ChangePasswordForm />} />
