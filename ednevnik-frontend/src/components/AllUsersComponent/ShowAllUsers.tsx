@@ -1,47 +1,45 @@
 import React, {useState, useEffect} from 'react'
 import TableComponent from '../TableComponent/TableComponent'
 import axiosInstance from '../../services/axiosConfig'
-
-interface User {
-    firstName : string;
-    lastName : string;
-    username : string;
-    email: string;
-    role : string;
-}
-
-
+import { Box, Typography } from '@mui/material';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { useNavigate } from 'react-router-dom';
+import { User } from '../../interfaces/UserInterface';
+import { getAllUsers } from '../../services/AdminApi';
 
 const ShowAllUsers = () => {
     const [data, setData] = useState<User[]>([]);
+    const navigate = useNavigate();
+    const handleEditClick = () => {
+        console.log("Izmjena podataka!!!")
+    }
 
     const columns = [
         { header: 'Ime', field: 'firstName' },
         { header: 'Prezime', field: 'lastName' },
-        { header: 'Korisnicko ime', field: 'lastName' },
+        { header: 'Korisničko ime', field: 'username' },
         { header: 'Email', field: 'email' },
         { header: 'Uloga', field: 'role' }
       ];
-      const handleAddClick = (user: User) => {
-        console.log('Dodavanje korisnika:', user);
-      };
-
+      
+    const actions = [
+        { icon: <EditNoteIcon />, onClick: handleEditClick },
+       
+      ];
+      
       useEffect(() => {
-        axiosInstance.get<User[]>('/api/users/showAll')
-        .then(response => setData(response.data))
+        getAllUsers()
+        .then(users => setData(users))
         .catch(error => console.error('Error fetching data:', error));
       }, [])
 
       
-      const actions = [
-        { label: 'Dodaj', onClick: handleAddClick },
-       
-      ];
+      
   return (
-    <div>
-      <h1>Lista korisnika</h1>
+    <Box p={4}>
+      <Typography variant="h4" >Lista korisnika</Typography>
       <TableComponent columns={columns} data={data} actions={actions} />
-    </div>
+    </Box>
   )
 }
 

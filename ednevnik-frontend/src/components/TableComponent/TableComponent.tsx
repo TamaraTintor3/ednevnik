@@ -1,5 +1,7 @@
 import React from 'react'
+import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import './TableComponent.css'
+
 
 interface Column {
     header : string;
@@ -7,7 +9,7 @@ interface Column {
 }
 
 interface Action {
-  label: string;
+  icon: React.ReactNode;
   onClick: (item: any) => void;
 }
 
@@ -21,34 +23,36 @@ interface TableComponentProps{
 
 const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}) => {
   return (
-    <table>
-      <thead>
-        <tr>
+    <TableContainer  component={Paper} className="table-container">
+    <Table className="table">
+      <TableHead >
+        <TableRow>
           {columns.map((column, index) => (
-            <th key={index}>{column.header}</th>
+            <TableCell key={index} className="header-cell" sx={{ fontWeight: 'bold' }}>{column.header}</TableCell>
           ))}
-           {actions.length > 0 && <th>Akcije</th>}
-        </tr>
-      </thead>
-      <tbody>
+           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold' }}>Akcije</TableCell>}
+        </TableRow>
+      </TableHead>
+      <TableBody>
         {data.map((row, rowIndex) => (
-          <tr key={rowIndex}>
+          <TableRow key={rowIndex}>
             {columns.map((column, colIndex) => (
-              <td key={colIndex}>{row[column.field]}</td>
+              <TableCell className="cell" key={colIndex}>{row[column.field]}</TableCell>
             ))}
             {actions.length > 0 && (
-              <td>
+              <TableCell>
                 {actions.map((action, actionIndex) => (
-                  <button key={actionIndex} onClick={() => action.onClick(row)}>
-                    {action.label}
-                  </button>
+                  <Button variant="contained" color="primary"  key={actionIndex} onClick={() => action.onClick(row)}>
+                    {action.icon}
+                  </Button>
                 ))}
-              </td>
+              </TableCell>
             )}
-          </tr>
+          </TableRow>
         ))}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
+    </TableContainer>
   );
 }
 

@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import axiosInstance from '../../services/axiosConfig'
 import { Box, FormControl, InputLabel, Select,  Typography, SelectChangeEvent as MuiSelectChangeEvent, MenuItem, Button } from '@mui/material';
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
+import { registerUser } from '../../services/AdminApi';
 import './RegistrationStyle.css'
 
 const Registration = () => {
@@ -24,14 +25,14 @@ const Registration = () => {
         console.log('Password:', password);
         console.log('Role:', role);
         try{
-            const response = await axiosInstance.post('/api/authentication/register', {
-                firstName,
-                lastName,
-                username,
-                password,
-                email,
-                role
-            });
+            const response = await registerUser({
+              firstName,
+              lastName,
+              username,
+              password,
+              email,
+              role
+          });
             if (response.status === 200) {
                 alert('Korisnik je uspješno registrovan!');
               }

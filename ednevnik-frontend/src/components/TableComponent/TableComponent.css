@@ -1,14 +1,24 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
+.table-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(33, 33, 33, 0.1);
   }
   
-  th, td {
-    border: 1px solid black;
-    padding: 8px;
-    text-align: left;
+  .table {
+    min-width: 650px;
   }
   
-  th {
-    background-color: #f2f2f2;
+  .header-cell {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 16px;
+  }
+  
+  .cell {
+    padding: 16px;
+  }
+  
+  .button {
+    margin: 4px;
   }
