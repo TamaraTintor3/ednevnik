@@ -1,20 +1,20 @@
-import React from 'react';
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
-import Registration from './components/RegisterComponent/Registration';
-import LoginComponent from './components/LoginComponent/Login';
-import HomeComponent from './components/HomeComponent/Home';
-import ResetPasswordForm from './components/password-change/ResetPasswordForm';
-import ChangePasswordForm from './components/password-change/ChangePasswordForm';
-import { useAuth } from './contexts/AuthenticationContext';
-
+import React from "react";
+import { Navigate, Outlet, Route, Routes, } from "react-router-dom";
+import Registration from "./components/RegisterComponent/Registration";
+import LoginComponent from "./components/LoginComponent/Login";
+import HomeComponent from "./components/HomeComponent/Home";
+import ResetPasswordForm from "./components/password-change/ResetPasswordForm";
+import ChangePasswordForm from "./components/password-change/ChangePasswordForm";
+import { useAuth, } from "./contexts/AuthenticationContext";
+import MainComponent from "./components/MainComponent/MainComponent";
+import ClassesComponent from "./components/AdministratorComponents/ClassesComponent";
 
 function App(props: any) {
 
   const authentication = useAuth();
 
   function AdminPrivateRoute() {
-
-    if (authentication)
+    if (authentication) 
       authentication.role = authentication.getRole();
     return (authentication?.isLogedIn() && authentication?.role == "ADMIN") == true ? <Outlet /> : <Navigate to="/home" replace />;
   }
@@ -27,15 +27,20 @@ function App(props: any) {
 
   return (
     <Routes>
-      <Route path='/' element={<LoginComponent />} />
-      <Route path='/login' element={<LoginComponent />} />
-      <Route element={<IsLogedInPrivateRoute />}>
-        <Route path="/home" element={<HomeComponent />} />
+      <Route path="/" element={<LoginComponent />} />
+      <Route path="/login" element={<LoginComponent />} />
+      <Route element={<AdminPrivateRoute />}>
+        <Route path="/register" element={<Registration />} />
       </Route>
-      <Route element={<AdminPrivateRoute/>}>
-        <Route path='/register' element={<Registration />} /></Route>
-      <Route path="/password-reset" element={<ResetPasswordForm />}></Route>
-      <Route path="/password-change/:token" element={<ChangePasswordForm />}></Route>
+      <Route path="/password-reset" element={<ResetPasswordForm />} />
+      <Route path="/password-change/:token" element={<ChangePasswordForm />} />
+
+      <Route element={<IsLogedInPrivateRoute />}>
+        <Route element={<MainComponent />}>
+          <Route path="/home" element={<HomeComponent />} />
+          <Route path="/classes" element={<ClassesComponent/>} />
+        </Route>
+      </Route>
     </Routes>
   );
 }
