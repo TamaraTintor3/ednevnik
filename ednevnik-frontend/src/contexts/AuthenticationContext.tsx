@@ -50,7 +50,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     try {
       await LoginAxiosInstance.post("/api/authentication/login", { username: username, password: password });
-
+      sessionStorage.setItem("username",username);
       decodeToken();
     } catch (err) {
       alert("Neusjpešna prijava, pokušajte ponovo");
