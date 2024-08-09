@@ -24,13 +24,16 @@ interface TableComponentProps{
 const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}) => {
   return (
     <TableContainer  component={Paper} className="table-container">
-    <Table className="table">
+    <Table stickyHeader className="table">
       <TableHead >
         <TableRow>
           {columns.map((column, index) => (
-            <TableCell key={index} className="header-cell" sx={{ fontWeight: 'bold' }}>{column.header}</TableCell>
+            <TableCell key={index} className="header-cell" sx={{
+              backgroundColor: '#3c3c3c', 
+              fontWeight: 'bold',
+            }}>{column.header}</TableCell>
           ))}
-           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold' }}>Akcije</TableCell>}
+           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#3c3c3c' }}>Akcije</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -42,7 +45,7 @@ const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}
             {actions.length > 0 && (
               <TableCell>
                 {actions.map((action, actionIndex) => (
-                  <Button variant="contained" color="primary"  key={actionIndex} onClick={() => action.onClick(row)}>
+                  <Button  key={actionIndex} onClick={() => action.onClick(row)}>
                     {action.icon}
                   </Button>
                 ))}

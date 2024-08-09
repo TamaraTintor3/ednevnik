@@ -1,18 +1,31 @@
 import React, {useState, useEffect} from 'react'
 import TableComponent from '../TableComponent/TableComponent'
-import axiosInstance from '../../services/axiosConfig'
-import { Box, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../interfaces/UserInterface';
 import { getAllUsers } from '../../services/AdminApi';
+import { useAuth } from '../../contexts/AuthenticationContext';
 
 const ShowAllUsers = () => {
+    const authentication = useAuth();
     const [data, setData] = useState<User[]>([]);
     const navigate = useNavigate();
+
+    const handleAddUser = () => {
+      navigate("/register");
+    }
+
     const handleEditClick = () => {
         console.log("Izmjena podataka!!!")
     }
+
+useEffect(()=>{
+  if (!authentication?.isLogedIn() || authentication?.role !== "ADMIN") {
+    navigate('/showAllusers');  
+  }
+}, [])
 
     const columns = [
         { header: 'Ime', field: 'firstName' },
@@ -23,7 +36,7 @@ const ShowAllUsers = () => {
       ];
       
     const actions = [
-        { icon: <EditNoteIcon />, onClick: handleEditClick },
+        { icon: <EditNoteIcon sx={{ color: 'gray' }} />, onClick: handleEditClick },
        
       ];
       
@@ -37,7 +50,7 @@ const ShowAllUsers = () => {
       
   return (
     <Box p={4}>
-      <Typography variant="h4" >Lista korisnika</Typography>
+      <Button sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddUser}></Button>
       <TableComponent columns={columns} data={data} actions={actions} />
     </Box>
   )

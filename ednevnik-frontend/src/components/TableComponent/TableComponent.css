@@ -1,7 +1,9 @@
 .table-container {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(33, 33, 33, 0.1);
+    max-height: 500px; 
+  overflow-y: auto;
+    box-shadow: 0 4px 8px #3c3c3c;
   }
   
   .table {
@@ -9,7 +11,7 @@
   }
   
   .header-cell {
-    background-color: #333;
+    background-color: #3c3c3c;
     color: #fff;
     font-weight: bold;
     padding: 16px;
@@ -21,4 +23,6 @@
   
   .button {
     margin: 4px;
+    background-color: transparent; 
+    border: none;
   }

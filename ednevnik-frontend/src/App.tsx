@@ -9,7 +9,7 @@ import ChangePasswordForm from "./components/password-change/ChangePasswordForm"
 import { useAuth, } from "./contexts/AuthenticationContext";
 import MainComponent from "./components/MainComponent/MainComponent";
 import ClassesComponent from "./components/AdministratorComponents/ClassesComponent";
-import ShowAllUsers from './components/AllUsersComponent/ShowAllUsers';
+import ShowAllUsers from "./components/AdministratorComponents/ShowAllUsers";
 
 
 function App(props: any) {
@@ -19,7 +19,7 @@ function App(props: any) {
   function AdminPrivateRoute() {
     if (authentication) 
       authentication.role = authentication.getRole();
-    return (authentication?.isLogedIn() && authentication?.role == "ADMIN") == true ? <Outlet /> : <Navigate to="/home" replace />;
+    return (authentication?.isLogedIn() && authentication?.role == "ADMIN") == true ? <Outlet /> : <Navigate to="/login" replace />;
   }
 
   function IsLogedInPrivateRoute() {
@@ -33,16 +33,19 @@ function App(props: any) {
       <Route path="/" element={<LoginComponent />} />
       <Route path="/login" element={<LoginComponent />} />
       <Route element={<AdminPrivateRoute />}>
-        <Route path="/register" element={<Registration />} />
-        <Route path='/showAllUsers' element={<ShowAllUsers />}/>
+        
+        
       </Route>
       <Route path="/password-reset" element={<ResetPasswordForm />} />
       <Route path="/password-change/:token" element={<ChangePasswordForm />} />
 
       <Route element={<IsLogedInPrivateRoute />}>
         <Route element={<MainComponent />}>
-          <Route path="/home" element={<HomeComponent />} />
-          <Route path="/classes" element={<ClassesComponent/>} />
+        <Route path="/home" element={<HomeComponent />} />
+        <Route path='/showAllUsers' element={<ShowAllUsers />}/>
+        <Route path="/classes" element={<ClassesComponent/>} />
+        <Route path="/register" element={<Registration />} />
+         
         </Route>
       </Route>
     </Routes>
