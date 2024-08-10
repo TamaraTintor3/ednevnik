@@ -21,7 +21,7 @@ import ISidebarAction from "../../models/ISidebarAction";
 import { RoleEnum } from "../../enums/RoleEnum";
 
 const adminActions: ISidebarAction[] = [
-  { title: "Korisnici", icon: <PeopleAltTwoTone />, path: "/home" },
+  { title: "Korisnici", icon: <PeopleAltTwoTone />, path: "/showAllUsers" },
   { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "/classes" },
 ];
 
