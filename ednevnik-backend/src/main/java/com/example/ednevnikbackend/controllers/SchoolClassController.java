@@ -1,5 +1,6 @@
 package com.example.ednevnikbackend.controllers;
 
+
 import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.dtos.SchoolClassDTO;
@@ -28,5 +29,6 @@ public class SchoolClassController {
     @GetMapping("/{id}")
     public SchoolClassDTO getAllSchoolClasses(@PathVariable Integer id){
         return schoolClassService.findSchoolClassById(id);
+
     }
 }

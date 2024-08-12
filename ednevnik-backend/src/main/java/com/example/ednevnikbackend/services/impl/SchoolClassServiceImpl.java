@@ -25,5 +25,6 @@ public class SchoolClassServiceImpl implements SchoolClassService {
     @Override
     public SchoolClassDTO findSchoolClassById(Integer id) {
         return modelMapper.map(schoolClassDAO.findById(id), SchoolClassDTO.class);
+
     }
 }
