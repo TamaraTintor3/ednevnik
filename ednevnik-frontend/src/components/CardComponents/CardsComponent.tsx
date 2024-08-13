@@ -1,6 +1,6 @@
 import { Container, Grid } from "@mui/material";
 import React, { useState } from "react";
-import ClassCard from "./ClassCard";
+import ClassCard from "./CardComponent";
 import axiosInstance from "../../services/axiosConfig";
 import ISchoolClass, { initialClasses } from "../../models/ISchoolClass";
 
@@ -21,7 +21,7 @@ const CardsComponent = (props: any) => {
       <Grid container spacing={3}>
         {classes.map((c: ISchoolClass) => (
           <Grid item key={c.schoolClassId} xs={12} md={6} lg={4}>
-            <ClassCard schoolClass={c} openCard={props.openCard}></ClassCard>
+            <ClassCard schoolClass={c}></ClassCard>
           </Grid>
         ))}
       </Grid>
