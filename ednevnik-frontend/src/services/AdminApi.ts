@@ -1,5 +1,7 @@
 import axiosInstance from "./axiosConfig"
 import { User } from "../interfaces/UserInterface"
+import { IEditUser } from "../models/IEditUser";
+
 interface RegisterUserPayload {
     firstName: string;
     lastName: string;
@@ -23,6 +25,26 @@ export const getAllUsers = async () => {
     try {
         const response = await axiosInstance.get<User[]>('/api/users/showAll');
         return response.data;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+};
+
+export const getUserByUsername = async (username:string) => {
+    try {
+        const response = await axiosInstance.get('/api/users/getUserByUsername/' + username);
+        return response;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+};
+
+export const editUserById = async (user :IEditUser) => {
+    try {
+        const response = await axiosInstance.put('/api/users/editUserById/' + user.userId, user);
+        return response;
     } catch (error) {
         console.error('Error fetching users:', error);
         throw error;
