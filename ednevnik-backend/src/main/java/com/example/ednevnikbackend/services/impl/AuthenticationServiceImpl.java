@@ -2,10 +2,7 @@ package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.config.JWTUserDetails;
 import com.example.ednevnikbackend.daos.UserDAO;
-import com.example.ednevnikbackend.dtos.EmailData;
-import com.example.ednevnikbackend.dtos.LoginDTO;
-import com.example.ednevnikbackend.dtos.RegistrationDto;
-import com.example.ednevnikbackend.dtos.ResetPasswordDTO;
+import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
 import com.example.ednevnikbackend.models.Role;
@@ -125,7 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void forgottenPassword(String username) {
-        User user=userService.findByUsername(username);
+        UserDTO user=userService.findByUsername(username);
 
         String token= Generators.timeBasedGenerator().generate().toString();
         UUID.fromString(token).getMostSignificantBits();

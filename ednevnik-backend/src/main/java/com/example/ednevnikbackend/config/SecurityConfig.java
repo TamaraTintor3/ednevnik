@@ -56,14 +56,16 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST,"/api/authentication/login").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/authentication/register").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.POST,"/api/authentication/change-password").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/authentication/reset-password-request/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "api/users/showAll").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/authentication/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/authentication/register").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/authentication/change-password").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/authentication/reset-password-request/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "api/users/showAll").hasAuthority("ADMIN").
+                                requestMatchers(HttpMethod.GET, "api/users/getUserByUsername/**").hasAuthority("ADMIN").
+                                requestMatchers(HttpMethod.PUT, "api/users/editUserById/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/school-classes/**").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(),Role.PROFESSOR.toString(),Role.STAFF.toString())
 
-                )
+                        )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(

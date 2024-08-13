@@ -11,10 +11,11 @@ import java.util.List;
 public interface UserService {
 
     User getUserById(Integer id);
-    User findByUsername(String username);
+    UserDTO findByUsername(String username);
     User setUserToken(Integer id,String token);
     User removeUserToken(Integer id);
     User updateUserPassword(Integer id, String password);
     User findByToken(String token);
     List<ShowUsersDTO> getAllUsers();
+    User editUser (Integer id, UserDTO userDTO);
 }
