@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react'
 import TableComponent from '../TableComponent/TableComponent'
 import { Box, Button, Typography } from '@mui/material';
 import EditNoteIcon from '@mui/icons-material/EditNote';
+import DeleteIcon from '@mui/icons-material/Delete';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../../interfaces/UserInterface';
-import { getAllUsers } from '../../services/AdminApi';
+import { getAllUsers, getUserByUsername } from '../../services/AdminApi';
 import { useAuth } from '../../contexts/AuthenticationContext';
 
 const ShowAllUsers = () => {
@@ -16,9 +17,14 @@ const ShowAllUsers = () => {
     const handleAddUser = () => {
       navigate("/register");
     }
-
-    const handleEditClick = () => {
-        console.log("Izmjena podataka!!!")
+  
+  
+    const handleEditClick = (row:any) => {
+  
+       
+      
+      
+      navigate("/editUser",{state: {user:row}});
     }
 
 useEffect(()=>{
@@ -36,7 +42,7 @@ useEffect(()=>{
       ];
       
     const actions = [
-        { icon: <EditNoteIcon sx={{ color: 'gray' }} />, onClick: handleEditClick },
+        { icon: <EditNoteIcon sx={{ color: 'gray' }} />, onClick: handleEditClick }
        
       ];
       

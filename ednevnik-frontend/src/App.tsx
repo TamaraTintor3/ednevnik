@@ -10,6 +10,7 @@ import { useAuth, } from "./contexts/AuthenticationContext";
 import MainComponent from "./components/MainComponent/MainComponent";
 import ClassesComponent from "./components/AdministratorComponents/ClassesComponent";
 import ShowAllUsers from "./components/AdministratorComponents/ShowAllUsers";
+import EditUserComponent from "./components/EditUserComponent/EditUserComponent";
 
 
 function App(props: any) {
@@ -45,6 +46,7 @@ function App(props: any) {
         <Route path='/showAllUsers' element={<ShowAllUsers />}/>
         <Route path="/classes" element={<ClassesComponent/>} />
         <Route path="/register" element={<Registration />} />
+        <Route path="/editUser" element={<EditUserComponent/>}/>
          
         </Route>
       </Route>

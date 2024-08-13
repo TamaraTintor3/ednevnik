@@ -3,6 +3,7 @@ package com.example.ednevnikbackend.services.impl;
 import com.example.ednevnikbackend.daos.UserDAO;
 import com.example.ednevnikbackend.dtos.ShowUsersDTO;
 import com.example.ednevnikbackend.dtos.UserDTO;
+import com.example.ednevnikbackend.exceptions.NotFoundException;
 import com.example.ednevnikbackend.models.User;
 import com.example.ednevnikbackend.services.UserService;
 import jakarta.transaction.Transactional;
@@ -30,31 +31,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByUsername(String username) {
-        return modelMapper.map(userDAO.findByUsername(username),User.class);
+    public UserDTO findByUsername(String username) {
+        return modelMapper.map(userDAO.findByUsername(username), UserDTO.class);
     }
 
     @Override
-    public User setUserToken(Integer id,String token) {
-        User user=modelMapper.map(userDAO.findByUserId(id),User.class);
+    public User setUserToken(Integer id, String token) {
+        User user = modelMapper.map(userDAO.findByUserId(id), User.class);
         user.setToken(token);
-        user=userDAO.saveAndFlush(user);
+        user = userDAO.saveAndFlush(user);
         return user;
     }
 
     @Override
     public User removeUserToken(Integer id) {
-        User user=modelMapper.map(userDAO.findByUserId(id),User.class);
+        User user = modelMapper.map(userDAO.findByUserId(id), User.class);
         user.setToken(null);
-        user=userDAO.saveAndFlush(user);
+        user = userDAO.saveAndFlush(user);
         return user;
     }
 
     @Override
-    public User updateUserPassword(Integer id,String password) {
-        User user=userDAO.findByUserId(id);
+    public User updateUserPassword(Integer id, String password) {
+        User user = userDAO.findByUserId(id);
         user.setPassword(password);
-        user=userDAO.saveAndFlush(user);
+        user = userDAO.saveAndFlush(user);
         return user;
     }
 
@@ -69,5 +70,19 @@ public class UserServiceImpl implements UserService {
         return users.stream()
                 .map(user -> modelMapper.map(user, ShowUsersDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public User editUser(Integer id, UserDTO userDTO) {
+
+        if (!userDAO.existsById(id)) {
+            throw new NotFoundException();
+        }
+
+        User user = modelMapper.map(userDTO, User.class);
+        user.setUserId(id);
+        user = userDAO.saveAndFlush(user);
+        System.out.println(user);
+        return user;
     }
 }
