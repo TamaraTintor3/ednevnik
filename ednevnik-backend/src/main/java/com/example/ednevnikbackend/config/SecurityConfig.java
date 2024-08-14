@@ -65,7 +65,7 @@ public class SecurityConfig {
                                 requestMatchers(HttpMethod.GET, "api/users/getUserByUsername/**").hasAuthority("ADMIN").
                                 requestMatchers(HttpMethod.PUT, "api/users/editUserById/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/school-classes/**").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(),Role.PROFESSOR.toString(),Role.STAFF.toString())
-
+                                .requestMatchers(HttpMethod.POST,"api/school-classes/addClass").hasAuthority("ADMIN")
 
                         )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
