@@ -1,10 +1,15 @@
 import { Card, CardContent, CardHeader, Typography } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const CardComponent = (props: any) => {
+  const navigate = useNavigate();
+  function openCard() {
+    navigate("/class/" + props.schoolClass.schoolClassId);
+  }
   return (
     <div>
-      <Card style={{ backgroundColor: "#d6d6d6" }} onClick={props.openCard}>
+      <Card style={{ backgroundColor: "#d6d6d6" }} onClick={openCard}>
         <CardHeader
           title={props.schoolClass.name}
           subheader={
@@ -23,7 +28,7 @@ const CardComponent = (props: any) => {
               : ""}
           </Typography>
         </CardContent> */}
-        <hr></hr>
+        <hr color="white"></hr>
       </Card>
     </div>
   );

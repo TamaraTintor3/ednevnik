@@ -29,11 +29,11 @@ const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}
         <TableRow>
           {columns.map((column, index) => (
             <TableCell key={index} className="header-cell" sx={{
-              backgroundColor: '#3c3c3c', 
+              backgroundColor: '#d6d6d6', 
               fontWeight: 'bold',
             }}>{column.header}</TableCell>
           ))}
-           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#3c3c3c' }}>Akcije</TableCell>}
+           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#d6d6d6' }}>Akcije</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>

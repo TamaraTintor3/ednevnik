@@ -11,3 +11,11 @@ export default interface ISchoolClass {
 }
 
 export const initialClasses: ISchoolClass[] = [];
+export const initialClass: ISchoolClass = {
+  schoolClassId: 1,
+  name: "",
+  professors: [],
+  schoolYearYear: "",
+  schoolYearSemester: 1,
+  students: [],
+};
