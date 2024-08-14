@@ -11,6 +11,10 @@ interface RegisterUserPayload {
     role: string;
 }
 
+interface AddSchoolClassPayload{
+    name: string;
+}
+
 export const registerUser = async (payload: RegisterUserPayload) => {
     try {
         const response = await axiosInstance.post('/api/authentication/register', payload);
@@ -31,6 +35,7 @@ export const getAllUsers = async () => {
     }
 };
 
+
 export const getUserByUsername = async (username:string) => {
     try {
         const response = await axiosInstance.get('/api/users/getUserByUsername/' + username);
@@ -47,6 +52,17 @@ export const editUserById = async (user :IEditUser) => {
         return response;
     } catch (error) {
         console.error('Error fetching users:', error);
+        throw error;
+    }
+};
+
+export const addSchoolClass = async (payload: AddSchoolClassPayload) => {
+    try {
+        const response = await axiosInstance.post('/api/school-classes', payload);
+        return response;
+    } catch (error) {
+        console.error('Došlo je do greške prilikom dodavanja odjeljenja!', error);
+
         throw error;
     }
 };

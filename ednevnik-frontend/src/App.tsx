@@ -12,6 +12,8 @@ import ClassesComponent from "./components/AdministratorComponents/ClassesCompon
 import ShowAllUsers from "./components/AdministratorComponents/ShowAllUsers";
 import EditUserComponent from "./components/EditUserComponent/EditUserComponent";
 import ClassDetailsComponent from "./components/AdministratorComponents/ClassDetailsComponent";
+import AddSchoolClass from "./components/AdministratorComponents/AddSchoolClass";
+
 
 
 function App(props: any) {
@@ -43,12 +45,15 @@ function App(props: any) {
 
       <Route element={<IsLogedInPrivateRoute />}>
         <Route element={<MainComponent />}>
+
           <Route path="/home" element={<HomeComponent />} />
           <Route path='/showAllUsers' element={<ShowAllUsers />}/>
           <Route path="/classes" element={<ClassesComponent/>} />
           <Route path="/register" element={<Registration />} />
           <Route path="/editUser" element={<EditUserComponent/>}/>
           <Route path="/class/:id" element={<ClassDetailsComponent />} />
+          <Route path="/addSchoolClass" element={<AddSchoolClass />} />
+
         </Route>
       </Route>
     </Routes>
