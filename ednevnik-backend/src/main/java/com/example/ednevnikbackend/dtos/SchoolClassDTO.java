@@ -1,5 +1,6 @@
 package com.example.ednevnikbackend.dtos;
 
+
 import com.example.ednevnikbackend.models.Professor;
 import com.example.ednevnikbackend.models.SchoolYear;
 import com.example.ednevnikbackend.models.Student;
@@ -15,4 +16,5 @@ public class SchoolClassDTO {
     private String schoolYearYear;
     private String schoolYearSemester;
     private List<StudentDTO> students;
+
 }

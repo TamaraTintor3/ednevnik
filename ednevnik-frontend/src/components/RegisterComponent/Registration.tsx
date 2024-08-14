@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
-import axiosInstance from '../../services/axiosConfig'
-import { Box, FormControl, InputLabel, Select,  Typography, SelectChangeEvent as MuiSelectChangeEvent, MenuItem, Button } from '@mui/material';
+import { Box, FormControl, Select,  Typography, SelectChangeEvent as MuiSelectChangeEvent, MenuItem, Button } from '@mui/material';
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
 import { registerUser } from '../../services/AdminApi';
 import './RegistrationStyle.css'
