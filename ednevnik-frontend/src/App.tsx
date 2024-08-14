@@ -10,10 +10,12 @@ import { useAuth, } from "./contexts/AuthenticationContext";
 import MainComponent from "./components/MainComponent/MainComponent";
 import ClassesComponent from "./components/AdministratorComponents/ClassesComponent";
 import ShowAllUsers from "./components/AdministratorComponents/ShowAllUsers";
-import EditUserComponent from "./components/EditUserComponent/EditUserComponent";
+import EditUserComponent from "./components/AdministratorComponents/EditUserComponent";
 import ClassDetailsComponent from "./components/AdministratorComponents/ClassDetailsComponent";
 import AddSchoolClass from "./components/AdministratorComponents/AddSchoolClass";
 
+import ShowAllClassesComponent from "./components/ProfessorComponents/ShowAllClassesComponent";
+import MyClassComponent from "./components/ProfessorComponents/MyClassComponent";
 
 
 function App(props: any) {
@@ -54,6 +56,8 @@ function App(props: any) {
           <Route path="/class/:id" element={<ClassDetailsComponent />} />
           <Route path="/addSchoolClass" element={<AddSchoolClass />} />
 
+        <Route path="/showProfessorsClasses" element={<ShowAllClassesComponent/>}/>
+        <Route path="/myClass" element={<MyClassComponent/>}/>
         </Route>
       </Route>
     </Routes>
