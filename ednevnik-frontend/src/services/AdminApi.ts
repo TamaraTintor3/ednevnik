@@ -15,6 +15,20 @@ interface AddSchoolClassPayload{
     name: string;
 }
 
+export interface Parent {
+    parentId: number;
+    firstName: string;
+    lastName: string;
+}
+
+export interface StudentPayload {
+    firstName: string;
+    lastName: string;
+    jmbg: string;
+    parentId: number;
+    schoolClassId: number;
+}
+
 export const registerUser = async (payload: RegisterUserPayload) => {
     try {
         const response = await axiosInstance.post('/api/authentication/register', payload);
@@ -66,3 +80,24 @@ export const addSchoolClass = async (payload: AddSchoolClassPayload) => {
         throw error;
     }
 };
+
+export const fetchParents = async (): Promise<Parent[]> => {
+    try {
+        const response = await axiosInstance.get<Parent[]>("/api/parents");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching parents:", error);
+        throw error;
+    }
+};
+
+export const addStudent = async (payload: StudentPayload) => {
+    try {
+        const response = await axiosInstance.post(`/api/school-classes/${payload.schoolClassId}/students/add`, payload);
+        return response.data;
+    } catch (error) {
+        console.error("Error adding student:", error);
+        throw error;
+    }
+};
+

@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../../services/axiosConfig";
-import { Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { initialClass } from "../../models/ISchoolClass";
 import TableComponent from "../TableComponent/TableComponent";
+import { useNavigate } from "react-router-dom";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const ClassDetailsComponent = (props: any) => {
   const { id } = useParams();
   const [schoolClass, setSchoolClass] = useState(initialClass);
+  const navigate = useNavigate();
   React.useEffect(() => {
     axiosInstance
       .get("/api/school-classes/" + id)
@@ -18,6 +21,11 @@ const ClassDetailsComponent = (props: any) => {
         console.log(error);
       });
   }, []);
+
+  const handleAddStudent = () => {
+    navigate(`/addStudent/${id}`);
+  };
+
   const columns = [
     { header: "Ime", field: "firstName" },
     { header: "Prezime", field: "lastName" },
@@ -36,6 +44,12 @@ const ClassDetailsComponent = (props: any) => {
       {schoolClass.professors.map(
         (p) => p.userFirstName + " " + p.userLastName
       )}
+      <Box pt={2} display="flex" alignItems="center">
+      <Typography>Dodaj učenika</Typography>
+      <Button sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddStudent}/>
+      </Box>
+     
+
       <br />
       <br />
       <TableComponent

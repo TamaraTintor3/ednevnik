@@ -1,5 +1,6 @@
 package com.example.ednevnikbackend.controllers;
 
+import com.example.ednevnikbackend.dtos.ParentDTO;
 import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.services.ParentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,7 @@ public class ParentController {
     ParentService parentService;
 
     @GetMapping("/parents")
-    public ResponseEntity<List<Parent>> getAllParents() {
-        List<Parent> parents = parentService.findAllParents();
-        return ResponseEntity.ok(parents);
+    public List<ParentDTO> getAllParents() {
+        return parentService.findAllParents();
     }
 }
