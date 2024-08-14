@@ -58,7 +58,7 @@ export const editUserById = async (user :IEditUser) => {
 
 export const addSchoolClass = async (payload: AddSchoolClassPayload) => {
     try {
-        const response = await axiosInstance.post('/api/school-classes', payload);
+        const response = await axiosInstance.post('/api/school-classes/addClass', payload);
         return response;
     } catch (error) {
         console.error('Došlo je do greške prilikom dodavanja odjeljenja!', error);

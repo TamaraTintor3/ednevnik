@@ -19,15 +19,15 @@ const AddSchoolClass = () => {
             const response = await addSchoolClass({
               name
           });
-          console.log('Server Response:', response);
+          console.log('Response:', response);
           if (response.status === 201) {
               alert('Uspješno dodavanje odjeljenja!');
           } else {
-              alert(`Unexpected status: ${response.status}`);
+              alert(`Neocekivan status: ${response.status}`);
           }
             } catch (error) {
               console.error('Došlo je do greške prilikom dodavanja odjeljenja!', error);
-              alert('Registration failed!');
+              alert('Došlo je do greške prilikom dodavanja odjeljenja!');
             }
          
     }
