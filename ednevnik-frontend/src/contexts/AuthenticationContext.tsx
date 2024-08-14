@@ -38,7 +38,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
 
   const logOut = () => {
-    // setUser(null);
     setToken("");
     setRole("");
     sessionStorage.clear();
@@ -114,7 +113,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     const tokken = sessionStorage.getItem("token");
     if (tokken != null) {
-      // setToken(tokken);
     }
 
 

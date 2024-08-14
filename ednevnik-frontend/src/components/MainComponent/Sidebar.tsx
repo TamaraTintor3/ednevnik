@@ -26,8 +26,8 @@ const adminActions: ISidebarAction[] = [
 ];
 
 const professorActions: ISidebarAction[] = [
-  { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "" },
-  { title: "Moje odjeljenje", icon: <PeopleAltOutlined />, path: "" },
+  { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "/showProfessorsClasses" },
+  { title: "Moje odjeljenje", icon: <PeopleAltOutlined />, path: "/myClass" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const parentActions: ISidebarAction[] = [

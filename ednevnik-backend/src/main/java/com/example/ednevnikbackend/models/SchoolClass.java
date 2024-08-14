@@ -32,4 +32,8 @@ public class SchoolClass {
     @OneToMany(mappedBy = "schoolClass")
     @JsonIgnore
     private List<StudentClass> studentClasses;
+
+//    @OneToMany(mappedBy = "schoolClass")
+//    @JsonIgnore
+//    private List<Teaching> teachings;
 }

@@ -1,10 +1,12 @@
 package com.example.ednevnikbackend.controllers;
 
+import com.example.ednevnikbackend.dtos.ProfessorDTO;
 
 import com.example.ednevnikbackend.dtos.AddSchoolClassDTO;
 import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.dtos.SchoolClassDTO;
+import com.example.ednevnikbackend.services.ProfessorService;
 import com.example.ednevnikbackend.services.SchoolClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -21,6 +23,9 @@ public class SchoolClassController {
     @Autowired
     private SchoolClassService schoolClassService;
 
+    @Autowired
+    private ProfessorService professorService;
+
     @GetMapping
     public List<SchoolClassDTO> getAllSchoolClasses() {
         return schoolClassService.findAllSchoolClasses().stream().sorted(Comparator.comparing(SchoolClassDTO::getSchoolYearYear).reversed()).toList();
@@ -36,5 +41,13 @@ public class SchoolClassController {
     public ResponseEntity<SchoolClass> createSchoolClass(@RequestBody AddSchoolClassDTO addSchoolClassDTO) {
         SchoolClass newSchoolClass = schoolClassService.addSchoolClass(addSchoolClassDTO);
         return new ResponseEntity<>(newSchoolClass, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/byUserId/{id}")
+    public List<SchoolClassDTO> getAllClassesByProfessorId(@PathVariable Integer id){
+
+        ProfessorDTO professorDTO = professorService.getProfessorByUserId(id);
+
+        return schoolClassService.findAllClassesByProfessorId(professorDTO.getProfessorId());
     }
 }

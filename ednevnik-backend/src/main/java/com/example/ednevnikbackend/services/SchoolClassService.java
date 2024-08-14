@@ -14,4 +14,6 @@ public interface SchoolClassService {
     public SchoolClass addSchoolClass (AddSchoolClassDTO addSchoolClassDTO);
     public SchoolYear findCurrentSchoolYear();
 
+
+    List<SchoolClassDTO> findAllClassesByProfessorId(Integer id);
 }
