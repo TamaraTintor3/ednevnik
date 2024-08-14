@@ -1,11 +1,11 @@
 import { Container, Grid } from "@mui/material";
 import CardsComponent from "../CardComponents/CardsComponent";
 import ISchoolClass, { initialClasses } from "../../models/ISchoolClass";
-import ClassCard from "../CardComponents/ClassCard";
 import { useState } from "react";
 import React from "react";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { getClassesByUserId } from "../../services/UserApi";
+import CardComponent from "../CardComponents/CardComponent";
 
 
 const ShowAllClassesComponent = (props: any) => {
@@ -22,7 +22,7 @@ const ShowAllClassesComponent = (props: any) => {
         <Grid container spacing={3}>
           {classes.map((c: ISchoolClass) => (
             <Grid item key={c.schoolClassId} xs={12} md={6} lg={4}>
-              <ClassCard schoolClass={c} openCard={props.openCard}></ClassCard>
+              <CardComponent schoolClass={c} openCard={props.openCard}></CardComponent>
             </Grid>
           ))}
         </Grid>
