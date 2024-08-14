@@ -1,8 +1,10 @@
 package com.example.ednevnikbackend.controllers;
 
+import com.example.ednevnikbackend.dtos.ProfessorDTO;
 import com.example.ednevnikbackend.dtos.ShowUsersDTO;
 import com.example.ednevnikbackend.dtos.UserDTO;
 import com.example.ednevnikbackend.models.User;
+import com.example.ednevnikbackend.services.ProfessorService;
 import com.example.ednevnikbackend.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
+
 
 
     @GetMapping("/showAll")
@@ -42,4 +46,6 @@ public class UserController {
         User u = userService.editUser(id,user);
         return ResponseEntity.ok(user);
     }
+
+
 }

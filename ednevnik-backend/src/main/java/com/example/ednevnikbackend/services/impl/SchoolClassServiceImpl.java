@@ -1,9 +1,11 @@
 package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.daos.SchoolClassDAO;
+import com.example.ednevnikbackend.daos.TeachingDAO;
 import com.example.ednevnikbackend.daos.SchoolYearDAO;
 import com.example.ednevnikbackend.dtos.AddSchoolClassDTO;
 import com.example.ednevnikbackend.dtos.SchoolClassDTO;
+import com.example.ednevnikbackend.models.Teaching;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.models.SchoolYear;
 import com.example.ednevnikbackend.services.SchoolClassService;
@@ -12,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,6 +26,8 @@ public class SchoolClassServiceImpl implements SchoolClassService {
     private SchoolYearDAO schoolYearDAO;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private TeachingDAO teachingDAO;
     @Override
     public List<SchoolClassDTO> findAllSchoolClasses() {
         return schoolClassDAO.findAll().stream().map(e->modelMapper.map(e,SchoolClassDTO.class)).toList();
@@ -62,5 +67,16 @@ public class SchoolClassServiceImpl implements SchoolClassService {
         }
 
         return currentYearSemesters.get(0);
+    }
+
+    @Override
+    public List<SchoolClassDTO> findAllClassesByProfessorId(Integer id) {
+
+        List<Teaching> teachings = teachingDAO.findAllByProfessorId(id);
+        List<SchoolClassDTO> classes = new ArrayList<SchoolClassDTO>();
+        for(Teaching t : teachings){
+            classes.add(modelMapper.map(t.getSchoolClass(),SchoolClassDTO.class));
+        }
+        return classes;
     }
 }

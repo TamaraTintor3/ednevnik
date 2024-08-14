@@ -1,2 +1,12 @@
-package com.example.ednevnikbackend.daos;public interface TeachingDAO {
+package com.example.ednevnikbackend.daos;
+
+import com.example.ednevnikbackend.models.Teaching;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface TeachingDAO extends JpaRepository<Teaching, Integer> {
+
+    List<Teaching> findAllByProfessorId(Integer id);
+
 }
