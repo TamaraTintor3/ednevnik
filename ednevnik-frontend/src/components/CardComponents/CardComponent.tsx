@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const CardComponent = (props: any) => {
   const navigate = useNavigate();
   function openCard() {
-    navigate("/class/" + props.schoolClass.schoolClassId);
+    navigate(props.path + props.schoolClass.schoolClassId);
   }
   return (
     <div>
