@@ -80,13 +80,13 @@ const TableGradesComponent = () => {
                             <TableCell>{s.lastName}</TableCell>
                             <TableCell>{s.parent.userFirstName + " " + s.parent.userLastName}</TableCell>
                             <TableCell>
-                                {s.gradesWritten.map((g) => (
+                                {s.gradesWritten?.map((g) => (
                                     <TableRow>{g.date + " (" + g.grade + ")"}</TableRow>
                                 ))}
 
                             </TableCell>
                             <TableCell>
-                                {s.gradesVerbal.map((g) => (
+                                {s.gradesVerbal?.map((g) => (
                                     <TableRow>{g.date + " (" + g.grade + ")"}</TableRow>
                                 ))}
 

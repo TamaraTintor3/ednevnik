@@ -40,6 +40,7 @@ const ShowClassDetails = () => {
       })
 
       getSchoolClassById(Number(id)).then((resp) => {
+        console.log("++++++++++" + resp.data);
         setSchoolClass(resp.data);
       })
 

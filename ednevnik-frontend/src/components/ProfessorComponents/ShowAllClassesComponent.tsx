@@ -15,7 +15,7 @@ const ShowAllClassesComponent = (props: any) => {
     const authentication = useAuth();
     const [classes, setClasses] = useState(initialClasses);
     React.useEffect(() => {
-     getClassesByUserId(authentication?.userId).then(
+     getClassesByUserId(authentication?.getUserId()).then(
         resp => setClasses(resp.data)
      )
     }, []);
