@@ -1,5 +1,6 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
-import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { RoleEnum } from "../enums/RoleEnum";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
@@ -27,8 +28,17 @@ const LoginAxiosInstance = axios.create({
         response => {
             if (response.status === 200) {
                 sessionStorage.setItem("token", response.data);
-                window.location.href='/home';
-    
+                const decodedToken = jwtDecode(response.data);
+                const role = JSON.parse(JSON.stringify(decodedToken)).role;
+                if(role===RoleEnum.ADMIN.toString()){
+                    window.location.href='/showAllUsers'
+                }else if(role===RoleEnum.PROFESSOR.toString()){
+                    window.location.href='/showProfessorsClasses'
+                }else if(role===RoleEnum.PARENT.toString()){
+                    window.location.href='/home'
+                }else if(role===RoleEnum.STAFF.toString()){
+                    window.location.href='/classes'
+                }
             }
             return response;
         },
