@@ -22,7 +22,8 @@ public class UserController {
     UserService userService;
 
 
-
+    @Autowired
+    ProfessorService professorService;
 
     @GetMapping("/showAll")
     public ResponseEntity<List<ShowUsersDTO>> getAllUsers() {
@@ -44,8 +45,12 @@ public class UserController {
     public ResponseEntity<?> editUserById(@PathVariable Integer id, @RequestBody UserDTO user){
 
         User u = userService.editUser(id,user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(u);
     }
 
 
+    @GetMapping("/getProfessorByUserId/{id}")
+    public ProfessorDTO getProfessor(@PathVariable Integer id){
+        return professorService.getProfessorByUserId(id);
+    }
 }
