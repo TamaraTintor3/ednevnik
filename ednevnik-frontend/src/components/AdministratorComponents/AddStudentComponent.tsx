@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import axiosInstance from '../../services/axiosConfig'
-import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select} from '@mui/material';
+import { Box, Button, FormControl,  MenuItem, Paper, Select} from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
 import { fetchParents, addStudent, Parent } from '../../services/AdminApi';
