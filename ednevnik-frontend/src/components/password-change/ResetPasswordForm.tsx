@@ -13,6 +13,7 @@ import { initialPasswordResetRequest } from "../../models/IPasswordResetRequest"
 import useStyles from "./styles";
 import axiosInstance from "../../services/axiosConfig";
 import { ToastContainer, toast } from "react-toastify";
+import { resetUserPassword } from "../../services/ResetPasswordApi";
 
 const ResetPasswordForm = () => {
   const classes = useStyles();
@@ -22,11 +23,7 @@ const ResetPasswordForm = () => {
 
   function resetPassword(event: any) {
     event.preventDefault();
-    axiosInstance
-      .post(
-        "/api/authentication/reset-password-request/" +
-          passwordResetRequest.username
-      )
+    resetUserPassword(passwordResetRequest.username)
       .then((response) => {
         console.log(response);
         toast.success(response.data);

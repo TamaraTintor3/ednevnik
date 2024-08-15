@@ -1,21 +1,11 @@
 import React, { useState } from "react";
 import useStyles from "./styles";
-import {
-  IPasswordChangeRequest,
-  initialPasswordChangeRequest,
-} from "../../models/IPasswordChangeRequest";
-import {
-  Box,
-  Button,
-  FormControl,
-  FormGroup,
-  FormHelperText,
-  TextField,
-} from "@mui/material";
+import { IPasswordChangeRequest } from "../../models/IPasswordChangeRequest";
+import { Box, Button, FormControl, FormGroup, TextField } from "@mui/material";
 import { initialPasswordConfirmation } from "../../models/IPasswordConfirmation";
-import axiosInstance from "../../services/axiosConfig";
 import { ToastContainer, toast } from "react-toastify";
 import { useParams } from "react-router-dom";
+import { changeUserPassword } from "../../services/ResetPasswordApi";
 
 const ChangePasswordForm = () => {
   const classes = useStyles();
@@ -54,8 +44,7 @@ const ChangePasswordForm = () => {
       token: token || "",
       newPassword: passwordConfirmation.password,
     };
-    axiosInstance
-      .post("/api/authentication/change-password", passwordChangeRequest)
+    changeUserPassword(passwordChangeRequest)
       .then((response) => {
         console.log(response);
         toast.success(response.data);
