@@ -60,7 +60,7 @@ function App(props: any) {
         <Route path="/showProfessorsClasses" element={<ShowAllClassesComponent/>}/>
         <Route path="/myClass" element={<MyClassComponent/>}/>
           <Route path="/addStudent/:id" element={<AddStudentComponent />} />
-          <Route path="/showClassDetails" element={<ShowClassDetails/>}/>
+          <Route path="/showClassDetails/:id" element={<ShowClassDetails/>}/>
         </Route>
       </Route>
     </Routes>
