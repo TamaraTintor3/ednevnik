@@ -22,6 +22,7 @@ public class Professor {
     private List<Message> messages;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
     @ManyToOne
     @JoinColumn(name = "school_class_id", referencedColumnName = "school_class_id")

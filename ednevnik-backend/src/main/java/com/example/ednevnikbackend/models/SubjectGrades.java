@@ -1,5 +1,6 @@
 package com.example.ednevnikbackend.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class SubjectGrades {
     private Subject subject;
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
+    @JsonIgnore
     private Student student;
     @ManyToOne
     @JoinColumn(name = "school_year_id", referencedColumnName = "school_year_id")

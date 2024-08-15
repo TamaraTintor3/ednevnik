@@ -15,6 +15,7 @@ interface AuthContextType {
   isTokenExpired: any;
   getRole: any;
   setRole: any;
+  getUserId:any;
 }
 
 
@@ -115,13 +116,22 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     if (tokken != null) {
     }
 
+  }
 
-
-
+  function getUserId() {
+    const tokken = sessionStorage.getItem("token");
+   let id = '';
+    if (tokken != null) {
+      const tok = jwtDecode(tokken);
+      const tokenString = JSON.stringify(tok);
+      if (tok.jti)
+      id = tok.jti;
+    }
+    return id;
   }
 
   return (
-    <AuthContext.Provider value={{ userId, role, token, logOut, login, isTokenExpired, isLogedIn, getRole, setRole }}>
+    <AuthContext.Provider value={{ userId, role, token, logOut, login, isTokenExpired, isLogedIn, getRole, setRole, getUserId }}>
       {children}
     </AuthContext.Provider>
   );

@@ -17,6 +17,7 @@ import AddStudentComponent from "./components/AdministratorComponents/AddStudent
 
 import ShowAllClassesComponent from "./components/ProfessorComponents/ShowAllClassesComponent";
 import MyClassComponent from "./components/ProfessorComponents/MyClassComponent";
+import ShowClassDetails from "./components/ProfessorComponents/ShowClassDeatils";
 
 
 function App(props: any) {
@@ -24,14 +25,14 @@ function App(props: any) {
   const authentication = useAuth();
 
   function AdminPrivateRoute() {
-    if (authentication) 
+    if (authentication)
       authentication.role = authentication.getRole();
     return (authentication?.isLogedIn() && authentication?.role == "ADMIN") == true ? <Outlet /> : <Navigate to="/login" replace />;
   }
 
   function IsLogedInPrivateRoute() {
     let loged = false;
-    if (authentication) {  loged = authentication.isLogedIn(); }
+    if (authentication) { loged = authentication.isLogedIn(); }
     return (authentication?.isLogedIn()) == true ? <Outlet /> : <Navigate to="/login" replace />;
   }
 
@@ -40,8 +41,8 @@ function App(props: any) {
       <Route path="/" element={<LoginComponent />} />
       <Route path="/login" element={<LoginComponent />} />
       <Route element={<AdminPrivateRoute />}>
-        
-        
+
+
       </Route>
       <Route path="/password-reset" element={<ResetPasswordForm />} />
       <Route path="/password-change/:token" element={<ChangePasswordForm />} />
@@ -50,15 +51,16 @@ function App(props: any) {
         <Route element={<MainComponent />}>
 
           <Route path="/home" element={<HomeComponent />} />
-          <Route path='/showAllUsers' element={<ShowAllUsers />}/>
-          <Route path="/classes" element={<ClassesComponent/>} />
+          <Route path='/showAllUsers' element={<ShowAllUsers />} />
+          <Route path="/classes" element={<ClassesComponent />} />
           <Route path="/register" element={<Registration />} />
-          <Route path="/editUser" element={<EditUserComponent/>}/>
+          <Route path="/editUser" element={<EditUserComponent />} />
           <Route path="/class/:id" element={<ClassDetailsComponent />} />
           <Route path="/addSchoolClass" element={<AddSchoolClass />} />
         <Route path="/showProfessorsClasses" element={<ShowAllClassesComponent/>}/>
         <Route path="/myClass" element={<MyClassComponent/>}/>
           <Route path="/addStudent/:id" element={<AddStudentComponent />} />
+          <Route path="/showClassDetails/:id" element={<ShowClassDetails/>}/>
         </Route>
       </Route>
     </Routes>

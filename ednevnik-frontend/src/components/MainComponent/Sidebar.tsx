@@ -14,11 +14,13 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { Link } from "react-router-dom";
 import ISidebarAction from "../../models/ISidebarAction";
 import { RoleEnum } from "../../enums/RoleEnum";
+import { getProfessorByUserId } from "../../services/UserApi";
+import ProfessorProvider, { useProfessorContext } from "../../contexts/ProfessorContext";
 
 const adminActions: ISidebarAction[] = [
   { title: "Korisnici", icon: <PeopleAltTwoTone />, path: "/showAllUsers" },
@@ -41,10 +43,12 @@ const staffActions: ISidebarAction[] = [
 const Sidebar = () => {
   const [sidebarActions, setSidebarActions] = useState(staffActions);
   const context = useAuth();
+  const professorContext = useProfessorContext();
   React.useEffect(() => {
     if (context?.getRole() === RoleEnum.ADMIN.toString()) {
       setSidebarActions(adminActions);
     } else if (context?.getRole() === RoleEnum.PROFESSOR.toString()) {
+      professorContext?.setProfId(context?.getUserId());
       setSidebarActions(professorActions);
     } else if (context?.getRole() === RoleEnum.PARENT.toString()) {
       setSidebarActions(parentActions);

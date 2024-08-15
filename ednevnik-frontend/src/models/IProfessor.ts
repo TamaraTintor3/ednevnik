@@ -4,3 +4,10 @@ export default interface IProfessor {
   userFirstName: string;
   userLastName: string;
 }
+
+export const initialProfessor: IProfessor = {
+  professorId: 0,
+  classProfessor: false,
+  userFirstName: "",
+  userLastName: ""
+};

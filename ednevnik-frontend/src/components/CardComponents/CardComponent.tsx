@@ -3,13 +3,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const CardComponent = (props: any) => {
-  const navigate = useNavigate();
-  function openCard() {
-    navigate("/class/" + props.schoolClass.schoolClassId);
+  function clickOnCard() {
+    props.openCard(props.schoolClass.schoolClassId)
   }
   return (
     <div>
-      <Card style={{ backgroundColor: "#d6d6d6" }} onClick={openCard}>
+      <Card style={{ backgroundColor: "#d6d6d6" }} onClick={clickOnCard}>
         <CardHeader
           title={props.schoolClass.name}
           subheader={

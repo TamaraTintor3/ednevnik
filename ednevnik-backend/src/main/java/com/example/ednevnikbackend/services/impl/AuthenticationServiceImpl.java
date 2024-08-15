@@ -53,7 +53,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     ParentDAO parentDAO;
 
-    @Value("90000")
+
+
+    @Value("900000")
     private String tokenExpirationTime;
 
     @Value("${authorization.token.secret}")
