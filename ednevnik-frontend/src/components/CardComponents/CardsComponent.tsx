@@ -1,21 +1,20 @@
 import { Container, Grid } from "@mui/material";
 import React, { useState } from "react";
 import ClassCard from "./CardComponent";
-import axiosInstance from "../../services/axiosConfig";
 import ISchoolClass, { initialClasses } from "../../models/ISchoolClass";
 import { useNavigate } from "react-router-dom";
+import { getSchoolClasses } from "../../services/SchoolClassApi";
 
 const CardsComponent = (props: any) => {
   const [classes, setClasses] = useState(initialClasses);
   const navigate = useNavigate();
 
-  function openCard(id:number) {
+  function openCard(id: number) {
     navigate("/class/" + id);
   }
 
   React.useEffect(() => {
-    axiosInstance
-      .get("/api/school-classes")
+    getSchoolClasses()
       .then((response) => {
         setClasses(response.data);
       })

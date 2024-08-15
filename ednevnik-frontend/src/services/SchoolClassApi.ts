@@ -11,3 +11,5 @@ export const getSchoolClassById = async (id:number) => {
         throw error;
     }
 };
+
+export const getSchoolClasses=()=>axiosInstance.get("/api/school-classes");
