@@ -2,11 +2,13 @@ package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.config.JWTUserDetails;
 import com.example.ednevnikbackend.daos.ParentDAO;
+import com.example.ednevnikbackend.daos.ProfessorDAO;
 import com.example.ednevnikbackend.daos.UserDAO;
 import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
 import com.example.ednevnikbackend.models.Parent;
+import com.example.ednevnikbackend.models.Professor;
 import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.User;
 import com.example.ednevnikbackend.services.AuthenticationService;
@@ -16,6 +18,7 @@ import com.fasterxml.uuid.Generators;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +33,7 @@ import java.util.UUID;
 
 
 @Service
+@Transactional
 public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
@@ -51,9 +55,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private EmailService emailService;
 
     @Autowired
-    ParentDAO parentDAO;
+    private ParentDAO parentDAO;
 
-
+    @Autowired
+    private ProfessorDAO professorDAO;
 
     @Value("900000")
     private String tokenExpirationTime;
@@ -111,6 +116,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             parent.setUser(savedUser);
 
             parentDAO.save(parent);
+        }else if (Role.PROFESSOR.toString().equals(savedUser.getRole())) {
+            Professor professor = new Professor();
+            professor.setUser(savedUser);
+            professor.setClassProfessor(false);
+            professorDAO.save(professor);
         }
         sendRegistrationEmail(savedUser, registrationDto.getPassword());
 
