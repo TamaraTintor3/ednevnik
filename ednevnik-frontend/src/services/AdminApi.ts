@@ -1,19 +1,10 @@
 import axiosInstance from "./axiosConfig"
 import { User } from "../interfaces/UserInterface"
 import { IEditUser } from "../models/IEditUser";
-
-interface RegisterUserPayload {
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-    email: string;
-    role: string;
-}
-
-interface AddSchoolClassPayload{
-    name: string;
-}
+import { RegisterUserPayload } from "../interfaces/RegisterUserPayload";
+import { AddSchoolClassPayload } from "../interfaces/AddSchoolClassPayload";
+import { Parent } from "../interfaces/ParentInterface";
+import { StudentPayload } from "../interfaces/StudentPayload";
 
 export const registerUser = async (payload: RegisterUserPayload) => {
     try {
@@ -66,3 +57,24 @@ export const addSchoolClass = async (payload: AddSchoolClassPayload) => {
         throw error;
     }
 };
+
+export const fetchParents = async (): Promise<Parent[]> => {
+    try {
+        const response = await axiosInstance.get<Parent[]>("/api/parents");
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching parents:", error);
+        throw error;
+    }
+};
+
+export const addStudent = async (payload: StudentPayload) => {
+    try {
+        const response = await axiosInstance.post(`/api/school-classes/${payload.schoolClassId}/students/add`, payload);
+        return response.data;
+    } catch (error) {
+        console.error("Error adding student:", error);
+        throw error;
+    }
+};
+

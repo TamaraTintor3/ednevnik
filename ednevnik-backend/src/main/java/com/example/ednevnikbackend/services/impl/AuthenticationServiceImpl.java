@@ -1,10 +1,12 @@
 package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.config.JWTUserDetails;
+import com.example.ednevnikbackend.daos.ParentDAO;
 import com.example.ednevnikbackend.daos.UserDAO;
 import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
+import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.User;
 import com.example.ednevnikbackend.services.AuthenticationService;
@@ -47,6 +49,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    ParentDAO parentDAO;
 
     @Value("90000")
     private String tokenExpirationTime;
@@ -99,6 +104,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         User savedUser = userDAO.save(user);
 
+        if ("PARENT".equals(savedUser.getRole())) {
+            Parent parent = new Parent();
+            parent.setUser(savedUser);
+
+            parentDAO.save(parent);
+        }
         sendRegistrationEmail(savedUser, registrationDto.getPassword());
 
         return savedUser;
