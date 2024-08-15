@@ -53,7 +53,7 @@ const AddSchoolClass = () => {
           required
           margin="none"
           error={!!errors.name}
-          helperText={errors.setName}
+          helperText={errors.name}
         />
         <Button className='submitButton'  type="submit" variant="contained" fullWidth sx={{
                                                 marginTop: '20px',

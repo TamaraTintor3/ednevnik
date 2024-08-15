@@ -1,33 +1,10 @@
 import axiosInstance from "./axiosConfig"
 import { User } from "../interfaces/UserInterface"
 import { IEditUser } from "../models/IEditUser";
-
-interface RegisterUserPayload {
-    firstName: string;
-    lastName: string;
-    username: string;
-    password: string;
-    email: string;
-    role: string;
-}
-
-interface AddSchoolClassPayload{
-    name: string;
-}
-
-export interface Parent {
-    parentId: number;
-    firstName: string;
-    lastName: string;
-}
-
-export interface StudentPayload {
-    firstName: string;
-    lastName: string;
-    jmbg: string;
-    parentId: number;
-    schoolClassId: number;
-}
+import { RegisterUserPayload } from "../interfaces/RegisterUserPayload";
+import { AddSchoolClassPayload } from "../interfaces/AddSchoolClassPayload";
+import { Parent } from "../interfaces/ParentInterface";
+import { StudentPayload } from "../interfaces/StudentPayload";
 
 export const registerUser = async (payload: RegisterUserPayload) => {
     try {

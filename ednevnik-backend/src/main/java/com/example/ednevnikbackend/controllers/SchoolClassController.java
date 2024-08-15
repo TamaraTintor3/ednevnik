@@ -28,6 +28,7 @@ public class SchoolClassController {
     @Autowired
     private ProfessorService professorService;
 
+    @Autowired
     private StudentService studentService;
 
 

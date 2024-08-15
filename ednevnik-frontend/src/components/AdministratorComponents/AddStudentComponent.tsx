@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { Box, Button, FormControl,  MenuItem, Paper, Select} from '@mui/material';
+import { Box, Button, FormControl,  MenuItem, Paper, Select, Typography} from '@mui/material';
 import { SelectChangeEvent } from '@mui/material';
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
-import { fetchParents, addStudent, Parent } from '../../services/AdminApi';
+import { fetchParents, addStudent} from '../../services/AdminApi';
+import { Parent } from '../../interfaces/ParentInterface';
 
 
 const AddStudentComponent = () => {
@@ -14,6 +15,12 @@ const AddStudentComponent = () => {
     const [jmbg, setJmbg] = useState("");
     const [parentId, setParentId] = useState<number | ''>('');
     const [parents, setParents] = useState<Parent[]>([]);
+    const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
+        jmbg: '',
+        parentId: ''
+    });
 
     useEffect(() => {
         const loadParents = async () => {
@@ -28,7 +35,42 @@ const AddStudentComponent = () => {
         loadParents();
     }, []);
 
+    const validate = () => {
+        const newErrors = {
+            firstName: '',
+            lastName: '',
+            jmbg: '',
+            parentId: ''
+        };
+
+        if (!firstName.trim()) {
+            newErrors.firstName = "Ime je obavezno.";
+        }
+
+        if (!lastName.trim()) {
+            newErrors.lastName = "Prezime je obavezno.";
+        }
+
+        if (!jmbg.trim() || !/^\d{13}$/.test(jmbg)) {
+            newErrors.jmbg = "JMBG mora sadržati tačno 13 cifara.";
+        }
+
+        if (!parentId) {
+            newErrors.parentId = "Izaberite roditelja.";
+        }
+
+        setErrors(newErrors);
+
+        
+        return !Object.values(newErrors).some((error) => error !== '');
+    };
+
+
     const handleSubmit = async () => {
+        
+        if (!validate()) {
+            return; 
+        }
        
         const studentData = { firstName, lastName, jmbg, parentId: Number(parentId), schoolClassId: Number(id) };
 
@@ -60,6 +102,8 @@ const AddStudentComponent = () => {
         variant="outlined"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
+        error={!!errors.firstName}
+        helperText={errors.firstName}
         />        
         <label>PREZIME</label> 
         <StyledTxtField
@@ -67,6 +111,8 @@ const AddStudentComponent = () => {
         variant="outlined"
         value={lastName}
         onChange={(e) => setLastName(e.target.value)}
+        error={!!errors.lastName}
+        helperText={errors.lastName}
         />
         <label>JMBG</label> 
         <StyledTxtField
@@ -74,6 +120,8 @@ const AddStudentComponent = () => {
         variant="outlined"
         value={jmbg}
         onChange={(e) => setJmbg(e.target.value)}
+        error={!!errors.jmbg}
+        helperText={errors.jmbg}
         />
         
        <FormControl fullWidth margin="normal">
@@ -92,6 +140,7 @@ const AddStudentComponent = () => {
                         </MenuItem>
                     ))}
                 </Select>
+                {errors.parentId && <Typography color="error">{errors.parentId}</Typography>}
             </FormControl>
         <Button variant="contained" color="primary" onClick={handleSubmit} sx={{
                                                 marginTop: '20px',
