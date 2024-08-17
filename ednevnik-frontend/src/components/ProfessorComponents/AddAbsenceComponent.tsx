@@ -7,56 +7,56 @@ import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
 
 
 const AddAbsenceComponent = () => {
-  const { studentId } = useParams<{ studentId: string }>();
-  const [dateOfAbsence, setDateOfAbsence] = useState('');
-  const [reason, setReason] = useState('');
-  const [numberOfClasses, setNumberOfClasses] = useState<number | ''>('');
-  const [errors, setErrors] = useState({
-      dateOfAbsence: '',
-
-      numberOfClasses: ''
-  });
-  const validate = () => {
-    const newErrors = {
+    const { studentId } = useParams<{ studentId: string }>();
+    const [dateOfAbsence, setDateOfAbsence] = useState('');
+    const [reason, setReason] = useState('');
+    const [numberOfClasses, setNumberOfClasses] = useState<number | ''>('');
+    const [errors, setErrors] = useState({
         dateOfAbsence: '',
- 
-        numberOfClasses: ''
-    };
 
-    if (!dateOfAbsence) {
-        newErrors.dateOfAbsence = "Datum izostanka je obavezan.";
+        numberOfClasses: ''
+        });
+    const validate = () => {
+        const newErrors = {
+            dateOfAbsence: '',
+ 
+            numberOfClasses: ''
+        };
+
+        if (!dateOfAbsence) {
+            newErrors.dateOfAbsence = "Datum izostanka je obavezan.";
     }
 
  
 
-    if (numberOfClasses === '' || isNaN(Number(numberOfClasses))) {
-        newErrors.numberOfClasses = "Broj časova je obavezan i mora biti broj.";
-    } 
+        if (numberOfClasses === '' || isNaN(Number(numberOfClasses))) {
+            newErrors.numberOfClasses = "Broj časova je obavezan i mora biti broj.";
+        } 
     
-    setErrors(newErrors);
+        setErrors(newErrors);
 
-    return !Object.values(newErrors).some((error) => error !== '');
-};
+        return !Object.values(newErrors).some((error) => error !== '');
+    };
 
-const handleSubmit = async () => {
-  if (!validate()) {
-      return;
-  }
+    const handleSubmit = async () => {
+        if (!validate()) {
+        return;
+    }
 
-  const absenceData = {
-      dateOfAbsence,
-      numberOfClasses: Number(numberOfClasses),
-      studentId: Number(studentId),
-      approved: false
-  };
-  console.log("Poslati podaci:", absenceData);
-  try {
-      await addAbsence(absenceData);
-      alert("Izostanak uspješno dodat");
-  } catch (error) {
-      console.error("Greška prilikom dodavanja izostanka:", error);
-  }
-};
+    const absenceData = {
+        dateOfAbsence,
+        numberOfClasses: Number(numberOfClasses),
+        studentId: Number(studentId),
+        approved: false
+    };
+    console.log("Poslati podaci:", absenceData);
+        try {
+            await addAbsence(absenceData);
+            alert("Izostanak uspješno dodat");
+            } catch (error) {
+            console.error("Greška prilikom dodavanja izostanka:", error);
+        }
+    };
 
 
 
