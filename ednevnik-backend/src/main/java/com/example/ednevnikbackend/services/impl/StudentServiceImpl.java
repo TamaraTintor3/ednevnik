@@ -44,6 +44,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public AddStudentDTO addStudent(AddStudentDTO addStudentDTO) {
+        boolean exists = studentDAO.existsByJmbg(addStudentDTO.getJmbg());
+        if (exists) {
+            throw new IllegalArgumentException("Student sa datim JMBG-om već postoji");
+        }
+
         Parent parent = parentDAO.findById(addStudentDTO.getParentId())
                 .orElseThrow(() -> new IllegalArgumentException("Roditelj nije pronađen"));
         SchoolClass schoolClass = schoolClassDAO.findById(addStudentDTO.getSchoolClassId())
