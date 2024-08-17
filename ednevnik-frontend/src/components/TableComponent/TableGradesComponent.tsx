@@ -13,6 +13,7 @@ import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useNavigate } from "react-router-dom";
 
+
 const TableGradesComponent = () => {
 
 
@@ -57,7 +58,6 @@ const TableGradesComponent = () => {
     function addFinalGrade(studentId: number){
 
     }
-
 
     function editGrade(studentId: number){
         console.log("Edited grade")
