@@ -42,7 +42,7 @@ useEffect(()=>{
       ];
       
     const actions = [
-        { icon: <EditNoteIcon sx={{ color: 'gray' }} />, onClick: handleEditClick }
+        { icon: <EditNoteIcon titleAccess='Izmjeni korisnika' sx={{ color: 'gray' }} />, onClick: handleEditClick }
        
       ];
       
@@ -56,7 +56,7 @@ useEffect(()=>{
       
   return (
     <Box p={4}>
-      <Button sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddUser}></Button>
+      <Button title='Dodaj korisnika' sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddUser}></Button>
       <TableComponent columns={columns} data={data} actions={actions} />
     </Box>
   )
