@@ -11,7 +11,6 @@ import { initialStudentsTable } from "../../models/IStudentTable";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
-
 const TableGradesComponent = () => {
 
 
@@ -55,6 +54,12 @@ const TableGradesComponent = () => {
     function addFinalGrade(studentId: number){
 
     }
+
+
+
+
+  
+
 
     return (
         <TableContainer component={Paper} className="table-container">
