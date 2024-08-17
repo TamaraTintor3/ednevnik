@@ -74,7 +74,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "api/grades/bySchoolClassIdAndProfessorId/**").hasAnyAuthority(Role.ADMIN.toString(),Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.GET, "api/users/getProfessorByUserId/**").hasAnyAuthority(Role.ADMIN.toString(),Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.GET, "api/subjects/**").hasAnyAuthority(Role.ADMIN.toString(),Role.PROFESSOR.toString())
-
+                                .requestMatchers(HttpMethod.POST,"/api/absences/add").hasAuthority("PROFESSOR")
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())

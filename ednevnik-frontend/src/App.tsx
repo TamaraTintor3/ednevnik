@@ -18,6 +18,7 @@ import AddStudentComponent from "./components/AdministratorComponents/AddStudent
 import ShowAllClassesComponent from "./components/ProfessorComponents/ShowAllClassesComponent";
 import MyClassComponent from "./components/ProfessorComponents/MyClassComponent";
 import ShowClassDetails from "./components/ProfessorComponents/ShowClassDeatils";
+import AddAbsenceComponent from "./components/ProfessorComponents/AddAbsenceComponent";
 
 
 function App(props: any) {
@@ -61,6 +62,7 @@ function App(props: any) {
         <Route path="/myClass" element={<MyClassComponent/>}/>
           <Route path="/addStudent/:id" element={<AddStudentComponent />} />
           <Route path="/showClassDetails/:id" element={<ShowClassDetails/>}/>
+          <Route path="/addAbsence/:studentId" element={<AddAbsenceComponent />} />
         </Route>
       </Route>
     </Routes>

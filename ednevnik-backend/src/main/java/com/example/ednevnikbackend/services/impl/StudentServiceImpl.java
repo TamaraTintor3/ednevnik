@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,5 +55,10 @@ public class StudentServiceImpl implements StudentService {
 
         Student savedStudent = studentDAO.save(student);
         return modelMapper.map(savedStudent, AddStudentDTO.class);
+    }
+
+    @Override
+    public Optional<Student> findById(Integer studentId) {
+        return studentDAO.findById(studentId);
     }
 }
