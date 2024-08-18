@@ -1,7 +1,9 @@
 package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.daos.ProfessorDAO;
+import com.example.ednevnikbackend.dtos.ClassProfessorDTO;
 import com.example.ednevnikbackend.dtos.ProfessorDTO;
+import com.example.ednevnikbackend.dtos.SchoolClassDTO;
 import com.example.ednevnikbackend.services.ProfessorService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +21,10 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     public ProfessorDTO getProfessorByUserId(Integer id) {
         return modelMapper.map(professorDAO.getProfessorByUser_UserId(id),ProfessorDTO.class);
+    }
+
+    @Override
+    public SchoolClassDTO getProfessorsSchoolClass(ClassProfessorDTO classProfessorDTO) {
+        return modelMapper.map(professorDAO.getProfessorByUser_UserId(classProfessorDTO.getUserId()).getSchoolClass(),SchoolClassDTO.class);
     }
 }
