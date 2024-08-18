@@ -76,10 +76,18 @@ const AddStudentComponent = () => {
 
         try {
             const response = await addStudent(studentData);
-            console.log("Student added successfully", response);
+            console.log("Uspješno dodavanje učenika", response);
             alert("Uspješno dodavanje učenika");
-        } catch (error) {
-            console.error("Error adding student:", error);
+        } catch (error: any) {
+            console.error("Došlo je do greške prilikom dodavanja učenika:", error);
+            if (error.response && error.response.data && typeof error.response.data === 'string') {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    jmbg: error.response.data
+                }));
+            } else {
+                alert("Student sa datim JMBG-om već postoji");
+            }
         }
     };
 

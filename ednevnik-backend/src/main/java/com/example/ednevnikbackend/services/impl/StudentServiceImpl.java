@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,6 +44,11 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public AddStudentDTO addStudent(AddStudentDTO addStudentDTO) {
+        boolean exists = studentDAO.existsByJmbg(addStudentDTO.getJmbg());
+        if (exists) {
+            throw new IllegalArgumentException("Student sa datim JMBG-om već postoji");
+        }
+
         Parent parent = parentDAO.findById(addStudentDTO.getParentId())
                 .orElseThrow(() -> new IllegalArgumentException("Roditelj nije pronađen"));
         SchoolClass schoolClass = schoolClassDAO.findById(addStudentDTO.getSchoolClassId())
@@ -54,5 +60,10 @@ public class StudentServiceImpl implements StudentService {
 
         Student savedStudent = studentDAO.save(student);
         return modelMapper.map(savedStudent, AddStudentDTO.class);
+    }
+
+    @Override
+    public Optional<Student> findById(Integer studentId) {
+        return studentDAO.findById(studentId);
     }
 }

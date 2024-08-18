@@ -10,6 +10,9 @@ import React from "react";
 import { initialStudentsTable } from "../../models/IStudentTable";
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { useNavigate } from "react-router-dom";
+
 
 const TableGradesComponent = () => {
 
@@ -19,6 +22,7 @@ const TableGradesComponent = () => {
     const [profId, setProfId] = useState(0);
     const authentiaction = useAuth();
     const professorContext = useProfessorContext();
+    const navigate = useNavigate();
     React.useEffect(() => {
 
         console.log("+++++" + professorContext?.professorId)
@@ -55,10 +59,13 @@ const TableGradesComponent = () => {
 
     }
 
+    function editGrade(studentId: number){
+        console.log("Edited grade")
+    }
 
-
-
-  
+    function addAbsence(studentId: number){
+        navigate(`/addAbsence/${studentId}`);
+    }
 
 
     return (
@@ -109,6 +116,19 @@ const TableGradesComponent = () => {
                                     <IconButton onClick={() => addFinalGrade(s.studentId)} sx={{ p: 0 }}>
 
                                         <PlaylistAddCheckIcon />
+
+                                    </IconButton>                
+                                </Tooltip>
+
+                                <Tooltip title="Izmjeni ocjenu" onClick={() => editGrade(s.studentId)} sx={{ p: 0 }}>
+                                        <IconButton>
+                                            <EditNoteIcon />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Dodaj izostanak" onClick={() => addAbsence(s.studentId)} sx={{ p: 0 }}>
+                                    <IconButton>
+
+                                        <PlaylistAddIcon />
 
                                     </IconButton>
                                 </Tooltip>

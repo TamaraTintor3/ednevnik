@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface StudentDAO extends JpaRepository<Student, Integer> {
     List<Student> findBySchoolClassSchoolClassId(Integer schoolClassId);
+    boolean existsByJmbg(String jmbg);
 }
