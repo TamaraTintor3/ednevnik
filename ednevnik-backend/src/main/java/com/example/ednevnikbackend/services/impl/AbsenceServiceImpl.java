@@ -2,6 +2,7 @@ package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.daos.AbsenceDAO;
 import com.example.ednevnikbackend.dtos.AbsenceDTO;
+import com.example.ednevnikbackend.dtos.AbsenceUpdateDTO;
 import com.example.ednevnikbackend.models.Absence;
 import com.example.ednevnikbackend.models.Student;
 import com.example.ednevnikbackend.services.AbsenceService;
@@ -37,5 +38,16 @@ public class AbsenceServiceImpl implements AbsenceService {
 
         return absenceDAO.save(absence);
 
+    }
+
+    @Override
+    public Absence updateAbsence(Integer absenceId, AbsenceUpdateDTO absenceUpdateDTO) {
+        Absence existingAbsence = absenceDAO.findById(absenceId)
+                .orElseThrow(() -> new RuntimeException("Absence not found"));
+
+        existingAbsence.setReason(absenceUpdateDTO.getReason());
+        existingAbsence.setApproved(absenceUpdateDTO.getApproved());
+
+        return absenceDAO.save(existingAbsence);
     }
 }
