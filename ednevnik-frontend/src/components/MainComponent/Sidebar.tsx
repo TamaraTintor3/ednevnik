@@ -32,6 +32,15 @@ const professorActions: ISidebarAction[] = [
     icon: <FolderCopyTwoTone />,
     path: "/showProfessorsClasses",
   },
+
+  { title: "Inbox", icon: <MessageTwoTone />, path: "" },
+];
+const classProfessorActions: ISidebarAction[] = [
+  {
+    title: "Odjeljenja",
+    icon: <FolderCopyTwoTone />,
+    path: "/showProfessorsClasses",
+  },
   { title: "Moje odjeljenje", icon: <PeopleAltOutlined />, path: "/myClass" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
@@ -52,7 +61,9 @@ const Sidebar = () => {
       setSidebarActions(adminActions);
     } else if (context?.getRole() === RoleEnum.PROFESSOR.toString()) {
       professorContext?.setProfId(context?.getUserId());
-      setSidebarActions(professorActions);
+      if (professorContext?.classProfessor) {
+        setSidebarActions(classProfessorActions);
+      } else setSidebarActions(professorActions);
     } else if (context?.getRole() === RoleEnum.PARENT.toString()) {
       setSidebarActions(parentActions);
     } else if (context?.getRole() === RoleEnum.STAFF.toString()) {
