@@ -7,8 +7,6 @@ interface ProfessorContextType {
    
     professorId:any;
     setProfId:any;
-    classProfessor:any;
-    setClassProfessor:any;
   }
 
 
@@ -23,7 +21,6 @@ const ProfessorProvider: FC<ProfessorProviderProps> = ({ children }) => {
     const context = useAuth();
 
     const [professorId,setProfessorId] = useState();
-    const [classProfessor,setClassProfessor]=useState();
 
     function setProfId(id:number){
 
@@ -31,7 +28,6 @@ const ProfessorProvider: FC<ProfessorProviderProps> = ({ children }) => {
         getProfessorByUserId(id).then(resp => {
             console.log(resp.data.professorId);
             setProfessorId(resp.data.professorId)
-            setClassProfessor(resp.data.classProfessor);
           });    
     
       }
@@ -39,7 +35,7 @@ const ProfessorProvider: FC<ProfessorProviderProps> = ({ children }) => {
      
 
     return (
-        <ProfessorContext.Provider value={{ professorId, setProfId, classProfessor, setClassProfessor}}>
+        <ProfessorContext.Provider value={{ professorId, setProfId}}>
           {children}
         </ProfessorContext.Provider>
       );
