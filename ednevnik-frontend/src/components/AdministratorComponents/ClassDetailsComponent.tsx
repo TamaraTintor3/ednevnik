@@ -26,6 +26,7 @@ const ClassDetailsComponent = (props: any) => {
   };
 
   const columns = [
+    { header: "Br.", field: "studentId" },
     { header: "Ime", field: "firstName" },
     { header: "Prezime", field: "lastName" },
     { header: "Roditelj", field: "parent" },
