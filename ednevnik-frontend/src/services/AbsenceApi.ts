@@ -12,3 +12,7 @@ export const getAbsencesByStudentId = (studentId: number) => {
   export const updateAbsence = (id: number, data: { reason: string; approved: boolean }) => {
     return axiosInstance.put(`/api/absences/${id}`, data);
   };
+
+  export const getStudentById = (studentId: number) => {
+    return axiosInstance.get(`/api/students/${studentId}`);
+}

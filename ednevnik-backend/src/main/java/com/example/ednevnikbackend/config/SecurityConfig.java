@@ -82,13 +82,9 @@ public class SecurityConfig {
 
                                 .requestMatchers(HttpMethod.GET,"/api/grades/details/**").hasAuthority(Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.GET,"/api/students/**").hasAuthority(Role.PROFESSOR.toString())
-
                                 .requestMatchers(HttpMethod.PUT,"/api/absences/{id}").hasAuthority("PROFESSOR")
-
-
-
-
                                 .requestMatchers(HttpMethod.GET,"/api/absences/student/{studentId}").hasAuthority("PROFESSOR")
+                                .requestMatchers(HttpMethod.GET,"/api/students/{studentId}").hasAuthority("PROFESSOR")
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

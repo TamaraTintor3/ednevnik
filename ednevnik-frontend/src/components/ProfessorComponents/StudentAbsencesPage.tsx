@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
-import { Checkbox, Button, Box } from '@mui/material'
-import { getAbsencesByStudentId, updateAbsence } from '../../services/AbsenceApi'
+import { Checkbox, Box, Typography } from '@mui/material'
+import { getAbsencesByStudentId, updateAbsence, getStudentById } from '../../services/AbsenceApi'
 import EditableTableComponent from '../TableComponent/EditTableComponent'
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled'
 import SaveIcon from '@mui/icons-material/Save';
@@ -15,6 +15,11 @@ interface Absence {
     approved: boolean;
   }
 
+  interface Student {
+    firstName: string;
+    lastName: string;
+}
+
   interface Column {
     header: string;
     field: string;
@@ -25,28 +30,42 @@ const StudentAbsencesPage = () => {
     const { studentId } = useParams();
     console.log("Student ID:", studentId);
     const [absences, setAbsences] = useState<Absence[]>([]);
+    const [student, setStudent] = useState<Student | null>(null);
 
   useEffect(() => {
-    getAbsencesByStudentId(Number(studentId))
-      .then((response) => {
-        setAbsences(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [studentId]);
+    if (studentId) {
+      getStudentById(Number(studentId))
+          .then((response: any) => {
+              setStudent(response.data);
+          })
+          .catch((error: any) => {
+              console.log(error);
+          });
+          getAbsencesByStudentId(Number(studentId))
+          .then((response: any) => {
+            const sortedAbsences = response.data.sort((a: Absence, b: Absence) => {
+              return new Date(b.dateOfAbsence).getTime() - new Date(a.dateOfAbsence).getTime();
+            });
+            setAbsences(sortedAbsences);
+          })
+          .catch((error: any) => {
+            console.log(error);
+          });
+  }}, [studentId]);
 
   const updateAbsenceReason = (absenceId: number, reason: string, approved: boolean) => {
     updateAbsence(absenceId, { reason, approved })
       .then(() => {
-        getAbsencesByStudentId(Number(studentId))
-          .then((response) => {
-            setAbsences(response.data);
-            alert('Izostanak uspješno editovan!');
-          })
-          .catch((error) => console.log(error));
+        setAbsences(prevAbsences =>
+          prevAbsences.map(absence =>
+            absence.absenceId === absenceId
+              ? { ...absence, reason, approved }
+              : absence
+          )
+        );
+        alert('Izostanak uspješno editovan!');
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.log(error);
       });
 };
@@ -103,7 +122,12 @@ const StudentAbsencesPage = () => {
   ];
 
   return (
-    <Box pt={6}> 
+    <Box pt={6}>
+      {student && (
+                <Typography variant="inherit" gutterBottom>
+                    Izostanci za učenika: {student.firstName} {student.lastName}
+                </Typography>
+            )} 
       <EditableTableComponent columns={columns} data={absences} actions={actions} />
     </Box>
   )
