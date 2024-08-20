@@ -5,7 +5,7 @@ import './TableComponent.css'
 
 interface Column {
     header : string;
-    field: string;
+    field: any;
 }
 
 interface Action {

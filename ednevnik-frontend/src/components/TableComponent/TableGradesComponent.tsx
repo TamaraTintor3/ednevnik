@@ -12,9 +12,16 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useNavigate } from "react-router-dom";
+import { Grade } from "@mui/icons-material";
 
 
-const TableGradesComponent = () => {
+
+interface TableComponentProps{
+   subjectId : number;
+   schoolYearId  :number;
+}
+
+const TableGradesComponent : React.FC<TableComponentProps> = ({subjectId, schoolYearId}) => {
 
 
     const { id } = useParams();
@@ -23,9 +30,12 @@ const TableGradesComponent = () => {
     const authentiaction = useAuth();
     const professorContext = useProfessorContext();
     const navigate = useNavigate();
-    React.useEffect(() => {
 
-        console.log("+++++" + professorContext?.professorId)
+
+    
+
+
+    React.useEffect(() => {
 
         getProfessorByUserId(authentiaction?.getUserId()).then(resp => {
             console.log(resp.data.professorId);
@@ -52,23 +62,25 @@ const TableGradesComponent = () => {
 
 
     function addGrade(studentId: number) {
-        //  console.log(studentId);
+     navigate('/addGrade/' + studentId, {state : {subjectId:subjectId, schoolYearId:schoolYearId, classId:id,profId:profId}});
     }
 
-    function addFinalGrade(studentId: number){
-
+    function addFinalGrade(studentId: number) {
+        
     }
 
-    function editGrade(studentId: number){
-        console.log("Edited grade")
+    function editGrade(studentId: number, gradesVerbal:any, gradesWritten : any) {
+       
+        navigate('/editGrades/' + studentId, {state : {subjectId:subjectId, schoolYearId:schoolYearId, classId:id,profId:profId}});
     }
 
-    function addAbsence(studentId: number){
+    function addAbsence(studentId: number) {
         navigate(`/addAbsence/${studentId}`);
     }
 
 
     return (
+     
         <TableContainer component={Paper} className="table-container">
             <Table stickyHeader className="table">
                 <TableHead >
@@ -112,20 +124,21 @@ const TableGradesComponent = () => {
                                     </IconButton>
                                 </Tooltip>
 
+                                
+
+                                <Tooltip title="Izmjeni ocjenu" onClick={() => editGrade(s.studentId, s.gradesVerbal, s.gradesWritten)} sx={{ p: 0 }}>
+                                    <IconButton>
+                                        <EditNoteIcon />
+                                    </IconButton>
+                                </Tooltip>
                                 <Tooltip title="Zaključi ocjenu">
                                     <IconButton onClick={() => addFinalGrade(s.studentId)} sx={{ p: 0 }}>
 
                                         <PlaylistAddCheckIcon />
 
-                                    </IconButton>                
+                                    </IconButton>
                                 </Tooltip>
-
-                                <Tooltip title="Izmjeni ocjenu" onClick={() => editGrade(s.studentId)} sx={{ p: 0 }}>
-                                        <IconButton>
-                                            <EditNoteIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Dodaj izostanak" onClick={() => addAbsence(s.studentId)} sx={{ p: 0 }}>
+                                <Tooltip title="Dodaj izostanak" onClick={() => addAbsence(s.studentId)} sx={{ p: 0 }}>
                                     <IconButton>
 
                                         <PlaylistAddIcon />
@@ -140,6 +153,7 @@ const TableGradesComponent = () => {
                 </TableBody>
             </Table>
         </TableContainer>
+       
     );
 }
 
