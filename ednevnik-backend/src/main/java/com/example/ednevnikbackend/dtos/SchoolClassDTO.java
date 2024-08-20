@@ -13,6 +13,7 @@ public class SchoolClassDTO {
     private Integer schoolClassId;
     private String name;
     private List<ProfessorDTO> professors;
+    private Integer schoolYearId;
     private String schoolYearYear;
     private String schoolYearSemester;
     private List<StudentDTO> students;

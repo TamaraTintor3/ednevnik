@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface SchoolYearDAO extends JpaRepository<SchoolYear, Integer> {
     List<SchoolYear> findAllByOrderByYearDescSemesterDesc();
     List<SchoolYear> findByYearOrderBySemesterDesc(String year);
+
+    SchoolYear findBySchoolYearId(Integer id);
 }

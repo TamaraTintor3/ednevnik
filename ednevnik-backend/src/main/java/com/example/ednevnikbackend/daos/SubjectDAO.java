@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface SubjectDAO extends JpaRepository<Subject, Integer> {
 
     Subject findByProfessor_ProfessorId(Integer id);
+    Subject findBySubjectId(Integer id);
 
 }

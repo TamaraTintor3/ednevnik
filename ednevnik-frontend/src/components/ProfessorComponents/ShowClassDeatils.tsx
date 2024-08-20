@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import TableComponent from "../TableComponent/TableComponent";
 import { getSchoolClassById } from "../../services/SchoolClassApi";
 import TableGradesComponent from "../TableComponent/TableGradesComponent";
-import {  getGradesbySchoolClassIdAndProfessorId } from "../../services/GradesApi";
+import { getGradesbySchoolClassIdAndProfessorId } from "../../services/GradesApi";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { useProfessorContext } from "../../contexts/ProfessorContext";
 import { getProfessorByUserId } from "../../services/UserApi";
@@ -18,82 +18,70 @@ import { initialSubject } from "../../models/ISubject";
 import { getSubjectByProfessorId } from "../../services/SubjectApi";
 
 const ShowClassDetails = () => {
+
+  const { id } = useParams();
+  const [profId, setProfId] = useState(0);
+  const [subject, setSubject] = useState(initialSubject);
+  const [professor, setProfessor] = useState(initialProfessor)
+  const [schoolClass, setSchoolClass] = useState(initialClass);
+  const [schoolClassYearId, setSchoolClassYearId] = useState(0);
+  const [subjectId, setSubjectId] = useState(0);
+  const authentiaction = useAuth();
+  const professorContext = useProfessorContext();
+
+  React.useEffect(() => {
+
+    getProfessorByUserId(authentiaction?.getUserId()).then(resp => {
+      console.log(resp.data.professorId);
+      setProfessor(resp.data);
+      setProfId(resp.data.professorId);
+    })
+
+    getSchoolClassById(Number(id)).then((resp) => {
+      console.log("++++++++++" + resp.data);
+      setSchoolClass(resp.data);
+      setSchoolClassYearId(resp.data.schoolYearId);
+    })
+
    
-    const { id } = useParams();
-    const [students, setStudents] = useState(initialStudentsTable);
-    const [profId, setProfId]  = useState(0);
-    const [subject, setSubject] = useState(initialSubject);
-    const [professor, setProfessor] = useState(initialProfessor)
-    const [schoolClass, setSchoolClass] = useState(initialClass);
-    const authentiaction = useAuth();
-    const professorContext = useProfessorContext();
-    React.useEffect(() => {
 
-        console.log("+++++" + professorContext?.professorId)
+    getSubjectByProfessorId(profId).then((resp) => {
+      setSubject(resp.data);
+      setSubjectId(resp.data.subjectId);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, [profId]);
 
-        
 
-        getProfessorByUserId(authentiaction?.getUserId()).then(resp => {
-            console.log(resp.data.professorId);
-            setProfessor(resp.data);
-            setProfId(resp.data.professorId);
-      })
+ 
 
-      getSchoolClassById(Number(id)).then((resp) => {
-        console.log("++++++++++" + resp.data);
-        setSchoolClass(resp.data);
-      })
-
-        getGradesbySchoolClassIdAndProfessorId(Number(id), profId)
-          .then((response) => {
-            console.log(response.data)
-            setStudents(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-
-          getSubjectByProfessorId(profId).then((resp) => {
-            setSubject(resp.data);
-          }).catch((error) => {
-            console.log(error);
-          });
-      }, [profId]);
-
-      
-      const columns = [
-        { header: "Ime", field: "firstName" },
-        { header: "Prezime", field: "lastName" },
-        { header: "Roditelj", field: "parent" },
-        
-      ];
-
-      const gradeColumns = [
-        { header: "Ocjene(Pismeni)", field: students }
-      ]
-
-    return (
-        <div>
-        <Typography variant="h4">{schoolClass.name}</Typography>
-        <Typography>
-          {" " +
-            schoolClass.schoolYearYear +
-            " " +
-            schoolClass.schoolYearSemester +
-            ". polugodište"}
-        </Typography>
-        <Typography>
-            {
-                professor.userFirstName + " " + professor.userLastName
-            }
-        </Typography>
-        <Typography variant="h4">{subject.name}</Typography>
-        <br />
-        <TableGradesComponent  ></TableGradesComponent>
-        <br />
-    
-      </div>
-    );
-  };
   
-  export default ShowClassDetails;
+
+
+
+  return (
+    <div>
+      <Typography variant="h4">{schoolClass.name}</Typography>
+      <Typography>
+        {" " +
+          schoolClass.schoolYearYear +
+          " " +
+          schoolClass.schoolYearSemester +
+          ". polugodište"}
+      </Typography>
+      <Typography>
+        {
+          professor.userFirstName + " " + professor.userLastName
+        }
+      </Typography>
+      <Typography variant="h4">{subject.name}</Typography>
+      <br />
+      <TableGradesComponent subjectId={subjectId} schoolYearId={schoolClassYearId} ></TableGradesComponent>
+      <br />
+
+    </div>
+  );
+};
+
+export default ShowClassDetails;

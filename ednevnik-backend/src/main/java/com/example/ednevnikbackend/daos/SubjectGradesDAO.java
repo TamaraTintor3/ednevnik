@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SubjectGradesDAO extends JpaRepository<SubjectGrades, Integer> {
 
-    public List<SubjectGrades> findAllByStudent_StudentIdAndSubject_Professor_ProfessorId(Integer studentId, Integer professorId);
+    public List<SubjectGrades> findAllByStudent_StudentIdAndSubject_Professor_ProfessorIdAndSchoolYear_SchoolYearId(Integer studentId, Integer professorId, Integer schoolYearId);
 
 }
