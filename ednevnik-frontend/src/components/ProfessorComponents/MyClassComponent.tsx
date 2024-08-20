@@ -55,7 +55,9 @@ const MyClassComponent = () => {
       onClick: openStudentDetails,
     },
   ];
-  function handleAbsences() {}
+  function handleAbsences(student: any) {
+    navigate(`/absences/${student.studentId}`);
+  }
   function generateCertificate() {}
   function handleBehavior() {}
   function openStudentDetails(student: any) {
