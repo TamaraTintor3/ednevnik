@@ -14,13 +14,12 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { Link } from "react-router-dom";
 import ISidebarAction from "../../models/ISidebarAction";
 import { RoleEnum } from "../../enums/RoleEnum";
-import { getProfessorByUserId } from "../../services/UserApi";
-import ProfessorProvider, { useProfessorContext } from "../../contexts/ProfessorContext";
+import { useProfessorContext } from "../../contexts/ProfessorContext";
 
 const adminActions: ISidebarAction[] = [
   { title: "Korisnici", icon: <PeopleAltTwoTone />, path: "/showAllUsers" },
@@ -28,7 +27,11 @@ const adminActions: ISidebarAction[] = [
 ];
 
 const professorActions: ISidebarAction[] = [
-  { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "/showProfessorsClasses" },
+  {
+    title: "Odjeljenja",
+    icon: <FolderCopyTwoTone />,
+    path: "/showProfessorsClasses",
+  },
   { title: "Moje odjeljenje", icon: <PeopleAltOutlined />, path: "/myClass" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
@@ -37,7 +40,7 @@ const parentActions: ISidebarAction[] = [
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const staffActions: ISidebarAction[] = [
-  { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "" },
+  { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "/classes" },
 ];
 
 const Sidebar = () => {

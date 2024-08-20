@@ -33,7 +33,7 @@ const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}
               fontWeight: 'bold',
             }}>{column.header}</TableCell>
           ))}
-           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#d6d6d6' }}>Akcije</TableCell>}
+           {actions.length > 0 && <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#d6d6d6',textAlign:"center" }}>Akcije</TableCell>}
         </TableRow>
       </TableHead>
       <TableBody>
@@ -43,7 +43,7 @@ const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}
               <TableCell className="cell" key={colIndex}>{row[column.field]}</TableCell>
             ))}
             {actions.length > 0 && (
-              <TableCell>
+              <TableCell sx={{textAlign:"center"}}>
                 {actions.map((action, actionIndex) => (
                   <Button  key={actionIndex} onClick={() => action.onClick(row)}>
                     {action.icon}

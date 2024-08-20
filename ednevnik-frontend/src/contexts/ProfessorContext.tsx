@@ -27,7 +27,8 @@ const ProfessorProvider: FC<ProfessorProviderProps> = ({ children }) => {
 
         getProfessorByUserId(id).then(resp => {
             console.log(resp.data.professorId);
-            setProfessorId(resp.data.professorId)});
+            setProfessorId(resp.data.professorId)
+          });    
     
       }
 
