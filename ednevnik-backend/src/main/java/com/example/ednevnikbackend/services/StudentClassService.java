@@ -5,4 +5,5 @@ import com.example.ednevnikbackend.models.StudentClass;
 
 public interface StudentClassService {
     StudentClass saveOrUpdateStudentClass(StudentClassDTO studentClassDTO);
+    StudentClassDTO getStudentClassById(Integer id);
 }

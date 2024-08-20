@@ -46,4 +46,19 @@ public class StudentClassServiceImpl implements StudentClassService {
         return studentClassDAO.save(studentClass);
     }
 
+    @Override
+    public StudentClassDTO getStudentClassById(Integer id) {
+        StudentClass studentClass = studentClassDAO.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student class not found"));
+
+        StudentClassDTO dto = new StudentClassDTO();
+        dto.setStudentClassId(studentClass.getStudentClassId());
+        dto.setStudentId(studentClass.getStudent().getStudentId());
+        dto.setSchoolClassId(studentClass.getSchoolClass().getSchoolClassId());
+        dto.setBehavior(studentClass.getBehavior());
+        dto.setFinalGrade(studentClass.getFinalGrade());
+
+        return dto;
+    }
+
 }

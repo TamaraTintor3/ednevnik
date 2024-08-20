@@ -86,6 +86,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/absences/student/{studentId}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/students/{studentId}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.POST,"/api/student-classes/add").hasAuthority("PROFESSOR")
+                                .requestMatchers(HttpMethod.GET,"/api/student-classes/{id}").hasAuthority("PROFESSOR")
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
