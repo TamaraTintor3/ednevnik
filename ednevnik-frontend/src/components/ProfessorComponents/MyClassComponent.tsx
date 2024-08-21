@@ -13,10 +13,12 @@ import {
   PrintTwoTone,
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 const MyClassComponent = () => {
   const [schoolClass, setSchoolClass] = useState<ISchoolClass>(initialClass);
   const authentication = useAuth();
+  const navigate = useNavigate();
   React.useEffect(() => {
     getMyClass({ userId: authentication?.userId })
       .then((response: any) => {
@@ -58,6 +60,12 @@ const MyClassComponent = () => {
   function handleBehavior() {}
   function openStudentDetails(student: any) {
     console.log(student);
+    navigate("/student-grades", {
+      state: {
+        schoolYearId: schoolClass.schoolClassId,
+        studentId: student.studentId,
+      },
+    });
   }
   return (
     <div>
