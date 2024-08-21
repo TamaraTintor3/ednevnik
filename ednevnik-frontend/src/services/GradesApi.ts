@@ -34,3 +34,5 @@ export const editGrade =async (subjectGrade:SubjectGradesPayload, subjectGradeId
         throw error;
     }
 }
+
+export const getStudentGradesBySubjects=(schoolYearId:number,studentId:number)=>axiosInstance.get("/api/grades/details/"+schoolYearId+"/"+studentId);

@@ -1,17 +1,17 @@
 package com.example.ednevnikbackend.controllers;
 
 import com.example.ednevnikbackend.dtos.*;
-import com.example.ednevnikbackend.models.SchoolYear;
-import com.example.ednevnikbackend.models.Student;
-import com.example.ednevnikbackend.models.User;
+import com.example.ednevnikbackend.models.SubjectGrades;
 import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.SubjectGradesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
@@ -47,4 +47,8 @@ public class GradesController {
         return new ResponseEntity<>(subjectGradesDTO, HttpStatus.OK);
     }
 
+    @GetMapping("/details/{schoolYearId}/{studentId}")
+    List<GradesDTO> getStudentGradesByYear(@PathVariable Integer schoolYearId,@PathVariable Integer studentId){
+        return subjectGradesService.getAllStudentGradesByYear(schoolYearId,studentId);
+    }
 }

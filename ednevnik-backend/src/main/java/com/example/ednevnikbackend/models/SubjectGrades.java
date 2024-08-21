@@ -3,7 +3,6 @@ package com.example.ednevnikbackend.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.sql.Date;
 
 @Data

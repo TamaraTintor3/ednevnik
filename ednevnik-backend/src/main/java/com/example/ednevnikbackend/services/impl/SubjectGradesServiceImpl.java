@@ -1,14 +1,8 @@
 package com.example.ednevnikbackend.services.impl;
 
 import com.example.ednevnikbackend.daos.*;
-import com.example.ednevnikbackend.dtos.AddSubjectGradesDTO;
-import com.example.ednevnikbackend.dtos.ParentInfoDTO;
-import com.example.ednevnikbackend.dtos.StudentSubjectGradesDTO;
-import com.example.ednevnikbackend.dtos.SubjectGradesDTO;
-import com.example.ednevnikbackend.models.SchoolYear;
-import com.example.ednevnikbackend.models.Student;
-import com.example.ednevnikbackend.models.Subject;
-import com.example.ednevnikbackend.models.SubjectGrades;
+import com.example.ednevnikbackend.dtos.*;
+import com.example.ednevnikbackend.models.*;
 import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.SubjectGradesService;
 import org.modelmapper.ModelMapper;
@@ -17,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SubjectGradesServiceImpl implements SubjectGradesService {
@@ -42,6 +38,9 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
 
     @Autowired
     private SchoolClassDAO schoolClassDAO;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<StudentSubjectGradesDTO> getAllStudentGradesByStudentIdAndProfessorId(Integer schoolClassId, Integer professorId) {
@@ -120,4 +119,30 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
         return mapper.map(subjectGrades,SubjectGradesDTO.class);
     }
 
+    @Override
+    public List<GradesDTO> getAllStudentGradesByYear(Integer schoolYearId, Integer studentId) {
+        List<GradesDTO> response=new ArrayList<>();
+
+        List<SubjectGrades> grades= subjectGradesDAO.getSubjectGradesBySchoolYear_SchoolYearIdAndStudent_StudentId(schoolYearId, studentId);
+        Map<String,List<SubjectGrades>> map= grades.stream().collect(Collectors.groupingBy((g)->g.getSubject().getName()));
+        for (Map.Entry<String,List<SubjectGrades>> entry : map.entrySet()) {
+            List<SingleSubjectGradeDTO> gradesWritten=new ArrayList<>();
+            List<SingleSubjectGradeDTO> gradesVerbal=new ArrayList<>();
+            GradesDTO gradesDTO=new GradesDTO();
+            entry.getValue().stream().forEach((grade)-> {
+                if (grade.getDescription().equals(GradeDescription.PISMENI.toString()) && !grade.getFinalSubjectGrade()) {
+                    gradesWritten.add(modelMapper.map(grade, SingleSubjectGradeDTO.class));
+                } else if (grade.getDescription().equals(GradeDescription.USMENI.toString()) && !grade.getFinalSubjectGrade()) {
+                    gradesVerbal.add(modelMapper.map(grade, SingleSubjectGradeDTO.class));
+                }
+                gradesDTO.setProfessorFullName(grade.getSubject().getProfessor().getUser().getFirstName()+" "+grade.getSubject().getProfessor().getUser().getFirstName());
+            });
+            gradesDTO.setGradesWritten(gradesWritten);
+            gradesDTO.setGradesVerbal(gradesVerbal);
+            gradesDTO.setSubjectName(entry.getKey());
+            response.add(gradesDTO);
+        }
+
+        return response;
+    }
 }

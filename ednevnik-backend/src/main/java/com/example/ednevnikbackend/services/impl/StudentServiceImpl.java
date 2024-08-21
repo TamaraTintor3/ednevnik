@@ -5,6 +5,7 @@ import com.example.ednevnikbackend.daos.SchoolClassDAO;
 import com.example.ednevnikbackend.daos.StudentDAO;
 import com.example.ednevnikbackend.dtos.AddStudentDTO;
 import com.example.ednevnikbackend.dtos.StudentDTO;
+import com.example.ednevnikbackend.dtos.StudentDetailsDTO;
 import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.models.Student;
@@ -65,5 +66,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Optional<Student> findById(Integer studentId) {
         return studentDAO.findById(studentId);
+    }
+
+    @Override
+    public StudentDetailsDTO getStudentDetails(Integer id) {
+        return modelMapper.map(studentDAO.findById(id),StudentDetailsDTO.class);
     }
 }
