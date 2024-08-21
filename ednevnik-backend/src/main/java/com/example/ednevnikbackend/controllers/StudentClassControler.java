@@ -1,11 +1,14 @@
 package com.example.ednevnikbackend.controllers;
 
 import com.example.ednevnikbackend.dtos.StudentClassDTO;
+import com.example.ednevnikbackend.models.Absence;
 import com.example.ednevnikbackend.models.StudentClass;
 import com.example.ednevnikbackend.services.StudentClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/student-classes")
@@ -20,9 +23,10 @@ public class StudentClassControler {
         return ResponseEntity.ok(savedStudentClass);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<StudentClassDTO> getStudentClassById(@PathVariable("id") Integer id) {
-        StudentClassDTO studentClassDTO = studentClassService.getStudentClassById(id);
-        return ResponseEntity.ok(studentClassDTO);
+
+    @GetMapping("/{studentId}")
+    public ResponseEntity<List<StudentClass>> getStudentClassByStudentId(@PathVariable Integer studentId) {
+        List<StudentClass> studentClasses = studentClassService.getStudentClassByStudentId(studentId);
+        return ResponseEntity.ok(studentClasses);
     }
 }

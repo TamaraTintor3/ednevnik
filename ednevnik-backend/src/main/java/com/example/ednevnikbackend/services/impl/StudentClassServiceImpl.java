@@ -4,11 +4,14 @@ import com.example.ednevnikbackend.daos.SchoolClassDAO;
 import com.example.ednevnikbackend.daos.StudentClassDAO;
 import com.example.ednevnikbackend.daos.StudentDAO;
 import com.example.ednevnikbackend.dtos.StudentClassDTO;
+import com.example.ednevnikbackend.models.Absence;
 import com.example.ednevnikbackend.models.StudentClass;
 import com.example.ednevnikbackend.services.StudentClassService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -46,19 +49,10 @@ public class StudentClassServiceImpl implements StudentClassService {
         return studentClassDAO.save(studentClass);
     }
 
-    @Override
-    public StudentClassDTO getStudentClassById(Integer id) {
-        StudentClass studentClass = studentClassDAO.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student class not found"));
 
-        StudentClassDTO dto = new StudentClassDTO();
-        dto.setStudentClassId(studentClass.getStudentClassId());
-        dto.setStudentId(studentClass.getStudent().getStudentId());
-        dto.setSchoolClassId(studentClass.getSchoolClass().getSchoolClassId());
-        dto.setBehavior(studentClass.getBehavior());
-        dto.setFinalGrade(studentClass.getFinalGrade());
+    public List<StudentClass> getStudentClassByStudentId(Integer studentId) {
+        return studentClassDAO.findByStudentStudentId(studentId);
 
-        return dto;
     }
 
 }
