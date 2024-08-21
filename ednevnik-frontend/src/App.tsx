@@ -22,6 +22,7 @@ import AddAbsenceComponent from "./components/ProfessorComponents/AddAbsenceComp
 import AddGradeComponent from "./components/ProfessorComponents/AddGradeComponent";
 import EditGradeComponent from "./components/ProfessorComponents/EditGradeComponent";
 import StudentGradesComponent from "./components/ProfessorComponents/StudentGradesComponent";
+import AddFinalGradeComponent from "./components/ProfessorComponents/AddFinalGradeComponent";
 
 
 function App(props: any) {
@@ -69,6 +70,7 @@ function App(props: any) {
           <Route path="/addGrade/:studentId" element={<AddGradeComponent />} />
           <Route path="/editGrades/:studentId" element={<EditGradeComponent/>} />
           <Route path="/student-grades" element={<StudentGradesComponent/>} />
+          <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent/>} />
         </Route>
       </Route>
     </Routes>
