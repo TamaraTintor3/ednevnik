@@ -15,6 +15,7 @@ import {
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { useNavigate } from "react-router-dom";
 
+
 const MyClassComponent = () => {
   const [schoolClass, setSchoolClass] = useState<ISchoolClass>(initialClass);
   const authentication = useAuth();
@@ -55,9 +56,13 @@ const MyClassComponent = () => {
       onClick: openStudentDetails,
     },
   ];
-  function handleAbsences() {}
+  function handleAbsences(student: any) {
+    navigate(`/absences/${student.studentId}`);
+  }
   function generateCertificate() {}
-  function handleBehavior() {}
+  function handleBehavior(student: any) {
+    navigate(`/studentBehavior/${student.studentId}`, { state: { schoolClassId: schoolClass.schoolClassId } });
+  }
   function openStudentDetails(student: any) {
     console.log(student);
     navigate("/student-grades", {
