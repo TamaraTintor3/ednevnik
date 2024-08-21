@@ -10,5 +10,6 @@ public interface SubjectGradesDAO extends JpaRepository<SubjectGrades, Integer> 
 
     public List<SubjectGrades> findAllByStudent_StudentIdAndSubject_Professor_ProfessorIdAndSchoolYear_SchoolYearId(Integer studentId, Integer professorId, Integer schoolYearId);
     List<SubjectGrades> getSubjectGradesBySchoolYear_SchoolYearIdAndStudent_StudentId(Integer schoolYearId,Integer studentId);
+    public List<SubjectGrades> findAllByStudent_StudentIdAndSubject_Professor_ProfessorIdAndSchoolYear_SchoolYearIdAndFinalSubjectGrade(Integer studentId, Integer professorId, Integer schoolYearId, Boolean isFinal);
 
 }

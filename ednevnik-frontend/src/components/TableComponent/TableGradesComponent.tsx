@@ -66,7 +66,7 @@ const TableGradesComponent : React.FC<TableComponentProps> = ({subjectId, school
     }
 
     function addFinalGrade(studentId: number) {
-        
+        navigate('/addFinalGrade/' + studentId,  {state : {subjectId:subjectId, schoolYearId:schoolYearId, classId:id,profId:profId}});
     }
 
     function editGrade(studentId: number, gradesVerbal:any, gradesWritten : any) {
@@ -94,6 +94,7 @@ const TableGradesComponent : React.FC<TableComponentProps> = ({subjectId, school
                         ))}
 
                         <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#d6d6d6' }}>Akcije</TableCell>
+                        <TableCell className="header-cell" sx={{ fontWeight: 'bold', backgroundColor: '#d6d6d6' }}>Zaključna ocjena</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -145,6 +146,9 @@ const TableGradesComponent : React.FC<TableComponentProps> = ({subjectId, school
 
                                     </IconButton>
                                 </Tooltip>
+                            </TableCell>
+                            <TableCell>
+                                {s.finalGrade.grade}
                             </TableCell>
                         </TableRow>
 

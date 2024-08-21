@@ -24,13 +24,6 @@ const GradeFormComponent : React.FC<GradeFormComponentProps> = ({dateParam, grad
     const [date, setDate] = useState(dateParam);
     const [grade, setGrade] = useState(gradeParam);
     const [description, setDescription] = useState(descriptionParam)
-    // const { state } = useLocation();
-    // const { subjectId } = state;
-    // const {schoolYearId} = state;
-    // const { studentId } = useParams<{ studentId: string }>();
-    // const [date, setDate] = useState('');
-    // const [grade, setGrade] = useState('');
-    // const [description, setDescription] = useState('')
 
     const [errors, setErrors] = useState({
         date: '',
@@ -57,27 +50,6 @@ const GradeFormComponent : React.FC<GradeFormComponentProps> = ({dateParam, grad
 
         return !Object.values(newErrors).some((error) => error !== '');
     };
-
-
-//   const  handleSubmit = () => {
-//     const subGrade:SubjectGradesPayload = {
-
-//         studentId : Number(studentId),
-//         date : date,
-//         grade : Number(grade),
-//         finalSubjectGrade : false,
-//         description : description,
-//         subjectId : subjectId,
-//         schoolYearId : schoolYearId
-
-//     }
-//     addNewGrade(subGrade).then((resp) =>{
-//         console.log(resp.status)
-//         if(resp.status==200){
-//             alert("Uspjesno dodana ocjena");
-//         }
-//     })
-//    }
 
     return (
   

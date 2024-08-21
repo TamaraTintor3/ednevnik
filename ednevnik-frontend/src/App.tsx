@@ -26,6 +26,7 @@ import StudentGradesComponent from "./components/ProfessorComponents/StudentGrad
 
 import StudentAbsencesPage from "./components/ProfessorComponents/StudentAbsencesPage";
 import StudentBehaviorComponent from "./components/ProfessorComponents/StudentBehaviorComponent";
+import AddFinalGradeComponent from "./components/ProfessorComponents/AddFinalGradeComponent";
 
 
 function App(props: any) {
@@ -77,6 +78,7 @@ function App(props: any) {
           <Route path="/absences/:studentId" element={<StudentAbsencesPage />} />
           <Route path="/studentBehavior/:studentId" element={<StudentBehaviorComponent />} />
 
+          <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent/>} />
         </Route>
       </Route>
     </Routes>

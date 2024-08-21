@@ -11,6 +11,7 @@ public class StudentSubjectGradesDTO {
     private String firstName;
     private String lastName;
     private ParentInfoDTO parent;
+    private SubjectGradesDTO finalGrade;
     private List<SubjectGradesDTO> gradesWritten;
     private List<SubjectGradesDTO> gradesVerbal;
 }

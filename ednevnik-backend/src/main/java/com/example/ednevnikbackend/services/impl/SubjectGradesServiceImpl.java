@@ -53,7 +53,7 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
         StudentSubjectGradesDTO sddto = new StudentSubjectGradesDTO();
         for (Student stud : students) {
             sddto.setStudentId(stud.getStudentId());
-
+            sddto.setFinalGrade(new SubjectGradesDTO());
             sddto.setParent(mapper.map(stud.getParent(), ParentInfoDTO.class));
 
             sddto.setFirstName(stud.getFirstName());
@@ -61,12 +61,14 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
 
             if (!stud.getSubjectGrades().isEmpty())
                 for (SubjectGrades sg : stud.getSubjectGrades()) {
-                    if ((sg.getSubject().getProfessor().getProfessorId()).equals(professorId) && sg.getSchoolYear().getSchoolYearId() == schoolYear.getSchoolYearId()) {
+                    if ((sg.getSubject().getProfessor().getProfessorId()).equals(professorId) && sg.getSchoolYear().getSchoolYearId() == schoolYear.getSchoolYearId() && !sg.getFinalSubjectGrade()) {
                         if (sg.getDescription().equals("PISMENI")) {
                             writtenGrades.add(mapper.map(sg, SubjectGradesDTO.class));
                         } else if (sg.getDescription().equals("USMENI")) {
                             verbalGrades.add(mapper.map(sg, SubjectGradesDTO.class));
                         }
+                    }else if((sg.getSubject().getProfessor().getProfessorId()).equals(professorId) && sg.getSchoolYear().getSchoolYearId() == schoolYear.getSchoolYearId() && sg.getFinalSubjectGrade()){
+                        sddto.setFinalGrade(mapper.map(sg, SubjectGradesDTO.class));
                     }
                     sddto.setGradesWritten(writtenGrades);
                     sddto.setGradesVerbal(verbalGrades);
@@ -145,4 +147,7 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
 
         return response;
     }
+//    @Override
+//    public List<SubjectGradesDTO> getFinalGrades
+
 }
