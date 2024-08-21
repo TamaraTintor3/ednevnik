@@ -79,7 +79,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST,"/api/grades/addGrade").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.PUT,"/api/grades/editGradeById/**").hasAuthority("PROFESSOR")
 
-
+                                .requestMatchers(HttpMethod.GET,"/api/grades/details/**").hasAuthority(Role.PROFESSOR.toString())
+                                .requestMatchers(HttpMethod.GET,"/api/students/**").hasAuthority(Role.PROFESSOR.toString())
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
