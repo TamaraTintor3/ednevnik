@@ -1,72 +1,117 @@
 import React, {useEffect, useState} from 'react'
-import { useParams } from 'react-router-dom'
-import { getStudentClass, saveOrUpdateStudentClass } from '../../services/BehaviorApi'
-import { TextField, Button, Typography } from "@mui/material";
+import { useParams, useLocation } from 'react-router-dom'
+import { Box, Button, Typography, Paper } from "@mui/material";
+import axiosInstance from '../../services/axiosConfig';
+import { useNavigate } from 'react-router-dom';
+import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
+import SaveIcon from '@mui/icons-material/Save';
+
+
+interface StudentClass {
+  studentClassId?: number;
+  studentId: number;
+  schoolClassId?: number; 
+  behavior: string;
+  finalGrade: number;
+}
 
 const StudentBehaviorComponent = () => {
-  const { studentClassId } = useParams();
-  const [studentClass, setStudentClass] = useState({
-    studentClassId: '',
-    studentId: '',
-    schoolClassId: '',
+  const { state } = useLocation();
+  const { schoolClassId: locationSchoolClassId } = state || {};
+  const { studentId } = useParams();
+  console.log(studentId);
+  const [studentClass, setStudentClass] = useState<StudentClass>({
+    studentId: Number(studentId),
     behavior: '',
-    finalGrade: ''
-  });
+    finalGrade: 0,
+    schoolClassId: locationSchoolClassId
+});
 
-  useEffect(() => {
-    if (studentClassId) {
-        console.log("Student Class ID:", studentClassId); 
-      getStudentClass(Number(studentClassId))
-        .then((response) => {
-          console.log("Response Data:", response.data); 
-          setStudentClass(response.data);
-        })
-        .catch((error) => {
-          console.log("Error fetching data:", error); 
-        });
-    }
-  }, [studentClassId]);
-      function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const { name, value } = event.target;
-        setStudentClass((prev) => ({
-          ...prev,
-          [name]: value,
-        }));
-      }
+    const [isNew, setIsNew] = useState(true);
+    const navigate = useNavigate();
 
-      function handleSave() {
-        if (studentClass.studentClassId) {
-          saveOrUpdateStudentClass(studentClass)
-            .then(() => {
-              console.log("Data saved successfully");
-            })
-            .catch((error) => {
-              console.log(error);
+    useEffect(() => {
+      console.log("Location state:", state);
+      console.log("schoolClassId from location:", locationSchoolClassId);
+  
+      axiosInstance.get(`/api/student-classes/${studentId}`)
+        .then(response => {
+          if (response.data.length > 0) {
+            const data = response.data[0];
+            setStudentClass({
+              ...data,
+              studentId: Number(studentId),
+              schoolClassId: data.schoolClass?.schoolClassId || locationSchoolClassId
             });
-        }
-      }
+            setIsNew(false);
+          }
+        })
+        .catch(error => {
+          console.error("Greška prilikom prikaza podataka!", error);
+        });
+    }, [studentId, locationSchoolClassId]);
 
-  return (
-    <div>
-        <Typography variant="h4">Uredi vladanje i završnu ocenu</Typography>
-    <TextField
-      name="behavior"
-      label="Vladanje"
-      value={studentClass.behavior}
-      onChange={handleInputChange}
-      fullWidth
-    />
-    <TextField
-      name="finalGrade"
-      label="Završna ocena"
-      value={studentClass.finalGrade}
-      onChange={handleInputChange}
-      fullWidth
-    />
-    <Button onClick={handleSave}>Sačuvaj</Button>
-  </div>
-   
-  )
-}
+    const handleChange = (event: any) => {
+        const { name, value } = event.target;
+        setStudentClass(prevState => ({ ...prevState, [name]: value }));
+    };
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+  
+      const url = isNew ? '/api/student-classes/add' : `/api/student-classes/update/${studentClass.studentClassId}`;
+      const method = isNew ? 'POST' : 'PUT';
+  
+      const dataToSend = {
+        ...studentClass,
+        schoolClassId: studentClass.schoolClassId 
+      };
+  
+      console.log('Sending data:', dataToSend);
+  
+      axiosInstance({ method, url, data: dataToSend })
+        .then(response => {
+          console.log("Response Data:", response.data); 
+          alert("Uspješno sačuvani podaci!");
+          navigate(`/studentBehavior/${studentId}`);
+        })
+        .catch(error => {
+          console.error("Došlo je do greške priliko čuvanja podataka!", error);
+        });
+    };
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" p={8}>
+        <Paper  style={{ padding: 20 }}>
+            <Typography variant="h5">{isNew ? 'Dodaj' : 'Uredi'} vladanje i završnu ocjenu za učenika</Typography>
+            
+            <form onSubmit={handleSubmit}>
+              <label>VLADANJE</label>
+                <StyledTxtField
+                    name="behavior"
+                    variant="outlined"
+                    value={studentClass.behavior}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="none"
+                />
+                <label>ZAVRŠNA OCJENA</label>
+                <StyledTxtField
+                    name="finalGrade"
+                    variant="outlined"
+                    type="number"
+                    value={studentClass.finalGrade}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="none"
+                />
+                <Button startIcon={<SaveIcon/>} type="submit"  color="primary" sx={{ color: 'gray' }} style={{ marginTop: 20 }}>
+                    Sačuvaj
+                </Button>
+            </form>
+        </Paper>
+        </Box>
+    );
+};
+
 
 export default StudentBehaviorComponent

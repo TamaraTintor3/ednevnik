@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,32 +28,30 @@ public class StudentClassServiceImpl implements StudentClassService {
     SchoolClassDAO schoolClassDAO;
 
     @Override
-    public StudentClass saveOrUpdateStudentClass(StudentClassDTO studentClassDTO) {
-
-        StudentClass studentClass;
-
-        if (studentClassDTO.getStudentClassId() != null) {
-            studentClass = studentClassDAO.findById(studentClassDTO.getStudentClassId())
-                    .orElseThrow(() -> new RuntimeException("Student class not found"));
-            studentClass.setBehavior(studentClassDTO.getBehavior());
-            studentClass.setFinalGrade(studentClassDTO.getFinalGrade());
-        } else {
-            studentClass = new StudentClass();
-            studentClass.setStudent(studentDAO.findById(studentClassDTO.getStudentId())
-                    .orElseThrow(() -> new RuntimeException("Student not found")));
-            studentClass.setSchoolClass(schoolClassDAO.findById(studentClassDTO.getSchoolClassId())
-                    .orElseThrow(() -> new RuntimeException("School class not found")));
-            studentClass.setBehavior(studentClassDTO.getBehavior());
-            studentClass.setFinalGrade(studentClassDTO.getFinalGrade());
-        }
-
+    public StudentClass addStudentClass(StudentClassDTO studentClassDTO) {
+        StudentClass studentClass = new StudentClass();
+        studentClass.setStudent(studentDAO.findById(studentClassDTO.getStudentId())
+                .orElseThrow(() -> new RuntimeException("Student not found")));
+        studentClass.setSchoolClass(schoolClassDAO.findById(studentClassDTO.getSchoolClassId())
+                .orElseThrow(() -> new RuntimeException("School class not found")));
+        studentClass.setBehavior(studentClassDTO.getBehavior());
+        studentClass.setFinalGrade(studentClassDTO.getFinalGrade());
         return studentClassDAO.save(studentClass);
     }
 
-
-    public List<StudentClass> getStudentClassByStudentId(Integer studentId) {
-        return studentClassDAO.findByStudentStudentId(studentId);
-
+    @Override
+    public StudentClass updateStudentClass(Integer id, StudentClassDTO studentClassDTO) {
+        StudentClass studentClass = studentClassDAO.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student class not found"));
+        studentClass.setBehavior(studentClassDTO.getBehavior());
+        studentClass.setFinalGrade(studentClassDTO.getFinalGrade());
+        return studentClassDAO.save(studentClass);
     }
+
+    @Override
+    public List<StudentClass> getStudentClssByStudentId(Integer studentId){
+        return studentClassDAO.findByStudentStudentId(studentId);
+    }
+
 
 }

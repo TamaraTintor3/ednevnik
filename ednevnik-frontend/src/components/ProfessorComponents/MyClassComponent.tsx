@@ -61,7 +61,7 @@ const MyClassComponent = () => {
   }
   function generateCertificate() {}
   function handleBehavior(student: any) {
-    navigate(`/studentBehavior/${student.studentId}`);
+    navigate(`/studentBehavior/${student.studentId}`, { state: { schoolClassId: schoolClass.schoolClassId } });
   }
   function openStudentDetails(student: any) {
     console.log(student);

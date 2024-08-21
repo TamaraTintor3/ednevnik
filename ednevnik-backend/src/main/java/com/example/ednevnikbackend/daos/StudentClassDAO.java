@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface StudentClassDAO extends JpaRepository<StudentClass, Integer> {
     List<StudentClass> findByStudentStudentId(Integer studentId);
 
+
 }

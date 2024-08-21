@@ -18,15 +18,19 @@ public class StudentClassControler {
     private StudentClassService studentClassService;
 
     @PostMapping("/add")
-    public ResponseEntity<StudentClass> saveOrUpdateStudentClass(@RequestBody StudentClassDTO studentClassDTO) {
-        StudentClass savedStudentClass = studentClassService.saveOrUpdateStudentClass(studentClassDTO);
+    public ResponseEntity<StudentClass> addStudentClass(@RequestBody StudentClassDTO studentClassDTO) {
+        StudentClass savedStudentClass = studentClassService.addStudentClass(studentClassDTO);
         return ResponseEntity.ok(savedStudentClass);
     }
-
+    @PutMapping("/update/{id}")
+    public ResponseEntity<StudentClass> updateStudentClass(@PathVariable Integer id, @RequestBody StudentClassDTO studentClassDTO) {
+        StudentClass updatedStudentClass = studentClassService.updateStudentClass(id, studentClassDTO);
+        return ResponseEntity.ok(updatedStudentClass);
+    }
 
     @GetMapping("/{studentId}")
     public ResponseEntity<List<StudentClass>> getStudentClassByStudentId(@PathVariable Integer studentId) {
-        List<StudentClass> studentClasses = studentClassService.getStudentClassByStudentId(studentId);
+        List<StudentClass> studentClasses = studentClassService.getStudentClssByStudentId(studentId);
         return ResponseEntity.ok(studentClasses);
     }
 }
