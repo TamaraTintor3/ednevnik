@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, MenuItem, Paper, Select, Typography } from "@mui/material";
+import { Box, Button, Container, FormControl, Grid, MenuItem, Paper, Select, Typography } from "@mui/material";
 import { StyledTxtField } from "../LoginComponent/LoginTxtFieldStyled";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
@@ -100,8 +100,9 @@ const EditGradeComponent = () => {
     const actions = { onClick: handleSubmit };
 
     return (
-        <Box display="flex" alignItems="center" p={8} >
-            <div key={keyTable} style={{ width: '50%', display: 'flex', flexDirection: 'row', paddingRight: '10px' }}>
+        <Container>
+         <Grid container direction='row'>
+            <Grid key={keyTable} style={{ width: '45%', display: 'flex', flexDirection: 'row', paddingRight: '10px' }}>
                 <div style={{ paddingTop: '10px', width: '50%' }}>
                     <TableComponent columns={columns1} data={data1.map((d) => ({
                      ...d,
@@ -114,14 +115,15 @@ const EditGradeComponent = () => {
                      gradeDesc : "(" + d.date + ") " +  d.grade 
                    }))} actions={actionsTable}></TableComponent>
                 </div>
-            </div>
+            </Grid>
 
             <Paper key={key} elevation={1} style={{ padding: '16px', height: 'calc(100vh - 300px)', width: '50%', display: 'flex', flexDirection: 'row' }}>
                 {isVisible ? <GradeFormComponent titleParam={"Izmijeni ocjenu"} dateParam={grade.date} gradeParam={String(grade.grade)} descriptionParam={grade.description} actionParam={actions}></GradeFormComponent> : null}
 
 
             </Paper>
-        </Box>
+       </Grid>
+        </Container>
     )
 
 }

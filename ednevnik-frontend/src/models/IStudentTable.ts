@@ -7,6 +7,7 @@ export default interface IStudentTable {
   firstName: string;
   lastName: string;
   parent: IParent;
+  finalGrade:any;
   gradesWritten : any[];
   gradesVerbal: any[];
 }
