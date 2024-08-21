@@ -51,4 +51,9 @@ public class GradesController {
     List<GradesDTO> getStudentGradesByYear(@PathVariable Integer schoolYearId,@PathVariable Integer studentId){
         return subjectGradesService.getAllStudentGradesByYear(schoolYearId,studentId);
     }
+//    @GetMapping("/getFinalGrade")
+//    public ResponseEntity<?> getGrade(){
+//
+//    }
+
 }
