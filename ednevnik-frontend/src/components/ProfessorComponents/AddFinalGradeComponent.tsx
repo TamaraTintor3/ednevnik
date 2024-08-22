@@ -84,7 +84,7 @@ const AddFinalGradeComponent = () => {
             date : currentDate,
             grade : Number(grade),
             finalSubjectGrade : true,
-            description : 'USMENI',
+            description : 'ZAKLJUCNA',
             subjectId : subjectId,
             schoolYearId : schoolYearId
     
