@@ -1,2 +1,13 @@
-package com.example.ednevnikbackend.dtos;public class FinalGradeDTO {
+package com.example.ednevnikbackend.dtos;
+
+
+import lombok.Data;
+
+@Data
+public class FinalGradeDTO {
+
+    private Integer grade;
+    private String SubjectSubjectName;
+
+
 }
