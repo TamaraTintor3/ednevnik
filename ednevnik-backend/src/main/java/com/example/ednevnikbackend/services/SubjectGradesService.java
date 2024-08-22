@@ -1,9 +1,6 @@
 package com.example.ednevnikbackend.services;
 
-import com.example.ednevnikbackend.dtos.AddSubjectGradesDTO;
-import com.example.ednevnikbackend.dtos.GradesDTO;
-import com.example.ednevnikbackend.dtos.StudentSubjectGradesDTO;
-import com.example.ednevnikbackend.dtos.SubjectGradesDTO;
+import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.models.SubjectGrades;
 import java.util.List;
 
@@ -18,4 +15,7 @@ public interface SubjectGradesService {
 
     List<GradesDTO> getAllStudentGradesByYear(Integer schoolYearId, Integer studentId);
 
+
+
+    List<FinalGradeDTO> getFinalGradesByStudentIdSchoolYearId(Integer schoolYearId, Integer studentId);
 }

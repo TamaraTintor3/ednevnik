@@ -31,7 +31,7 @@ public class StudentController {
 
 
     }
-    @GetMapping("/{studentId}")
+    @GetMapping("/absence/{studentId}")
     public ResponseEntity<Student> getStudentById(@PathVariable Integer studentId) {
         Optional<Student> student = studentService.findById(studentId);
         return student.map(ResponseEntity::ok)
