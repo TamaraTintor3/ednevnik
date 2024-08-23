@@ -14,5 +14,5 @@ export const getAbsencesByStudentId = (studentId: number) => {
   };
 
   export const getStudentById = (studentId: number) => {
-    return axiosInstance.get(`/api/students/${studentId}`);
+    return axiosInstance.get(`/api/students/absence${studentId}`);
 }

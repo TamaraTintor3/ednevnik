@@ -3,8 +3,9 @@ import ISchoolClass, { initialClass } from "../../models/ISchoolClass";
 import { getMyClass } from "../../services/ProfessorApi";
 import { useProfessorContext } from "../../contexts/ProfessorContext";
 import TableComponent from "../TableComponent/TableComponent";
-import { Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { addAbsence } from "../../services/AbsenceApi";
+import PostAddIcon from '@mui/icons-material/PostAdd';
 import {
   AnnouncementTwoTone,
   GradeTwoTone,
@@ -14,10 +15,13 @@ import {
 } from "@mui/icons-material";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { useNavigate } from "react-router-dom";
+import { getOrCreateClassSchedule } from "../../services/ClassScheduleApi";
+
 
 
 const MyClassComponent = () => {
   const [schoolClass, setSchoolClass] = useState<ISchoolClass>(initialClass);
+ 
   const authentication = useAuth();
   const navigate = useNavigate();
   React.useEffect(() => {
@@ -30,6 +34,23 @@ const MyClassComponent = () => {
         console.log(error);
       });
   }, []);
+
+  
+  const handleCreateSchedule = () => {
+    console.log("Creating schedule for class ID:", schoolClass.schoolClassId);
+    getOrCreateClassSchedule(schoolClass.schoolClassId)
+      .then(response => {
+        const scheduleId = response.data.classScheduleId;
+        console.log("Schedule created or fetched:", response.data);
+        console.log("Navigating to schedule ID:", scheduleId);
+        navigate(`/createSchedule/${scheduleId}`);
+      })
+      .catch(error => {
+        console.error("Error fetching or creating schedule:", error);
+      });
+  };
+
+
   const columns = [
     { header: "Br.", field: "studentId" },
     { header: "Ime", field: "firstName" },
@@ -92,6 +113,11 @@ const MyClassComponent = () => {
       </i>
       <br />
       <br />
+      <Box display="flex" alignItems="center">
+        <Typography variant="inherit">Raspored časova</Typography>
+      <Button startIcon={<PostAddIcon/>} sx={{ color: 'gray' }} onClick={handleCreateSchedule}/>
+      </Box>
+
       <TableComponent
         columns={columns}
         data={schoolClass.students.map((s) => ({
