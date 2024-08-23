@@ -47,7 +47,6 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (username: any, password: any) => {
 
-
     try {
       await LoginAxiosInstance.post("/api/authentication/login", { username: username, password: password });
       sessionStorage.setItem("username",username);
