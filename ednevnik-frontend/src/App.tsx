@@ -32,6 +32,7 @@ import CreateScheduleComponent from "./components/ProfessorComponents/CreateSche
 
 
 import ParentHomePageComponent from "./components/ParentComponents/ParentHomePageComponent";
+import StudentDetailsParentComponent from "./components/ParentComponents/StudentDetailsParentComponent";
 
 
 function App(props: any) {
@@ -81,6 +82,7 @@ function App(props: any) {
           <Route path="/student-grades" element={<StudentGradesComponent  />} />
           <Route path="/absences/:studentId" element={<StudentAbsencesPage />} />
           <Route path="/studentBehavior/:studentId" element={<StudentBehaviorComponent />} />
+          <Route path="/studentDetails" element={<StudentDetailsParentComponent/>} />
           <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent />} />
           <Route path="/calendar" element={<CalendarComponent/>} />
           <Route path="/createSchedule/:classScheduleId" element={<CreateScheduleComponent />} />
