@@ -1,4 +1,5 @@
 import {
+  CalendarTodayTwoTone,
   FolderCopyTwoTone,
   MessageTwoTone,
   PeopleAltOutlined,
@@ -33,6 +34,11 @@ const professorActions: ISidebarAction[] = [
     path: "/showProfessorsClasses",
   },
   { title: "Moje odjeljenje", icon: <PeopleAltOutlined />, path: "/myClass" },
+  {
+    title: "Školski kalendar",
+    icon: <CalendarTodayTwoTone />,
+    path: "/calendar",
+  },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const parentActions: ISidebarAction[] = [
