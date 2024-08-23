@@ -89,6 +89,9 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/student-classes/{id}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/student-classes/{studentId}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.PUT,"/api/student-classes/update/{id}").hasAuthority("PROFESSOR")
+                                .requestMatchers(HttpMethod.GET,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
+                                .requestMatchers(HttpMethod.POST,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
+                                .requestMatchers(HttpMethod.DELETE,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
 
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
