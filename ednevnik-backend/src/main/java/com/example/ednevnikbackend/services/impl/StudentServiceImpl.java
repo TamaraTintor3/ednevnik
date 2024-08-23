@@ -3,12 +3,12 @@ package com.example.ednevnikbackend.services.impl;
 import com.example.ednevnikbackend.daos.ParentDAO;
 import com.example.ednevnikbackend.daos.SchoolClassDAO;
 import com.example.ednevnikbackend.daos.StudentDAO;
-import com.example.ednevnikbackend.dtos.AddStudentDTO;
-import com.example.ednevnikbackend.dtos.StudentDTO;
-import com.example.ednevnikbackend.dtos.StudentDetailsDTO;
+import com.example.ednevnikbackend.daos.SubjectGradesDAO;
+import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.models.Student;
+import com.example.ednevnikbackend.models.SubjectGrades;
 import com.example.ednevnikbackend.services.StudentService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -31,6 +31,9 @@ public class StudentServiceImpl implements StudentService {
 
     @Autowired
     private SchoolClassDAO schoolClassDAO;
+
+    @Autowired
+    private SubjectGradesDAO subjectGradesDAO;
 
     @Autowired
     ModelMapper modelMapper;
@@ -71,5 +74,19 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDetailsDTO getStudentDetails(Integer id) {
         return modelMapper.map(studentDAO.findById(id),StudentDetailsDTO.class);
+    }
+
+    @Override
+    public List<StudentGradesForParentDTO> getStudentGradesByParentIdDateDesc(Integer parentId, Integer schoolYearId){
+
+        Student student = studentDAO.findByParent_ParentId(parentId);
+
+        return subjectGradesDAO.findAllByStudent_StudentIdAndSchoolYear_SchoolYearIdAndFinalSubjectGradeOrderByDateDesc(student.getStudentId(),schoolYearId,false).stream().map((el) -> modelMapper.map(el, StudentGradesForParentDTO.class)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public StudentDTO getStudentByParentId(Integer parentId) {
+        return modelMapper.map(studentDAO.findByParent_ParentId(parentId),StudentDTO.class);
     }
 }

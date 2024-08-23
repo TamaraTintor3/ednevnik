@@ -10,3 +10,14 @@ export const getSubjectByProfessorId = async (id: number) => {
     }
 
 }
+
+export const getAllSubjects =async () => {
+    try {
+        const response = await axiosInstance.get('/api/subjects');
+        return response;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+    
+}

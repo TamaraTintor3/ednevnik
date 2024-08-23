@@ -25,6 +25,7 @@ public class SchoolClass {
     private List<Professor> professors;
     @ManyToOne
     @JoinColumn(name = "school_year_id", referencedColumnName = "school_year_id", nullable = false)
+    @JsonIgnore
     private SchoolYear schoolYear;
     @OneToMany(mappedBy = "schoolClass")
     @JsonIgnore

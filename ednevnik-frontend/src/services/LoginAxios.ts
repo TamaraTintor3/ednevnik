@@ -35,7 +35,7 @@ const LoginAxiosInstance = axios.create({
                 }else if(role===RoleEnum.PROFESSOR.toString()){
                     window.location.href='/showProfessorsClasses'
                 }else if(role===RoleEnum.PARENT.toString()){
-                    window.location.href='/home'
+                    window.location.href='/parentHomePage'
                 }else if(role===RoleEnum.STAFF.toString()){
                     window.location.href='/classes'
                 }

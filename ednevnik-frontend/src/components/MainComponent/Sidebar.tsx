@@ -3,8 +3,11 @@ import {
   FolderCopyTwoTone,
   MessageTwoTone,
   PeopleAltOutlined,
+  PersonTwoTone,
   PeopleAltTwoTone,
+  SubjectTwoTone
 } from "@mui/icons-material";
+import PersonIcon from '@mui/icons-material/Person';
 import {
   Box,
   Drawer,
@@ -42,7 +45,8 @@ const professorActions: ISidebarAction[] = [
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const parentActions: ISidebarAction[] = [
-  { title: "Učenici", icon: <PeopleAltOutlined />, path: "" },
+  { title: "Sve ocjene", icon: <SubjectTwoTone />, path: "/parentHomePage" },
+  { title: "Učenik", icon: <PersonTwoTone />, path: "" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const staffActions: ISidebarAction[] = [

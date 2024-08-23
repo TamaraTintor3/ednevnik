@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/subjects")
 public class SubjectController {
@@ -16,8 +18,13 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @GetMapping("/{id}")
-    public SubjectDTO getSubjectById(@PathVariable Integer id){
+    public SubjectDTO getSubjectById(@PathVariable Integer id) {
         return subjectService.getSubjectByProfessorId(id);
+    }
+
+    @GetMapping
+    public List<SubjectDTO> getAll() {
+        return subjectService.getAll();
     }
 
 }

@@ -27,6 +27,7 @@ public class SubjectGrades {
     private Boolean finalSubjectGrade;
     @ManyToOne
     @JoinColumn(name = "subject_id", referencedColumnName = "subject_id", nullable = false)
+    @JsonIgnore
     private Subject subject;
     @ManyToOne
     @JoinColumn(name = "student_id", referencedColumnName = "student_id", nullable = false)
@@ -34,5 +35,6 @@ public class SubjectGrades {
     private Student student;
     @ManyToOne
     @JoinColumn(name = "school_year_id", referencedColumnName = "school_year_id")
+    @JsonIgnore
     private SchoolYear schoolYear;
 }

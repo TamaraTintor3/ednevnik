@@ -3,7 +3,6 @@ import React from "react";
 import { Navigate, Outlet, Route, Routes, } from "react-router-dom";
 import Registration from "./components/RegisterComponent/Registration";
 import LoginComponent from "./components/LoginComponent/Login";
-import HomeComponent from "./components/HomeComponent/Home";
 import ResetPasswordForm from "./components/password-change/ResetPasswordForm";
 import ChangePasswordForm from "./components/password-change/ChangePasswordForm";
 import { useAuth, } from "./contexts/AuthenticationContext";
@@ -28,6 +27,7 @@ import CalendarComponent from "./components/ProfessorComponents/CalendarComponen
 import StudentAbsencesPage from "./components/ProfessorComponents/StudentAbsencesPage";
 import StudentBehaviorComponent from "./components/ProfessorComponents/StudentBehaviorComponent";
 import AddFinalGradeComponent from "./components/ProfessorComponents/AddFinalGradeComponent";
+import ParentHomePageComponent from "./components/ParentComponents/ParentHomePageComponent";
 
 
 
@@ -61,26 +61,25 @@ function App(props: any) {
       <Route element={<IsLogedInPrivateRoute />}>
         <Route element={<MainComponent />}>
 
-          <Route path="/home" element={<HomeComponent />} />
           <Route path='/showAllUsers' element={<ShowAllUsers />} />
           <Route path="/classes" element={<ClassesComponent />} />
           <Route path="/register" element={<Registration />} />
           <Route path="/editUser" element={<EditUserComponent />} />
           <Route path="/class/:id" element={<ClassDetailsComponent />} />
           <Route path="/addSchoolClass" element={<AddSchoolClass />} />
-        <Route path="/showProfessorsClasses" element={<ShowAllClassesComponent/>}/>
-        <Route path="/myClass" element={<MyClassComponent/>}/>
+          <Route path="/showProfessorsClasses" element={<ShowAllClassesComponent />} />
+          <Route path="/myClass" element={<MyClassComponent />} />
           <Route path="/addStudent/:id" element={<AddStudentComponent />} />
-          <Route path="/showClassDetails/:id" element={<ShowClassDetails/>}/>
+          <Route path="/showClassDetails/:id" element={<ShowClassDetails />} />
           <Route path="/addAbsence/:studentId" element={<AddAbsenceComponent />} />
-
+          <Route path="/parentHomePage" element={<ParentHomePageComponent />} />
           <Route path="/addGrade/:studentId" element={<AddGradeComponent />} />
-          <Route path="/editGrades/:studentId" element={<EditGradeComponent/>} />
-          <Route path="/student-grades" element={<StudentGradesComponent/>} />
+          <Route path="/editGrades/:studentId" element={<EditGradeComponent />} />
+          <Route path="/student-grades" element={<StudentGradesComponent />} />
           <Route path="/absences/:studentId" element={<StudentAbsencesPage />} />
           <Route path="/studentBehavior/:studentId" element={<StudentBehaviorComponent />} />
 
-          <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent/>} />
+          <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent />} />
           <Route path="/calendar" element={<CalendarComponent/>} />
           
         </Route>

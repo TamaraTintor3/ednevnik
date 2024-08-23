@@ -70,4 +70,11 @@ public class SchoolClassController {
         return ResponseEntity.ok(addedStudent);
 
     }
+
+
+//    @GetMapping("/classByStudentIdAndSchoolYear/{studentId}/{schoolYearId}")
+//    public SchoolClassDTO getClassByStudentIdAndSchoolYear(@PathVariable Integer studentId, @PathVariable Integer schoolYearId){
+//
+//    }
+
 }

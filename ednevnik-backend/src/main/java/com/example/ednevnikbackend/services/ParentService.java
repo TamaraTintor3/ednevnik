@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ParentService {
      List<ParentDTO> findAllParents();
+
+     ParentDTO findByUserId(Integer userId);
 }

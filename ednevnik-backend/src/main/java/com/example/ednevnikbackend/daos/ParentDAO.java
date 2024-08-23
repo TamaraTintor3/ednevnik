@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ParentDAO extends JpaRepository<Parent, Integer> {
+
+    Parent findByUser_UserId(Integer userId);
 }
