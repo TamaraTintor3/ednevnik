@@ -79,7 +79,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/grades/addGrade").hasAuthority("PROFESSOR")
                         .requestMatchers(HttpMethod.PUT, "/api/grades/editGradeById/**").hasAuthority("PROFESSOR")
                         .requestMatchers(HttpMethod.GET, "/api/grades/getFinalGrade/**").hasAuthority(Role.PROFESSOR.toString())
-                        .requestMatchers(HttpMethod.GET, "/api/grades/details/**").hasAuthority(Role.PROFESSOR.toString())
+                        .requestMatchers(HttpMethod.GET, "/api/grades/details/**").hasAnyAuthority(Role.PROFESSOR.toString(),Role.PARENT.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/{id}").hasAuthority(Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/byParentId/**").hasAuthority(Role.PARENT.toString())
                         .requestMatchers(HttpMethod.PUT, "/api/absences/{id}").hasAuthority("PROFESSOR")

@@ -12,4 +12,5 @@ public interface StudentClassService {
     StudentClass updateStudentClass(Integer id, StudentClassDTO studentClassDTO);
     List<StudentClass> getStudentClssByStudentId(Integer studentId);
 
+
 }
