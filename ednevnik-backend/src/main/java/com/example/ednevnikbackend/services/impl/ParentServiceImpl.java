@@ -5,6 +5,7 @@ import com.example.ednevnikbackend.dtos.ParentDTO;
 import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.services.ParentService;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ public class ParentServiceImpl implements ParentService {
     @Autowired
     ParentDAO parentDAO;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public List<ParentDTO> findAllParents() {
         List<Parent> parents = parentDAO.findAll();
@@ -28,5 +32,10 @@ public class ParentServiceImpl implements ParentService {
                         parent.getUser().getLastName()
                 ))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public ParentDTO findByUserId(Integer userId) {
+        return modelMapper.map(parentDAO.findByUser_UserId(userId),ParentDTO.class);
     }
 }

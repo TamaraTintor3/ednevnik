@@ -8,6 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SubjectServiceImpl implements SubjectService {
 
@@ -21,5 +24,10 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public SubjectDTO getSubjectByProfessorId(Integer id) {
         return modelMapper.map(subjectDAO.findByProfessor_ProfessorId(id),SubjectDTO.class);
+    }
+
+    @Override
+    public List<SubjectDTO> getAll() {
+        return subjectDAO.findAll().stream().map(el -> modelMapper.map(el,SubjectDTO.class)).collect(Collectors.toList());
     }
 }
