@@ -17,8 +17,11 @@ public class SchoolCalendar {
     @Column(name = "description")
     private String description;
     @Basic
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "start_date")
+    private Date startDate;
+    @Basic
+    @Column(name = "end_date")
+    private Date endDate;
     @ManyToOne
     @JoinColumn(name = "professor_id", referencedColumnName = "professor_id", nullable = false)
     private Professor professor;

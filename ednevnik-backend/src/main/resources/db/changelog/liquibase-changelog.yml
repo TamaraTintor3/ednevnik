@@ -5,3 +5,5 @@ databaseChangeLog:
       file: db/changelog/02-user-token-column.sql
 - include:
     file: db/changelog/04-create-table-teaching.sql
+- include:
+    file: db/changelog/05-calendar-start-end-column.sql
