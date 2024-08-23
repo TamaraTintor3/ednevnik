@@ -109,7 +109,7 @@ const CalendarComponent = () => {
           });
 
           setEvents(newar);
-          toast.success("Uspješno ste izmjenili događaj!");
+          toast.success("Uspješno ste izmijenili događaj!");
         })
         .catch((error) => {
           toast.error("Greška prilikom izmjene!");
@@ -229,7 +229,7 @@ const CalendarComponent = () => {
                 variant="contained"
                 sx={{ backgroundColor: "#3c3c3c", color: "white" }}
               >
-                {edit ? "Izmjeni" : "Sačuvaj"}
+                {edit ? "Izmijeni" : "Sačuvaj"}
               </Button>
             </Stack>
           </form>
