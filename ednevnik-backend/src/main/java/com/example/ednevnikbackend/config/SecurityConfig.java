@@ -116,6 +116,10 @@ public class SecurityConfig {
 
 
 
+
+                        .requestMatchers(HttpMethod.GET, "/api/school-years/current").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(), Role.PROFESSOR.toString())
+                        .requestMatchers(HttpMethod.GET, "/api/students/gradesOrderedByDate/{parentId}/{schoolYearId}").hasAuthority(Role.PARENT.toString())
+
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())
