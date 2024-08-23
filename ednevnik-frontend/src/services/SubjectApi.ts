@@ -11,6 +11,7 @@ export const getSubjectByProfessorId = async (id: number) => {
 
 }
 
+
 export const getAllSubjects =async () => {
     try {
         const response = await axiosInstance.get('/api/subjects');
@@ -21,3 +22,8 @@ export const getAllSubjects =async () => {
     }
     
 }
+
+export const getSubjects = () => {
+    return axiosInstance.get('/api/subjects/getAll');
+};
+

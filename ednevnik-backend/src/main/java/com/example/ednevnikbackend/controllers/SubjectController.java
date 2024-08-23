@@ -1,6 +1,7 @@
 package com.example.ednevnikbackend.controllers;
 
 import com.example.ednevnikbackend.dtos.SubjectDTO;
+import com.example.ednevnikbackend.models.Subject;
 import com.example.ednevnikbackend.services.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,11 @@ public class SubjectController {
     @GetMapping
     public List<SubjectDTO> getAll() {
         return subjectService.getAll();
+    }
+
+    @GetMapping("/getAll")
+    public List<Subject> getAllSubjects() {
+        return subjectService.getAllSubjects();
     }
 
 }
