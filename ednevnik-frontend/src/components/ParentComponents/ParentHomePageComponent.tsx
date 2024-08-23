@@ -101,7 +101,7 @@ const ParentHomePageComponent = () => {
                 Učenik: {student.firstName}  {student.lastName}
             </Typography>
             <div style={{ paddingBottom: "10px" }}>
-                Filtriraj po predmetu <Select value={defaultSelectedValue}
+                Filtriraj po predmetu <Select style={{ height: "40px" }} value={defaultSelectedValue}
                     onChange={handleChange}>
                     <MenuItem value={'0'}>{"Svi"}</MenuItem>
                     {subjets.map((s: any) =>
@@ -109,7 +109,7 @@ const ParentHomePageComponent = () => {
                     )}
                 </Select>
             </div>
-
+            <hr></hr>
             <TableComponent key={keyTable} actions={[]} columns={columns} data={tableGradesData.map((g: any) => ({
                 ...g,
                 grade: "(" + g.grade + ") " + GradeEnum[Number(g.grade)],

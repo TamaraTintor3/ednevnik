@@ -56,7 +56,8 @@ useEffect(()=>{
       
   return (
     <Box p={4}>
-      <Button title='Dodaj korisnika' sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddUser}></Button>
+     Dodaj korisnika  <Button title='Dodaj korisnika' sx={{ color: 'gray' }} startIcon={<PersonAddIcon/>} onClick={handleAddUser}></Button>
+      <hr></hr>
       <TableComponent columns={columns} data={data} actions={actions} />
     </Box>
   )
