@@ -147,7 +147,14 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
 
         return response;
     }
-//    @Override
-//    public List<SubjectGradesDTO> getFinalGrades
+
+    @Override
+    public List<FinalGradeDTO> getFinalGradesByStudentIdSchoolYearId(Integer schoolYearId, Integer studentId) {
+    List<SubjectGrades> grades = subjectGradesDAO.findAllByStudent_StudentIdAndSchoolYear_SchoolYearIdAndFinalSubjectGrade(studentId,schoolYearId,true);
+
+        return  grades.stream().map(el -> mapper.map(el, FinalGradeDTO.class)).collect(Collectors.toList());
+
+    }
+
 
 }

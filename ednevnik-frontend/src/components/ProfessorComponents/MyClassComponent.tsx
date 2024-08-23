@@ -47,10 +47,7 @@ const MyClassComponent = () => {
       icon: <GradeTwoTone titleAccess="Vladanje" sx={{ color: "gray" }} />,
       onClick: handleBehavior,
     },
-    {
-      icon: <PrintTwoTone titleAccess="Svjedočanstvo" sx={{ color: "gray" }} />,
-      onClick: generateCertificate,
-    },
+    
     {
       icon: <MoreHoriz titleAccess="Detalji" sx={{ color: "gray" }} />,
       onClick: openStudentDetails,
@@ -59,9 +56,8 @@ const MyClassComponent = () => {
   function handleAbsences(student: any) {
     navigate(`/absences/${student.studentId}`);
   }
-  function generateCertificate() {}
   function handleBehavior(student: any) {
-    navigate(`/studentBehavior/${student.studentId}`, { state: { schoolClassId: schoolClass.schoolClassId } });
+    navigate(`/studentBehavior/${student.studentId}`, { state: { schoolClassId: schoolClass.schoolClassId} });
   }
   function openStudentDetails(student: any) {
     console.log(student);
@@ -69,9 +65,15 @@ const MyClassComponent = () => {
       state: {
         schoolYearId: schoolClass.schoolClassId,
         studentId: student.studentId,
+        schoolClassName : schoolClass.name,
+        schoolClassYear : schoolClass.schoolYearYear,
+        schoolClassYearSemester : schoolClass.schoolYearSemester
       },
     });
   }
+
+
+  
   return (
     <div>
       <Typography variant="h4">{schoolClass.name}</Typography>

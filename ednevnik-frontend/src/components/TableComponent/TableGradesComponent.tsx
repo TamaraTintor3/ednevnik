@@ -127,13 +127,13 @@ const TableGradesComponent : React.FC<TableComponentProps> = ({subjectId, school
 
                                 
 
-                                <Tooltip title="Izmjeni ocjenu" onClick={() => editGrade(s.studentId, s.gradesVerbal, s.gradesWritten)} sx={{ p: 0 }}>
-                                    <IconButton>
+                                <Tooltip title="Izmjeni ocjenu"  >
+                                    <IconButton disabled={(s.gradesWritten!=null && s.gradesVerbal!=null) ? false : true } onClick={() => editGrade(s.studentId, s.gradesVerbal, s.gradesWritten)} sx={{ p: 0 }}>
                                         <EditNoteIcon />
                                     </IconButton>
                                 </Tooltip>
                                 <Tooltip title="Zaključi ocjenu">
-                                    <IconButton onClick={() => addFinalGrade(s.studentId)} sx={{ p: 0 }}>
+                                    <IconButton onClick={() => addFinalGrade(s.studentId)} sx={{ p: 0 }} disabled={(s.finalGrade.grade != null) || (!(s.gradesWritten!=null && s.gradesVerbal!=null)) ? true : false}>
 
                                         <PlaylistAddCheckIcon />
 
