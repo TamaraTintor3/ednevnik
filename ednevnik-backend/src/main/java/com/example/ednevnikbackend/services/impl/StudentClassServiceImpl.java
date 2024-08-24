@@ -5,7 +5,9 @@ import com.example.ednevnikbackend.daos.StudentClassDAO;
 import com.example.ednevnikbackend.daos.StudentDAO;
 import com.example.ednevnikbackend.dtos.StudentClassDTO;
 import com.example.ednevnikbackend.models.Absence;
+import com.example.ednevnikbackend.models.SchoolYear;
 import com.example.ednevnikbackend.models.StudentClass;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.StudentClassService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -31,6 +33,8 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Autowired
     SchoolClassDAO schoolClassDAO;
+    @Autowired
+    private SchoolClassService schoolClassService;
 
     @Override
     public StudentClass addStudentClass(StudentClassDTO studentClassDTO) {
@@ -59,8 +63,15 @@ public class StudentClassServiceImpl implements StudentClassService {
     }
 
     @Override
+    public StudentClass getByParentIdAndSchoolYearId(Integer parentId) {
+        SchoolYear schoolYear = schoolClassService.findCurrentSchoolYear();
+        return studentClassDAO.findByStudent_Parent_ParentIdAndSchoolClass_SchoolYear_SchoolYearId(parentId, schoolYear.getSchoolYearId());
+    }
+
+    @Override
     public List<StudentClassDTO> getStudentClassesByParentId(Integer parentId) {
         return studentClassDAO.findByStudent_Parent_ParentId(parentId).stream().map(el -> modelMapper.map(el,StudentClassDTO.class)).collect(Collectors.toList());
+
     }
 
 

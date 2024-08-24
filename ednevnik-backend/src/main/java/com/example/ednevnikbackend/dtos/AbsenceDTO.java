@@ -13,5 +13,6 @@ public class AbsenceDTO {
     private Date dateOfAbsence;
     private Integer numberOfClasses;
     private Boolean approved = false;
+    private String reason;
     private Integer studentId;
 }

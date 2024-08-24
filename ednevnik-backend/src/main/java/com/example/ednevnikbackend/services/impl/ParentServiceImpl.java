@@ -38,4 +38,5 @@ public class ParentServiceImpl implements ParentService {
     public ParentDTO findByUserId(Integer userId) {
         return modelMapper.map(parentDAO.findByUser_UserId(userId),ParentDTO.class);
     }
+
 }

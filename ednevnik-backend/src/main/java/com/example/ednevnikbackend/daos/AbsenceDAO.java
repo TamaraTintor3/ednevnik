@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface AbsenceDAO extends JpaRepository<Absence, Integer> {
     List<Absence> findByStudentStudentId(Integer studentId);
+    List<Absence> findAllByStudent_Parent_ParentIdAndStudent_SchoolClass_SchoolYear_SchoolYearId(Integer parentId,Integer schoolYearId);
 }

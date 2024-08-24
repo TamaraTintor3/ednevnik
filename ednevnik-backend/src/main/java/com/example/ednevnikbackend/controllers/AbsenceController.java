@@ -1,8 +1,10 @@
 package com.example.ednevnikbackend.controllers;
 
+import com.example.ednevnikbackend.dtos.AbsenceBehaviorDTO;
 import com.example.ednevnikbackend.dtos.AbsenceDTO;
 import com.example.ednevnikbackend.dtos.AbsenceUpdateDTO;
 import com.example.ednevnikbackend.models.Absence;
+import com.example.ednevnikbackend.services.AbsenceBehaviorService;
 import com.example.ednevnikbackend.services.AbsenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,8 @@ public class AbsenceController {
 
     @Autowired
     AbsenceService absenceService;
+    @Autowired
+    private AbsenceBehaviorService absenceBehaviorService;
 
     @PostMapping("/add")
     public ResponseEntity<Absence> addAbsence(@RequestBody AbsenceDTO absenceDTO) {
@@ -35,4 +39,8 @@ public class AbsenceController {
         return ResponseEntity.ok(absences);
     }
 
+    @GetMapping("/parent/{parentId}")
+    public AbsenceBehaviorDTO getAllAbsencesForParent(@PathVariable Integer parentId){
+        return absenceBehaviorService.getDataForParent(parentId);
+    }
 }

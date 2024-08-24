@@ -29,8 +29,8 @@ import StudentBehaviorComponent from "./components/ProfessorComponents/StudentBe
 import AddFinalGradeComponent from "./components/ProfessorComponents/AddFinalGradeComponent";
 
 import CreateScheduleComponent from "./components/ProfessorComponents/CreateScheduleComponent";
+import AbsencesComponent from "./components/ParentComponents/AbsencesComponent";
 import DisplayScheduleComponent from "./components/ParentComponents/DisplayScheduleComponent";
-
 
 import ParentHomePageComponent from "./components/ParentComponents/ParentHomePageComponent";
 import StudentDetailsParentComponent from "./components/ParentComponents/StudentDetailsParentComponent";
@@ -87,6 +87,7 @@ function App(props: any) {
           <Route path="/addFinalGrade/:studentId" element={<AddFinalGradeComponent />} />
           <Route path="/calendar" element={<CalendarComponent/>} />
           <Route path="/createSchedule/:classScheduleId" element={<CreateScheduleComponent />} />
+          <Route path="/absences" element={<AbsencesComponent />} />
           <Route path="/displaySchedule" element={<DisplayScheduleComponent/>} />
 
         </Route>
