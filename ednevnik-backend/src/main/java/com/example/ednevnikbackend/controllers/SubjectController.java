@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/subjects")
 public class SubjectController {
@@ -27,6 +29,8 @@ public class SubjectController {
     public List<SubjectDTO> getAll() {
         return subjectService.getAll();
     }
+
+  
 
     @GetMapping("/getAll")
     public List<Subject> getAllSubjects() {

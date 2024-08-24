@@ -45,5 +45,15 @@ export const getFinalGrades =async (schoolYearId:number, studentId:number) => {
         throw error;
     }
 }
+export const getFinalGradesData = async (schoolYearId:number, studentId:number) => {
+    try {
+        const response = await  axiosInstance
+        .get("api/grades/getFinalGrade/" + schoolYearId + "/"+ studentId);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        throw error;
+    }
+}
 
 export const getStudentGradesBySubjects=(schoolYearId:number,studentId:number)=>axiosInstance.get("/api/grades/details/"+schoolYearId+"/"+studentId);

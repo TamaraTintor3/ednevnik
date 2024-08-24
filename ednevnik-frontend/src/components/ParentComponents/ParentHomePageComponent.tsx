@@ -43,7 +43,7 @@ const ParentHomePageComponent = () => {
             setParent(response.data.parentId);
             setCounter(counter => counter + 1);
             getStudentByParentId(response.data.parentId).then((resp) => {
-                setStudent(resp.data);
+                setStudent(resp?.data);
             })
 
 
@@ -51,9 +51,9 @@ const ParentHomePageComponent = () => {
                 console.log(resp.data);
                 setScholYear(resp.data);
                 getStudentGradesByParentId(response.data.parentId, resp.data.schoolYearId).then((resp) => {
-                    console.log(resp.data)
-                    setGrades(resp.data);
-                    setTableGradesData(resp.data);
+                    console.log(resp?.data)
+                    setGrades(resp?.data);
+                    setTableGradesData(resp?.data);
                 })
                 setCounter(counter => counter + 1);
             })
@@ -81,7 +81,7 @@ const ParentHomePageComponent = () => {
                 console.log(event.target.value)
                 return grade.subjectSubjectId === event.target.value;
             });
-            console.log("-----------" + newArray)
+            //console.log("-----------" + newArray)
             setTableGradesData(newArray);
             setKeyTable(key => key + 1);
         }
@@ -101,7 +101,7 @@ const ParentHomePageComponent = () => {
                 Učenik: {student.firstName}  {student.lastName}
             </Typography>
             <div style={{ paddingBottom: "10px" }}>
-                Filtriraj po predmetu <Select style={{ height: "40px" }} value={defaultSelectedValue}
+                Filtriraj po predmetu <Select value={defaultSelectedValue}
                     onChange={handleChange}>
                     <MenuItem value={'0'}>{"Svi"}</MenuItem>
                     {subjets.map((s: any) =>
@@ -109,7 +109,7 @@ const ParentHomePageComponent = () => {
                     )}
                 </Select>
             </div>
-            <hr></hr>
+
             <TableComponent key={keyTable} actions={[]} columns={columns} data={tableGradesData.map((g: any) => ({
                 ...g,
                 grade: "(" + g.grade + ") " + GradeEnum[Number(g.grade)],
