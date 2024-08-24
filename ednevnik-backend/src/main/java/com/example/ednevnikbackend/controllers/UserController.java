@@ -51,5 +51,8 @@ public class UserController {
         return professorService.getProfessorByUserId(id);
     }
 
-
+    @GetMapping("/professors")
+    public List<User> getAllProfessors() {
+        return userService.getAllProfessors();
+    }
 }

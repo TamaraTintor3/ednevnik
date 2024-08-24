@@ -18,4 +18,5 @@ public interface UserService {
     User findByToken(String token);
     List<ShowUsersDTO> getAllUsers();
     User editUser (Integer id, UserDTO userDTO);
+    List<User> getAllProfessors();
 }

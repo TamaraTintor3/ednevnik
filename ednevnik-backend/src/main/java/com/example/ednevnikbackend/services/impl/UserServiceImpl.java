@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService {
         System.out.println(user);
         return user;
     }
+
+    @Override
+    public List<User> getAllProfessors() {
+        return userDAO.findByRole("PROFESSOR");
+    }
 }

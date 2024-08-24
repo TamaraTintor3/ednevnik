@@ -122,6 +122,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/class-schedules/{userId}").hasAuthority("PARENT")
                                 .requestMatchers(HttpMethod.PUT,"/api/authentication/{userId}/assign-class").hasAuthority("ADMIN")
                                 .requestMatchers(HttpMethod.GET,"/api/authentication/getStatus/{userId}").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/api/users/professors").hasAuthority("ADMIN")
 
 
 
