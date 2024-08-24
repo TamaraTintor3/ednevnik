@@ -5,6 +5,7 @@ import { SelectChangeEvent } from '@mui/material';
 import { StyledTxtField } from '../LoginComponent/LoginTxtFieldStyled';
 import { fetchParents, addStudent} from '../../services/AdminApi';
 import { Parent } from '../../interfaces/ParentInterface';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const AddStudentComponent = () => {
@@ -76,8 +77,8 @@ const AddStudentComponent = () => {
 
         try {
             const response = await addStudent(studentData);
-            console.log("Uspješno dodavanje učenika", response);
-            alert("Uspješno dodavanje učenika");
+            console.log("Uspješno dodavanje učenika", response); 
+            toast.success("Uspješno dodavanje učenika");
         } catch (error: any) {
             console.error("Došlo je do greške prilikom dodavanja učenika:", error);
             if (error.response && error.response.data && typeof error.response.data === 'string') {
@@ -86,7 +87,8 @@ const AddStudentComponent = () => {
                     jmbg: error.response.data
                 }));
             } else {
-                alert("Student sa datim JMBG-om već postoji");
+                // alert("Student sa datim JMBG-om već postoji");
+                toast.error("Potrebno je kreirati novi nalog za roditelja!");
             }
         }
     };
@@ -164,6 +166,11 @@ const AddStudentComponent = () => {
         </Button>
     </Box>
     </Paper>
+    <ToastContainer
+        position="bottom-right"
+        autoClose={3500}
+        hideProgressBar={true}
+      />
     </Box>
   )
 }
