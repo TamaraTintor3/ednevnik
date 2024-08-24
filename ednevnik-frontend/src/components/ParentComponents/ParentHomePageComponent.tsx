@@ -81,7 +81,7 @@ const ParentHomePageComponent = () => {
                 console.log(event.target.value)
                 return grade.subjectSubjectId === event.target.value;
             });
-            console.log("-----------" + newArray)
+            //console.log("-----------" + newArray)
             setTableGradesData(newArray);
             setKeyTable(key => key + 1);
         }
