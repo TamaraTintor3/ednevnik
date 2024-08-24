@@ -8,15 +8,20 @@ import com.example.ednevnikbackend.models.Absence;
 import com.example.ednevnikbackend.models.StudentClass;
 import com.example.ednevnikbackend.services.StudentClassService;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class StudentClassServiceImpl implements StudentClassService {
+
+    @Autowired
+    ModelMapper modelMapper;
 
     @Autowired
     StudentClassDAO studentClassDAO;
@@ -30,7 +35,7 @@ public class StudentClassServiceImpl implements StudentClassService {
     @Override
     public StudentClass addStudentClass(StudentClassDTO studentClassDTO) {
         StudentClass studentClass = new StudentClass();
-        studentClass.setStudent(studentDAO.findById(studentClassDTO.getStudentId())
+        studentClass.setStudent(studentDAO.findById(studentClassDTO.getStudentStudentId())
                 .orElseThrow(() -> new RuntimeException("Student not found")));
         studentClass.setSchoolClass(schoolClassDAO.findById(studentClassDTO.getSchoolClassId())
                 .orElseThrow(() -> new RuntimeException("School class not found")));
@@ -51,6 +56,11 @@ public class StudentClassServiceImpl implements StudentClassService {
     @Override
     public List<StudentClass> getStudentClssByStudentId(Integer studentId){
         return studentClassDAO.findByStudentStudentId(studentId);
+    }
+
+    @Override
+    public List<StudentClassDTO> getStudentClassesByParentId(Integer parentId) {
+        return studentClassDAO.findByStudent_Parent_ParentId(parentId).stream().map(el -> modelMapper.map(el,StudentClassDTO.class)).collect(Collectors.toList());
     }
 
 

@@ -79,7 +79,7 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentGradesForParentDTO> getStudentGradesByParentIdDateDesc(Integer parentId, Integer schoolYearId){
 
-        Student student = studentDAO.findByParent_ParentId(parentId);
+        Student student = studentDAO.findAllByParent_ParentId(parentId).get(0);
 
         return subjectGradesDAO.findAllByStudent_StudentIdAndSchoolYear_SchoolYearIdAndFinalSubjectGradeOrderByDateDesc(student.getStudentId(),schoolYearId,false).stream().map((el) -> modelMapper.map(el, StudentGradesForParentDTO.class)).collect(Collectors.toList());
 
@@ -87,6 +87,6 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public StudentDTO getStudentByParentId(Integer parentId) {
-        return modelMapper.map(studentDAO.findByParent_ParentId(parentId),StudentDTO.class);
+        return modelMapper.map(studentDAO.findAllByParent_ParentId(parentId).get(0),StudentDTO.class);
     }
 }

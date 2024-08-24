@@ -46,7 +46,7 @@ const professorActions: ISidebarAction[] = [
 ];
 const parentActions: ISidebarAction[] = [
   { title: "Sve ocjene", icon: <SubjectTwoTone />, path: "/parentHomePage" },
-  { title: "Učenik", icon: <PersonTwoTone />, path: "" },
+  { title: "Učenik", icon: <PersonTwoTone />, path: "/studentDetails" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const staffActions: ISidebarAction[] = [

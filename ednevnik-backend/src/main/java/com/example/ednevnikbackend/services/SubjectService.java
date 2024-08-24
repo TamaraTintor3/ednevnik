@@ -7,6 +7,8 @@ import java.util.List;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface SubjectService {
 
     public SubjectDTO getSubjectByProfessorId(Integer id);
