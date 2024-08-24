@@ -25,6 +25,7 @@ interface ScheduleSubject {
 const DisplayScheduleComponent = () => {
   const [classScheduleId, setClassScheduleId] = useState<number | null>(null);
   const [scheduleSubjects, setScheduleSubjects] = useState<ScheduleSubject[]>([]);
+  const [schoolClassName, setSchoolClassName] = useState<string | null>(null);
   const authentication = useAuth();
   const daysOfWeek = ["Ponedeljak", "Utorak", "Srijeda", "Četvrtak", "Petak"];
   const predefinedRowCount = 6;
@@ -68,6 +69,9 @@ useEffect(() => {
       try {
           const response = await axiosInstance.get<ScheduleSubject[]>(`/api/schedule-subjects/class-schedule/${classScheduleId}`);
           setScheduleSubjects(response.data);
+          if (response.data.length > 0) {
+            setSchoolClassName(response.data[0].classSchedule.schoolClass.name); 
+        }
       } catch (error) {
           console.error('Error fetching schedule subjects:', error);
       }
@@ -78,9 +82,10 @@ useEffect(() => {
   return (
     
     <Box>
-  <Typography variant="h6" gutterBottom>
-    Prikaz rasporeda časova
+  <Typography variant="subtitle1" gutterBottom>
+  Odjeljenje: {schoolClassName}
   </Typography>
+  <Box pt={4}>
   <TableContainer component={Paper} style={{ maxHeight: "530px", overflowY: "auto" }}>
     <Table>
       <TableHead>
@@ -108,6 +113,7 @@ useEffect(() => {
       </TableBody>
     </Table>
   </TableContainer>
+  </Box>
 </Box>
   )
 }
