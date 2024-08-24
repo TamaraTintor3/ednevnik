@@ -114,7 +114,7 @@ const StudentDetailsParentComponent = () => {
 
                 getCurrentSchoolYear().then((year) => {
 
-                    getStudentGradesBySubjects(year.data.schoolYearId, response?.data.studentId).then((finalResponse) => {
+                    getStudentGradesBySubjects(year.data.schoolYearId, response?.data.studentId==null?0:response?.data.studentId).then((finalResponse) => {
 
                         setGrades(finalResponse.data);
                     })
