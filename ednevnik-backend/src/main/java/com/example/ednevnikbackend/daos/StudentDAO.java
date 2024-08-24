@@ -21,6 +21,8 @@ public interface StudentDAO extends JpaRepository<Student, Integer> {
     List<Student> findAllByParent_ParentId(Integer parentId);
 
 
+
     List<Student> findByParent_ParentIdAndSchoolClass_SchoolYear_SchoolYearId(Integer parentId,Integer schoolYearId);
+    
 
 }
