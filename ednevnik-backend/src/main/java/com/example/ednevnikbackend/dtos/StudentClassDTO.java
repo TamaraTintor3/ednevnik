@@ -9,8 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentClassDTO {
     private Integer studentClassId;
-    private Integer studentId;
+    private Integer studentStudentId;
     private Integer schoolClassId;
+    private Integer schoolClassSchoolYearId;
+    private Integer schoolClassSchoolYearSemester;
+    private String schoolClassSchoolYearYear;
+    private String schoolClassName;
     private String behavior;
     private Double finalGrade;
 }

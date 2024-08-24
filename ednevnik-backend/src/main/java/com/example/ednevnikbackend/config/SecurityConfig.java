@@ -78,7 +78,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/professors/class").hasAuthority(Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.POST, "/api/grades/addGrade").hasAuthority("PROFESSOR")
                         .requestMatchers(HttpMethod.PUT, "/api/grades/editGradeById/**").hasAuthority("PROFESSOR")
-                        .requestMatchers(HttpMethod.GET, "/api/grades/getFinalGrade/**").hasAuthority(Role.PROFESSOR.toString())
+                        .requestMatchers(HttpMethod.GET, "/api/grades/getFinalGrade/**").hasAnyAuthority(Role.PROFESSOR.toString(),Role.PARENT.toString())
                         .requestMatchers(HttpMethod.GET, "/api/grades/details/**").hasAnyAuthority(Role.PROFESSOR.toString(),Role.PARENT.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/{id}").hasAuthority(Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/byParentId/**").hasAuthority(Role.PARENT.toString())
@@ -96,14 +96,11 @@ public class SecurityConfig {
 
 
 
-                        .requestMatchers(HttpMethod.GET, "/api/school-years/current").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(), Role.PROFESSOR.toString())
-                        .requestMatchers(HttpMethod.GET, "/api/students/gradesOrderedByDate/{parentId}/{schoolYearId}").hasAuthority(Role.PARENT.toString())
-
+                       
                                 .requestMatchers(HttpMethod.GET,"/api/grades/details/**").hasAuthority(Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.GET,"/api/students/**").hasAuthority(Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.PUT,"/api/absences/{id}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/absences/student/{studentId}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/students/absence/{studentId}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.POST,"/api/student-classes/add").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/student-classes/{id}").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/student-classes/{studentId}").hasAuthority("PROFESSOR")
@@ -115,6 +112,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/subjects/getAll").hasAuthority("PROFESSOR")
 
 
+                        .requestMatchers(HttpMethod.GET, "/api/student-classes/byParentId/{parentId}").hasAnyAuthority("PROFESSOR",Role.PARENT.toString())
 
 
                         .requestMatchers(HttpMethod.GET, "/api/school-years/current").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(), Role.PROFESSOR.toString())

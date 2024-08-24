@@ -35,6 +35,8 @@ public class StudentClassControler {
     }
 
     @GetMapping("/byParentId/{parentId}")
-    public  List<StudentClassDTO> getStudentClasses
+    public  List<StudentClassDTO> getStudentClassesByParentId(@PathVariable Integer parentId){
+        return  studentClassService.getStudentClassesByParentId(parentId);
+    }
 }
 
