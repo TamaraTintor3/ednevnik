@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ParentProvider from "../../contexts/ParentContext";
 import { getParentByUserId } from "../../services/ParentApi";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { getCurrentSchoolYear } from "../../services/SchoolClassApi";
