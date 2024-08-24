@@ -3,14 +3,12 @@ package com.example.ednevnikbackend.services.impl;
 import com.example.ednevnikbackend.config.JWTUserDetails;
 import com.example.ednevnikbackend.daos.ParentDAO;
 import com.example.ednevnikbackend.daos.ProfessorDAO;
+import com.example.ednevnikbackend.daos.SchoolClassDAO;
 import com.example.ednevnikbackend.daos.UserDAO;
 import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
-import com.example.ednevnikbackend.models.Parent;
-import com.example.ednevnikbackend.models.Professor;
-import com.example.ednevnikbackend.models.Role;
-import com.example.ednevnikbackend.models.User;
+import com.example.ednevnikbackend.models.*;
 import com.example.ednevnikbackend.services.AuthenticationService;
 import com.example.ednevnikbackend.services.EmailService;
 import com.example.ednevnikbackend.services.UserService;
@@ -50,6 +48,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     UserDAO userDAO;
+
+    @Autowired
+    SchoolClassDAO schoolClassDAO;
 
     @Autowired
     private EmailService emailService;
@@ -173,11 +174,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public void updateProfessorStatus(Integer userId, boolean classProfessor) {
+    public void updateProfessorStatus(Integer userId, Integer schoolClassId) {
         Professor professor = professorDAO.getProfessorByUser_UserId(userId);
+        SchoolClass schoolClass = schoolClassDAO.findById(schoolClassId)
+                .orElseThrow(() -> new IllegalArgumentException("SchoolClass not found with id: " + schoolClassId));
 
-        professor.setClassProfessor(classProfessor);
-        professorDAO.save(professor);
+        if (professor != null) {
+            professor.setClassProfessor(true);
+            professor.setSchoolClass(schoolClass);
+            professorDAO.save(professor);
+        } else {
+            throw new IllegalArgumentException("Professor not found with userId: " + userId);
+        }
     }
 
     @Override

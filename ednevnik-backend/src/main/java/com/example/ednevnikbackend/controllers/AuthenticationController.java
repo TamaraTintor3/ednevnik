@@ -64,11 +64,15 @@ public class AuthenticationController {
         return new ResponseEntity<>("Došlo je do greške, lozinka nije sačuvana!",HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/{userId}")
-    public ResponseEntity<?> updateProfessorStatus(@PathVariable Integer userId, @RequestBody Map<String, Boolean> request) {
-        boolean classProfessor = request.get("classProfessor");
-        authenticationService.updateProfessorStatus(userId, classProfessor);
-        return ResponseEntity.ok().build();
+
+
+    @PutMapping("/{userId}/assign-class")
+    public ResponseEntity<String> assignClassToProfessor(
+            @PathVariable Integer userId,
+            @RequestParam Integer schoolClassId) {
+
+        authenticationService.updateProfessorStatus(userId, schoolClassId);
+        return ResponseEntity.ok("Professor assigned to class successfully");
     }
 
     @GetMapping("/getStatus/{userId}")
