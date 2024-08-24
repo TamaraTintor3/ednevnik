@@ -89,33 +89,25 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/student-classes/{id}").hasAuthority("PROFESSOR")
                         .requestMatchers(HttpMethod.GET, "/api/student-classes/{studentId}").hasAuthority("PROFESSOR")
                         .requestMatchers(HttpMethod.PUT, "/api/student-classes/update/{id}").hasAuthority("PROFESSOR")
+
                         .requestMatchers(HttpMethod.GET,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.POST,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.DELETE,"/api/events/**").hasAuthority(Role.PROFESSOR.toString())
 
 
-
-
                         .requestMatchers(HttpMethod.GET, "/api/school-years/current").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(), Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/gradesOrderedByDate/{parentId}/{schoolYearId}").hasAuthority(Role.PARENT.toString())
 
-                                .requestMatchers(HttpMethod.GET,"/api/grades/details/**").hasAuthority(Role.PROFESSOR.toString())
-                                .requestMatchers(HttpMethod.GET,"/api/students/**").hasAuthority(Role.PROFESSOR.toString())
-                                .requestMatchers(HttpMethod.PUT,"/api/absences/{id}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/absences/student/{studentId}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/students/absence/{studentId}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.POST,"/api/student-classes/add").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/student-classes/{id}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/student-classes/{studentId}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.PUT,"/api/student-classes/update/{id}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.POST,"/api/class-schedules/get-or-create").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.POST,"/api/schedule-subjects/add").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.PUT,"/api/schedule-subjects/{id}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/schedule-subjects/class-schedule/{classScheduleId}").hasAuthority("PROFESSOR")
-                                .requestMatchers(HttpMethod.GET,"/api/subjects/getAll").hasAuthority("PROFESSOR")
 
+                        .requestMatchers(HttpMethod.GET,"/api/students/**").hasAuthority(Role.PROFESSOR.toString())
 
+                        .requestMatchers(HttpMethod.POST,"/api/class-schedules/get-or-create").hasAuthority("PROFESSOR")
+                        .requestMatchers(HttpMethod.POST,"/api/schedule-subjects/add").hasAuthority("PROFESSOR")
+                        .requestMatchers(HttpMethod.PUT,"/api/schedule-subjects/{id}").hasAuthority("PROFESSOR")
+                        .requestMatchers(HttpMethod.GET,"/api/schedule-subjects/class-schedule/{classScheduleId}").hasAuthority("PROFESSOR")
+                        .requestMatchers(HttpMethod.GET,"/api/subjects/getAll").hasAuthority("PROFESSOR")
 
+                        .requestMatchers(HttpMethod.GET,"/api/absences/parent/**").permitAll()//.hasAuthority(Role.PARENT.toString())
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())

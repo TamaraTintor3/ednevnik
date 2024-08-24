@@ -8,7 +8,6 @@ import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.models.Parent;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.models.Student;
-import com.example.ednevnikbackend.models.SubjectGrades;
 import com.example.ednevnikbackend.services.StudentService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -48,16 +47,20 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public AddStudentDTO addStudent(AddStudentDTO addStudentDTO) {
-        boolean exists = studentDAO.existsByJmbg(addStudentDTO.getJmbg());
-        if (exists) {
-            throw new IllegalArgumentException("Student sa datim JMBG-om već postoji");
-        }
+//        boolean exists = studentDAO.existsByJmbg(addStudentDTO.getJmbg());
+//        if (exists) {
+//            throw new IllegalArgumentException("Student sa datim JMBG-om već postoji");
+//        }
 
         Parent parent = parentDAO.findById(addStudentDTO.getParentId())
                 .orElseThrow(() -> new IllegalArgumentException("Roditelj nije pronađen"));
         SchoolClass schoolClass = schoolClassDAO.findById(addStudentDTO.getSchoolClassId())
                 .orElseThrow(() -> new IllegalArgumentException("Odjeljenje nije pronađeno"));
 
+        System.out.println(parentStudentExists(parent.getParentId(), schoolClass.getSchoolYear().getSchoolYearId()));
+        if(parentStudentExists(parent.getParentId(), schoolClass.getSchoolYear().getSchoolYearId())){
+            throw new IllegalArgumentException("Potrebno je kreirati novi nalog za odabranog roditelja!");
+        }
         Student student = modelMapper.map(addStudentDTO, Student.class);
         student.setParent(parent);
         student.setSchoolClass(schoolClass);
@@ -88,5 +91,15 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public StudentDTO getStudentByParentId(Integer parentId) {
         return modelMapper.map(studentDAO.findByParent_ParentId(parentId),StudentDTO.class);
+    }
+
+    @Override
+    public boolean parentStudentExists(Integer parentId,Integer schoolYearId){
+
+        if(studentDAO.findByParent_ParentIdAndSchoolClass_SchoolYear_SchoolYearId(parentId,schoolYearId).size()>0){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

@@ -4,8 +4,10 @@ import com.example.ednevnikbackend.daos.AbsenceDAO;
 import com.example.ednevnikbackend.dtos.AbsenceDTO;
 import com.example.ednevnikbackend.dtos.AbsenceUpdateDTO;
 import com.example.ednevnikbackend.models.Absence;
+import com.example.ednevnikbackend.models.SchoolYear;
 import com.example.ednevnikbackend.models.Student;
 import com.example.ednevnikbackend.services.AbsenceService;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.StudentService;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -26,6 +28,8 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    private SchoolClassService schoolClassService;
 
     @Override
     public Absence addAbsence(AbsenceDTO absenceDTO) {
@@ -56,5 +60,12 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public List<Absence> getAbsencesByStudentId(Integer studentId) {
         return absenceDAO.findByStudentStudentId(studentId);
+    }
+
+    @Override
+    public List<AbsenceDTO> getAbsencesForParent(Integer parentId) {
+        SchoolYear schoolYear=schoolClassService.findCurrentSchoolYear();
+        System.out.println(schoolYear.getYear()+" "+schoolYear.getSchoolYearId());
+        return absenceDAO.findAllByStudent_Parent_ParentIdAndStudent_SchoolClass_SchoolYear_SchoolYearId(parentId,schoolYear.getSchoolYearId()).stream().map((a)->modelMapper.map(a,AbsenceDTO.class)).toList();
     }
 }

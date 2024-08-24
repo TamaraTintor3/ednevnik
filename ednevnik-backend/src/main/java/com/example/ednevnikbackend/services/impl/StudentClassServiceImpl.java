@@ -5,7 +5,9 @@ import com.example.ednevnikbackend.daos.StudentClassDAO;
 import com.example.ednevnikbackend.daos.StudentDAO;
 import com.example.ednevnikbackend.dtos.StudentClassDTO;
 import com.example.ednevnikbackend.models.Absence;
+import com.example.ednevnikbackend.models.SchoolYear;
 import com.example.ednevnikbackend.models.StudentClass;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.StudentClassService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Autowired
     SchoolClassDAO schoolClassDAO;
+    @Autowired
+    private SchoolClassService schoolClassService;
 
     @Override
     public StudentClass addStudentClass(StudentClassDTO studentClassDTO) {
@@ -51,6 +55,13 @@ public class StudentClassServiceImpl implements StudentClassService {
     @Override
     public List<StudentClass> getStudentClssByStudentId(Integer studentId){
         return studentClassDAO.findByStudentStudentId(studentId);
+    }
+
+    @Override
+    public StudentClass getByParentIdAndSchoolYearId(Integer parentId) {
+        SchoolYear schoolYear=schoolClassService.findCurrentSchoolYear();
+        System.out.println(schoolYear.getYear()+" "+schoolYear.getSchoolYearId());
+        return studentClassDAO.findByStudent_Parent_ParentIdAndSchoolClass_SchoolYear_SchoolYearId(parentId,schoolYear.getSchoolYearId());
     }
 
 

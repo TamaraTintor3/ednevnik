@@ -10,4 +10,5 @@ public interface AbsenceService {
     Absence addAbsence(AbsenceDTO absenceDTO);
     Absence updateAbsence(Integer absenceId, AbsenceUpdateDTO absenceUpdateDTO);
     List<Absence> getAbsencesByStudentId(Integer studentId);
+    List<AbsenceDTO> getAbsencesForParent(Integer parentId);
 }

@@ -4,14 +4,12 @@ import com.example.ednevnikbackend.dtos.ProfessorDTO;
 
 import com.example.ednevnikbackend.dtos.AddSchoolClassDTO;
 import com.example.ednevnikbackend.dtos.AddStudentDTO;
-import com.example.ednevnikbackend.models.Role;
 import com.example.ednevnikbackend.models.SchoolClass;
 import com.example.ednevnikbackend.dtos.SchoolClassDTO;
 import com.example.ednevnikbackend.services.ProfessorService;
 import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +64,10 @@ public class SchoolClassController {
     @PostMapping("/{classId}/students/add")
     public ResponseEntity<AddStudentDTO> addStudentToClass(@PathVariable Integer classId, @RequestBody AddStudentDTO addStudentDTO) {
         addStudentDTO.setSchoolClassId(classId);
-        AddStudentDTO addedStudent = studentService.addStudent(addStudentDTO);
+        AddStudentDTO addedStudent = null;
+
+        addedStudent = studentService.addStudent(addStudentDTO);
+
         return ResponseEntity.ok(addedStudent);
 
     }
