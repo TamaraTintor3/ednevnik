@@ -91,7 +91,7 @@ const GenericGradesTable: React.FC<TableComponentProps> = ({
                 {row.gradesWritten &&
                   row.gradesWritten.map((g: any) => (
                     <TableRow>
-                      {new Date(g.date).toLocaleDateString("de-DE") +
+                      {new Date(g.date).toLocaleDateString("sr") +
                         " (" +
                         g.grade +
                         ")"}
@@ -102,7 +102,7 @@ const GenericGradesTable: React.FC<TableComponentProps> = ({
                 {row.gradesVerbal &&
                   row.gradesVerbal.map((g: any) => (
                     <TableRow>
-                      {new Date(g.date).toLocaleDateString("de-DE") +
+                      {new Date(g.date).toLocaleDateString("sr") +
                         " (" +
                         g.grade +
                         ")"}

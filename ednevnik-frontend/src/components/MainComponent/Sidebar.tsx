@@ -5,9 +5,10 @@ import {
   PeopleAltOutlined,
   PersonTwoTone,
   PeopleAltTwoTone,
-  SubjectTwoTone
+  SubjectTwoTone,
+  AnnouncementTwoTone,
 } from "@mui/icons-material";
-import PersonIcon from '@mui/icons-material/Person';
+import PersonIcon from "@mui/icons-material/Person";
 import {
   Box,
   Drawer,
@@ -47,6 +48,7 @@ const professorActions: ISidebarAction[] = [
 const parentActions: ISidebarAction[] = [
   { title: "Sve ocjene", icon: <SubjectTwoTone />, path: "/parentHomePage" },
   { title: "Učenik", icon: <PersonTwoTone />, path: "" },
+  { title: "Izostanci", icon: <AnnouncementTwoTone />, path: "/absences" },
   { title: "Inbox", icon: <MessageTwoTone />, path: "" },
 ];
 const staffActions: ISidebarAction[] = [
