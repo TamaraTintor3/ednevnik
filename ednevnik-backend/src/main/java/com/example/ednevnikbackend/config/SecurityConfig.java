@@ -120,6 +120,8 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET,"/api/schedule-subjects/class-schedule/{classScheduleId}").hasAnyAuthority(Role.PARENT.toString(), Role.PROFESSOR.toString())
                                 .requestMatchers(HttpMethod.GET,"/api/subjects/getAll").hasAuthority("PROFESSOR")
                                 .requestMatchers(HttpMethod.GET,"/api/class-schedules/{userId}").hasAuthority("PARENT")
+                                .requestMatchers(HttpMethod.PUT,"/api/authentication/{userId}").hasAuthority("ADMIN")
+                                .requestMatchers(HttpMethod.GET,"/api/authentication/getStatus/{userId}").hasAuthority("ADMIN")
 
 
 

@@ -171,4 +171,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
         return false;
     }
+
+    @Override
+    public void updateProfessorStatus(Integer userId, boolean classProfessor) {
+        Professor professor = professorDAO.getProfessorByUser_UserId(userId);
+
+        professor.setClassProfessor(classProfessor);
+        professorDAO.save(professor);
+    }
+
+    @Override
+    public Boolean getClassProfessorStatusByUserId(Integer userId) {
+        User user = userDAO.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Professor professor = professorDAO.getProfessorByUser_UserId(user.getUserId());
+
+
+        return professor.getClassProfessor();
+    }
 }

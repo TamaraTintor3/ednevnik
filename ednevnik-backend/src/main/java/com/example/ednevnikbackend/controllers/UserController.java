@@ -50,4 +50,6 @@ public class UserController {
     public ProfessorDTO getProfessor(@PathVariable Integer id){
         return professorService.getProfessorByUserId(id);
     }
+
+
 }

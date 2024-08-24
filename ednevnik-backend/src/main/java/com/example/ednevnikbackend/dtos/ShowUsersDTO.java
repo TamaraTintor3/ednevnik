@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShowUsersDTO {
+    private Integer userId;
 
     private String firstName;
 

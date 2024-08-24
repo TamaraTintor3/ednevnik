@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/authentication")
@@ -60,6 +62,18 @@ public class AuthenticationController {
         if(status)
             return ResponseEntity.ok("Lozinka je promijenjena!");
         return new ResponseEntity<>("Došlo je do greške, lozinka nije sačuvana!",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping("/{userId}")
+    public ResponseEntity<?> updateProfessorStatus(@PathVariable Integer userId, @RequestBody Map<String, Boolean> request) {
+        boolean classProfessor = request.get("classProfessor");
+        authenticationService.updateProfessorStatus(userId, classProfessor);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getStatus/{userId}")
+    public Boolean getClassProfessorStatusByUserId(@PathVariable("userId") Integer userId) {
+        return authenticationService.getClassProfessorStatusByUserId(userId);
     }
 
 }
