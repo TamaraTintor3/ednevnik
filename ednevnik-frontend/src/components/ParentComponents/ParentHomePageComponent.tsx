@@ -43,7 +43,7 @@ const ParentHomePageComponent = () => {
             setParent(response.data.parentId);
             setCounter(counter => counter + 1);
             getStudentByParentId(response.data.parentId).then((resp) => {
-                setStudent(resp.data);
+                setStudent(resp?.data);
             })
 
 
@@ -51,9 +51,9 @@ const ParentHomePageComponent = () => {
                 console.log(resp.data);
                 setScholYear(resp.data);
                 getStudentGradesByParentId(response.data.parentId, resp.data.schoolYearId).then((resp) => {
-                    console.log(resp.data)
-                    setGrades(resp.data);
-                    setTableGradesData(resp.data);
+                    console.log(resp?.data)
+                    setGrades(resp?.data);
+                    setTableGradesData(resp?.data);
                 })
                 setCounter(counter => counter + 1);
             })

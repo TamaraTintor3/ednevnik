@@ -33,4 +33,8 @@ public class StudentClassControler {
         List<StudentClass> studentClasses = studentClassService.getStudentClssByStudentId(studentId);
         return ResponseEntity.ok(studentClasses);
     }
+
+    @GetMapping("/byParentId/{parentId}")
+    public  List<StudentClassDTO> getStudentClasses
 }
+

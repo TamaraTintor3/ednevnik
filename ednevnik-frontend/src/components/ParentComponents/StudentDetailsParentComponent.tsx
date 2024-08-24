@@ -1,4 +1,4 @@
-import { Box, Tab } from "@mui/material";
+import { Box, Tab, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
 import Tabs from "@mui/material/Tabs";
 import React, { useEffect, useState } from "react";
 import GenericGradesTable from "../TableComponent/GenericGradesTable";
@@ -6,111 +6,177 @@ import { getParentByUserId } from "../../services/ParentApi";
 import { useAuth } from "../../contexts/AuthenticationContext";
 import { getStudentByParentId } from "../../services/StudentApi";
 import { getCurrentSchoolYear } from "../../services/SchoolClassApi";
-import { getStudentGradesBySubjects } from "../../services/GradesApi";
+import { getFinalGrades, getFinalGradesData, getStudentGradesBySubjects } from "../../services/GradesApi";
 import IStudentGrades from "../../models/IStudentGrades";
+import { getStudentClassesByParentId } from "../../services/StudentClassApi";
+import '../TableComponent/TableComponent.css'
+import IFinalGrades from "../../models/IFinalGrades";
+import { GradeEnum } from "../../enums/GradeEnum";
 
 interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
-  }
+}
+
+interface TableFinalGradesProps {
+    schoolYearId: number;
+    studentId: number;
+}
 
 function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-  
-    const [visible, setVisible]= useState(false);
 
 
 
 
     return (
-      
+
         <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-      </div>
-    
-      
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+        </div>
+
+
     );
-  }
+}
+
+const TableFinalGrades = (props: TableFinalGradesProps) => {
+
+
+    const { schoolYearId, studentId } = props;
+    const [finalGrades, setFinalGrades] = useState<any>([]);
+
+    useEffect(() => {
+
+        getFinalGrades(schoolYearId, studentId).then((resp) => {
+            setFinalGrades(resp.data);
+        })
+    },[])
+
+
+
+
+    return (
+        <Table>
+            <TableHead >
+                <TableCell style={{padding:'16px', backgroundColor:'#d6d6d6',  fontWeight: 'bold'}}>Predmet</TableCell> 
+   
+                <TableCell style={{padding:'16px', backgroundColor:'#d6d6d6',  fontWeight: 'bold'}}>Ocjena</TableCell>
+            </TableHead>
+            <TableBody>
+            <TableRow>
+                        
+                        </TableRow>
+                {
+                    finalGrades.map((el: any) => {
+                        return( <TableRow>
+                            <TableCell>{el.subjectSubjectName}</TableCell>
+                            <TableCell>{GradeEnum[el.grade] + " ("+ el.grade + ")"}</TableCell>
+                        </TableRow>)
+                       
+                    })
+                }
+            </TableBody>
+        </Table>
+    )
+}
 
 const StudentDetailsParentComponent = () => {
     const [value, setValue] = React.useState(0);
     const authentication = useAuth();
     const [grades, setGrades] = useState<IStudentGrades[]>([]);
-
+    const [parentId, setParentId] = useState(0);
+    const [studentClasses, setStudentClasses] = useState<any>([]);
+    const [finalGrades, setFinalGrades] = useState<IFinalGrades[]>([]);
     const columns = [
         { header: "Predmet", field: "subjectName" },
         { header: "Profesor", field: "professorFullName" },
-      ];
-
-      useEffect(() => {
+    ];
 
 
-        getParentByUserId(authentication?.getUserId()).then((resp)=>
-        getStudentByParentId(resp.data.parentId).then((response) => {
-            console.log(response.data);
 
-            getCurrentSchoolYear().then((year)=>
-            {
-                console.log(year.data);
+    useEffect(() => {
+        getParentByUserId(authentication?.getUserId()).then((resp) => {
+            getStudentClassesByParentId(resp.data.parentId).then((respClasses => {
+                setStudentClasses(respClasses.data);
 
+            }))
+            setParentId(resp.data.parentId);
+            getStudentByParentId(resp.data.parentId).then((response) => {
 
-                getStudentGradesBySubjects(year.data.schoolYearId,response.data.studentId).then((finalResponse)=>{
-                    console.log(finalResponse.data);
-                    setGrades(finalResponse.data);
+                
+
+                getCurrentSchoolYear().then((year) => {
+
+                    getStudentGradesBySubjects(year.data.schoolYearId, response?.data.studentId).then((finalResponse) => {
+
+                        setGrades(finalResponse.data);
+                    })
                 })
             })
+        }
+        )
+    }, [])
 
-            
-        })
-)
 
-      })
- 
+
+
 
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
-      };
+    };
 
- 
+
     function a11yProps(index: number) {
         return {
-          id: `simple-tab-${index}`,
-          'aria-controls': `simple-tabpanel-${index}`,
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
         };
-      }
+    }
 
-    return(
+  
+
+    return (
         <div>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange}  aria-label="basic tabs example">
-        <Tab label="Trenutni razred" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-        </Tabs>
-      </Box>
-      <CustomTabPanel value={value} index={0}>
-      <GenericGradesTable
-        columns={columns}
-        data={grades}
-        actions={[]}
-      ></GenericGradesTable>
-        
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        Item Two
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        Item Three
-      </CustomTabPanel>
-      </div>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                    <Tab label="Trenutni razred" {...a11yProps(0)} />
+                    {studentClasses.map((c: any) => <Tab label={c.schoolClassName + " Polugodište: " + c.schoolClassSchoolYearSemester}></Tab>)}
+
+                </Tabs>
+            </Box>
+            <CustomTabPanel value={value} index={0}>
+                <GenericGradesTable
+                    columns={columns}
+                    data={grades}
+                    actions={[]}
+                ></GenericGradesTable>
+
+            </CustomTabPanel>
+            {studentClasses.map((c: any) =>
+                <CustomTabPanel value={value} index={c.studentClassId}>
+
+
+                    <TableFinalGrades schoolYearId={c.schoolClassSchoolYearId} studentId={c.studentStudentId}></TableFinalGrades>
+                    <br></br>
+
+                    <hr></hr>
+                    Završna ocjena: {c.finalGrade}
+                    <br></br>
+                    Vladanje: {c.behavior}
+                </CustomTabPanel>
+
+            )}
+
+
+        </div>
     )
 
 }
