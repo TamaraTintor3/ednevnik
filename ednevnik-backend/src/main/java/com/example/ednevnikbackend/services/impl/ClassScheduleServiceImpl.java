@@ -1,11 +1,10 @@
 package com.example.ednevnikbackend.services.impl;
 
-import com.example.ednevnikbackend.daos.ClassScheduleDAO;
-import com.example.ednevnikbackend.daos.SchoolClassDAO;
+import com.example.ednevnikbackend.daos.*;
 import com.example.ednevnikbackend.dtos.ClassScheduleDTO;
-import com.example.ednevnikbackend.models.ClassSchedule;
-import com.example.ednevnikbackend.models.SchoolClass;
+import com.example.ednevnikbackend.models.*;
 import com.example.ednevnikbackend.services.ClassScheduleService;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +20,19 @@ public class ClassScheduleServiceImpl implements ClassScheduleService {
 
     @Autowired
     SchoolClassDAO schoolClassDAO;
+
+    @Autowired
+    ParentDAO parentDAO;
+
+    @Autowired
+    StudentDAO studentDAO;
+
+    @Autowired
+    SchoolClassService schoolClassService;
+
+    @Autowired
+    ClassScheduleDAO scheduleDAO;
+
 
     @Override
     public ClassSchedule createClassSchedule(ClassScheduleDTO classScheduleDto) {
@@ -43,5 +55,24 @@ public class ClassScheduleServiceImpl implements ClassScheduleService {
 
             return classScheduleDAO.save(classSchedule);
         }
+    }
+
+    @Override
+    public Integer getClassScheduleIdForLoggedInParent(Integer userId) {
+        Parent parent = parentDAO.findByUser_UserId(userId);
+
+        Student student = studentDAO.findByParent_ParentId(parent.getParentId());
+
+        SchoolYear currentSchoolYear = schoolClassService.findCurrentSchoolYear();
+
+        SchoolClass schoolClass = student.getSchoolClass();
+        if (!schoolClass.getSchoolYear().equals(currentSchoolYear)) {
+            throw new RuntimeException("Učenik nije upisan u odeljenje za trenutnu školsku godinu");
+        }
+
+        ClassSchedule classSchedule = classScheduleDAO.findBySchoolClassSchoolClassId(schoolClass.getSchoolClassId())
+                .orElseThrow(() -> new RuntimeException("Raspored časova nije pronađen za dato odeljenje"));
+
+        return classSchedule.getClassScheduleId();
     }
 }

@@ -5,4 +5,5 @@ import com.example.ednevnikbackend.models.ClassSchedule;
 
 public interface ClassScheduleService {
     ClassSchedule createClassSchedule(ClassScheduleDTO classScheduleDto);
+    Integer getClassScheduleIdForLoggedInParent(Integer userId);
 }
