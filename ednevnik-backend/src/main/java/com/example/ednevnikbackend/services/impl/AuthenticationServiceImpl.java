@@ -3,16 +3,15 @@ package com.example.ednevnikbackend.services.impl;
 import com.example.ednevnikbackend.config.JWTUserDetails;
 import com.example.ednevnikbackend.daos.ParentDAO;
 import com.example.ednevnikbackend.daos.ProfessorDAO;
+import com.example.ednevnikbackend.daos.SchoolClassDAO;
 import com.example.ednevnikbackend.daos.UserDAO;
 import com.example.ednevnikbackend.dtos.*;
 import com.example.ednevnikbackend.exceptions.UserAlreadyExistsException;
 import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
-import com.example.ednevnikbackend.models.Parent;
-import com.example.ednevnikbackend.models.Professor;
-import com.example.ednevnikbackend.models.Role;
-import com.example.ednevnikbackend.models.User;
+import com.example.ednevnikbackend.models.*;
 import com.example.ednevnikbackend.services.AuthenticationService;
 import com.example.ednevnikbackend.services.EmailService;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.UserService;
 import com.fasterxml.uuid.Generators;
 import io.jsonwebtoken.Jwts;
@@ -52,10 +51,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     UserDAO userDAO;
 
     @Autowired
+    SchoolClassDAO schoolClassDAO;
+
+    @Autowired
     private EmailService emailService;
 
     @Autowired
     private ParentDAO parentDAO;
+
+    @Autowired
+    SchoolClassService schoolClassService;
 
     @Autowired
     private ProfessorDAO professorDAO;
@@ -170,5 +175,49 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void updateProfessorStatus(Integer userId, Integer schoolClassId) {
+        Professor professor = professorDAO.getProfessorByUser_UserId(userId);
+        SchoolClass newSchoolClass = schoolClassDAO.findById(schoolClassId)
+                .orElseThrow(() -> new IllegalArgumentException("SchoolClass not found with id: " + schoolClassId));
+
+        if (professor != null) {
+            SchoolYear currentSchoolYear = schoolClassService.findCurrentSchoolYear();
+
+
+            if (professor.getSchoolClass() != null) {
+                SchoolClass currentClass = professor.getSchoolClass();
+
+
+                if (currentClass.getSchoolYear().equals(currentSchoolYear)) {
+
+                    if (currentClass.getSchoolClassId().equals(schoolClassId)) {
+                        throw new IllegalArgumentException("Professor is already assigned to this class in the current school year.");
+                    }
+
+                    throw new IllegalArgumentException("Professor is already assigned to another school class in the current school year.");
+                }
+            }
+
+
+            professor.setClassProfessor(true);
+            professor.setSchoolClass(newSchoolClass);
+            professorDAO.save(professor);
+        } else {
+            throw new IllegalArgumentException("Professor not found with userId: " + userId);
+        }
+    }
+
+    @Override
+    public Boolean getClassProfessorStatusByUserId(Integer userId) {
+        User user = userDAO.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Professor professor = professorDAO.getProfessorByUser_UserId(user.getUserId());
+
+
+        return professor.getClassProfessor();
     }
 }

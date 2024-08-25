@@ -13,5 +13,6 @@ public interface AuthenticationService {
     public User registration(RegistrationDto registrationDto);
     void forgottenPassword(String username) throws MessagingException;
     boolean updatePassword(ResetPasswordDTO resetPasswordDTO);
-
+    void updateProfessorStatus(Integer userId, Integer schoolClassId);
+    Boolean getClassProfessorStatusByUserId(Integer userId);
 }

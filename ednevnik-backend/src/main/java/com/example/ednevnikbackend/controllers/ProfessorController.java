@@ -1,7 +1,11 @@
 package com.example.ednevnikbackend.controllers;
 
 import com.example.ednevnikbackend.dtos.ClassProfessorDTO;
+
 import com.example.ednevnikbackend.dtos.ProfessorDTO;
+
+import com.example.ednevnikbackend.dtos.ProfessorInfoDTO;
+
 import com.example.ednevnikbackend.dtos.SchoolClassDTO;
 import com.example.ednevnikbackend.services.ProfessorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +24,15 @@ public class ProfessorController {
         return professorService.getProfessorsSchoolClass(classProfessorDTO);
     }
 
+
     @GetMapping
-    public List<ProfessorDTO> getAllProfessors(){
+    public List<ProfessorDTO> getAllProfessors() {
         return professorService.getAllProfessors();
+    }
+
+    @GetMapping("/school-class/{schoolClassId}")
+    public ProfessorInfoDTO getClassProfessorBySchoolClassId(@PathVariable Integer schoolClassId) {
+        return professorService.getClassProfessorBySchoolClassId(schoolClassId);
+
     }
 }

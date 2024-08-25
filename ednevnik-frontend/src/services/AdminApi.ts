@@ -76,8 +76,23 @@ export const addStudent = async (payload: StudentPayload) => {
         console.error("Error adding student:", error);
         throw error;
     }
+};  
+
+export const updateProfessorStatus = (userId: number, isClassProfessor: boolean) => {
+    return axiosInstance.put(`/api/authentication/${userId}`, { classProfessor: isClassProfessor });
 };
+
 
 export const getAllParents=()=>{
     return axiosInstance.get("/api/parents");
 }
+
+export const getProfessorStatus = (userId: number) => {
+    return axiosInstance.get<boolean>(`http://localhost:8080/api/authentication/getStatus/${userId}`)
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Error fetching professor status:', error);
+            throw error;
+        });
+};
+
