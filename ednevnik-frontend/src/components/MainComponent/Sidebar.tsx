@@ -44,13 +44,13 @@ const professorActions: ISidebarAction[] = [
     icon: <CalendarTodayTwoTone />,
     path: "/calendar",
   },
-  { title: "Inbox", icon: <MessageTwoTone />, path: "" },
+  { title: "Inbox", icon: <MessageTwoTone />, path: "/professor-messages" },
 ];
 const parentActions: ISidebarAction[] = [
   { title: "Sve ocjene", icon: <SubjectTwoTone />, path: "/parentHomePage" },
   { title: "Učenik", icon: <PersonTwoTone />, path: "/studentDetails" },
   { title: "Izostanci", icon: <AnnouncementTwoTone />, path: "/absences" },
-  { title: "Inbox", icon: <MessageTwoTone />, path: "" },
+  { title: "Inbox", icon: <MessageTwoTone />, path: "/parent-messages" },
   { title: "Raspored časova", icon: <EventNote />, path: "/displaySchedule" },
 ];
 const staffActions: ISidebarAction[] = [

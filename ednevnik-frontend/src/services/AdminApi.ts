@@ -78,3 +78,6 @@ export const addStudent = async (payload: StudentPayload) => {
     }
 };
 
+export const getAllParents=()=>{
+    return axiosInstance.get("/api/parents");
+}
