@@ -139,6 +139,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/api/messages/opened/{messageId}").hasAnyAuthority(Role.PARENT.toString(),Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET,"/api/messages/{messageId}").hasAnyAuthority(Role.PARENT.toString(),Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET,"/api/professors").hasAnyAuthority(Role.PARENT.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/professors/byId/**").hasAnyAuthority(Role.ADMIN.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/professors/getProfessorsWithoutSubject").hasAnyAuthority(Role.ADMIN.toString())
+
+
+                        .requestMatchers(HttpMethod.POST,"/api/subjects").hasAnyAuthority(Role.ADMIN.toString())
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(daoAuthenticationProvider())

@@ -53,7 +53,6 @@ public class StudentController {
 
     @GetMapping("/gradesOrderedByDate/{parentId}/{schoolYearId}")
     public List<StudentGradesForParentDTO> getOrderedGrades(@PathVariable Integer parentId, @PathVariable Integer schoolYearId){
-       System.out.println("hhhhhhhhhhhhhhhhhhhhh");
 
         return studentService.getStudentGradesByParentIdDateDesc(parentId,schoolYearId);
     }
