@@ -104,6 +104,9 @@ function App(props: any) {
           <Route path="/professor-messages" element={<ProfessorInboxComponent/>} />
           <Route path="/subjects" element={<SubjectsComponent/>} />
           <Route path="/addSubject" element={<AddSubject/>} />
+          <Route path="/addProfessorToClass/:id" element={<AddProfessorToClassComponent/>} />
+
+          
 
           <Route path="/addClassProffesor/:id" element={<AddClassProfessorComponent/>} />
 
