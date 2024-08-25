@@ -38,7 +38,7 @@ const TableComponent : React.FC<TableComponentProps> = ({columns, data, actions}
       </TableHead>
       <TableBody>
         {data.map((row, rowIndex) => (
-          <TableRow key={rowIndex}>
+          <TableRow key={rowIndex} sx={{backgroundColor:row["opened"]==="Pročitano" ? "#f2f6fc" :"white"}}>
             {columns.map((column, colIndex) => (
               <TableCell className="cell" key={colIndex}>{row[column.field]}</TableCell>
             ))}
