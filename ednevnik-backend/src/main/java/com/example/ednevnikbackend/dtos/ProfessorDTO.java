@@ -8,5 +8,4 @@ public class ProfessorDTO {
     private Boolean classProfessor;
     private String userFirstName;
     private String userLastName;
-
 }

@@ -22,6 +22,12 @@ public class Message {
     @Basic
     @Column(name = "date")
     private Date date;
+    @Basic
+    @Column(name = "is_opened")
+    private boolean isOpened;
+    @Basic
+    @Column(name = "sender")
+    private String sender;
     @ManyToOne
     @JoinColumn(name = "parent_id", referencedColumnName = "parent_id", nullable = false)
     private Parent parent;

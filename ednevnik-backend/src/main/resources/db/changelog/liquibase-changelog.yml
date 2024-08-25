@@ -7,3 +7,7 @@ databaseChangeLog:
     file: db/changelog/04-create-table-teaching.sql
 - include:
     file: db/changelog/05-calendar-start-end-column.sql
+- include:
+    file: db/changelog/06-message-isopened-column.sql
+- include:
+    file: db/changelog/07-message-sender-column.sql

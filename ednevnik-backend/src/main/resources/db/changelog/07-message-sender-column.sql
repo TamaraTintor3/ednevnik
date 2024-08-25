@@ -1,0 +1,1 @@
+ALTER TABLE public.message ADD COLUMN sender CHARACTER VARYING;
