@@ -1,5 +1,6 @@
 package com.example.ednevnikbackend.services;
 
+import com.example.ednevnikbackend.dtos.AddSubjectDTO;
 import com.example.ednevnikbackend.dtos.SubjectDTO;
 import com.example.ednevnikbackend.models.Subject;
 
@@ -15,4 +16,6 @@ public interface SubjectService {
     List<Subject> getAllSubjects();
 
     public List<SubjectDTO> getAll();
+
+    SubjectDTO addSubject(AddSubjectDTO addSubjectDTO);
 }

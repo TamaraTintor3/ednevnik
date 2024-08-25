@@ -24,4 +24,14 @@ public class ProfessorController {
     public List<ProfessorDTO> getAllProfessors(){
         return professorService.getAllProfessors();
     }
+
+    @GetMapping("/byId/{id}")
+    public ProfessorDTO getById(@PathVariable Integer id){
+        return professorService.getProfessorById(id);
+    }
+
+    @GetMapping("/getProfessorsWithoutSubject")
+    public List<ProfessorDTO> getProfessorsWithoutSubject(){
+            return professorService.getProfessorsWithoutSubject();
+    }
 }

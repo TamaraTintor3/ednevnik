@@ -11,4 +11,8 @@ public interface ProfessorService {
     public ProfessorDTO getProfessorByUserId(Integer id);
     SchoolClassDTO getProfessorsSchoolClass(ClassProfessorDTO classProfessorDTO);
     List<ProfessorDTO> getAllProfessors();
+
+    ProfessorDTO getProfessorById(Integer id);
+
+    List<ProfessorDTO> getProfessorsWithoutSubject();
 }
