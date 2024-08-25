@@ -4,8 +4,9 @@ import axiosInstance from "./axiosConfig";
 export const getMyClass = (classProfessorRequest: IClassProfessorRequest) =>
   axiosInstance.post("/api/professors/class", classProfessorRequest);
 
+export const getAllProfessors = async () => axiosInstance.get("api/professors");
 
-export const getAllProfessors = async () => {
+export const getProfessors = async () => {
   return await axiosInstance.get("/api/users/professors");
 };
 

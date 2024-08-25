@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from "react-router-dom";
 import { Box, Button, Typography, MenuItem, Select, InputLabel, FormControl, Paper } from "@mui/material";
-import { getAllProfessors, assignClassToProfessor, getProfessorBySchoolClassId } from "../../services/ProfessorApi";
+import { getProfessors, assignClassToProfessor, getProfessorBySchoolClassId } from "../../services/ProfessorApi";
 import { SelectChangeEvent } from "@mui/material";
 import { AxiosError } from 'axios';
 import SaveIcon from '@mui/icons-material/Save';
@@ -26,7 +26,7 @@ const AddClassProfessorComponent = () => {
 
       const fetchData = async () => {
           try {
-              const professorResponse = await getAllProfessors();
+              const professorResponse = await getProfessors();
               if (isMounted) {
                   setProfessors(professorResponse.data);
 
