@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 
@@ -26,5 +28,10 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     public SchoolClassDTO getProfessorsSchoolClass(ClassProfessorDTO classProfessorDTO) {
         return modelMapper.map(professorDAO.getProfessorByUser_UserId(classProfessorDTO.getUserId()).getSchoolClass(),SchoolClassDTO.class);
+    }
+
+    @Override
+    public List<ProfessorDTO> getAllProfessors() {
+        return professorDAO.findAll().stream().map((professor)->modelMapper.map(professor,ProfessorDTO.class)).toList();
     }
 }
