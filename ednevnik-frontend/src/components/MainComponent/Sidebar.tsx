@@ -8,6 +8,7 @@ import {
   SubjectTwoTone,
   AnnouncementTwoTone,
   EventNote,
+  SubjectSharp
 } from "@mui/icons-material";
 import PersonIcon from "@mui/icons-material/Person";
 import {
@@ -30,6 +31,7 @@ import { useProfessorContext } from "../../contexts/ProfessorContext";
 const adminActions: ISidebarAction[] = [
   { title: "Korisnici", icon: <PeopleAltTwoTone />, path: "/showAllUsers" },
   { title: "Odjeljenja", icon: <FolderCopyTwoTone />, path: "/classes" },
+  { title: "Predmeti", icon: <SubjectSharp />, path: "/subjects" },
 ];
 
 const professorActions: ISidebarAction[] = [

@@ -25,6 +25,10 @@ const ClassDetailsComponent = (props: any) => {
     navigate(`/addStudent/${id}`);
   };
 
+  const handleAddProfessor = () => {
+    navigate(`/addProfessorToClass/${id}`);
+  }
+
   const columns = [
     { header: "Br.", field: "studentId" },
     { header: "Ime", field: "firstName" },
@@ -52,8 +56,16 @@ const ClassDetailsComponent = (props: any) => {
           onClick={handleAddStudent}
         />
       </Box>
-
+      <Box pt={2} display="flex" alignItems="center">
+        <Typography>Dodaj profesora</Typography>
+        <Button
+          sx={{ color: "gray" }}
+          startIcon={<PersonAddIcon />}
+          onClick={handleAddProfessor}
+        />
+      </Box>
       <br />
+      <hr></hr>
       <br />
       <TableComponent
         columns={columns}

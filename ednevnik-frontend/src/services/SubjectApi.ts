@@ -27,3 +27,7 @@ export const getSubjects = () => {
     return axiosInstance.get('/api/subjects/getAll');
 };
 
+export const addSubject = (subject:any) => {
+    return axiosInstance.post("/api/subjects",subject);
+}
+
