@@ -34,8 +34,12 @@ import DisplayScheduleComponent from "./components/ParentComponents/DisplaySched
 
 import ParentHomePageComponent from "./components/ParentComponents/ParentHomePageComponent";
 import StudentDetailsParentComponent from "./components/ParentComponents/StudentDetailsParentComponent";
+
 import ParentInboxComponent from "./components/ParentComponents/ParentInboxComponent";
 import ProfessorInboxComponent from "./components/ProfessorComponents/ProfessorInboxComponent";
+
+import AddClassProfessorComponent from "./components/AdministratorComponents/AddClassProfessorComponent";
+
 
 
 function App(props: any) {
@@ -93,6 +97,10 @@ function App(props: any) {
           <Route path="/displaySchedule" element={<DisplayScheduleComponent/>} />
           <Route path="/parent-messages" element={<ParentInboxComponent/>} />
           <Route path="/professor-messages" element={<ProfessorInboxComponent/>} />
+
+          <Route path="/addClassProffesor/:id" element={<AddClassProfessorComponent/>} />
+
+
         </Route>
       </Route>
     </Routes>

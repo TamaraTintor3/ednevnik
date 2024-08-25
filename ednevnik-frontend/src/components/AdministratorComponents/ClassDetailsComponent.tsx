@@ -6,11 +6,14 @@ import TableComponent from "../TableComponent/TableComponent";
 import { useNavigate } from "react-router-dom";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import { getSchoolClassById } from "../../services/SchoolClassApi";
+import { getAllProfessors, assignClassToProfessor } from "../../services/ProfessorApi";
 
 const ClassDetailsComponent = (props: any) => {
   const { id } = useParams();
   const [schoolClass, setSchoolClass] = useState(initialClass);
   const navigate = useNavigate();
+  const [professors, setProfessors] = useState([]);
+  const [selectedProfessorId, setSelectedProfessorId] = useState<number | string>('');
   React.useEffect(() => {
     getSchoolClassById(parseInt(id || "0"))
       .then((response) => {
@@ -20,9 +23,14 @@ const ClassDetailsComponent = (props: any) => {
         console.log(error);
       });
   }, []);
+  
 
   const handleAddStudent = () => {
     navigate(`/addStudent/${id}`);
+  };
+
+  const handleAddClassProffesor = () => {
+    navigate(`/addClassProffesor/${id}`);
   };
 
   const columns = [
@@ -51,6 +59,16 @@ const ClassDetailsComponent = (props: any) => {
           startIcon={<PersonAddIcon />}
           onClick={handleAddStudent}
         />
+      </Box>
+      <Box pt={2} display="flex" alignItems="center">
+      <Typography>Razredni</Typography>
+        <Button
+          color="primary"
+          onClick={handleAddClassProffesor}
+          sx={{ color: "gray" }}
+          startIcon={<PersonAddIcon />}
+        />
+         
       </Box>
 
       <br />

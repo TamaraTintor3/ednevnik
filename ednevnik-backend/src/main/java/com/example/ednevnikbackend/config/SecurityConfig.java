@@ -131,6 +131,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/student-classes/byParentId/{parentId}").hasAnyAuthority("PROFESSOR",Role.PARENT.toString())
                         .requestMatchers(HttpMethod.GET, "/api/school-years/current").hasAnyAuthority(Role.ADMIN.toString(),Role.PARENT.toString(), Role.PROFESSOR.toString())
                         .requestMatchers(HttpMethod.GET, "/api/students/gradesOrderedByDate/{parentId}/{schoolYearId}").hasAuthority(Role.PARENT.toString())
+                        .requestMatchers(HttpMethod.GET,"/api/professors/school-class/{schoolClassId}").hasAuthority("ADMIN")
 
                         .requestMatchers(HttpMethod.GET,"/api/messages/parent/{parentId}").hasAuthority(Role.PARENT.toString())
                         .requestMatchers(HttpMethod.GET,"/api/messages/professor/{professorId}").hasAuthority(Role.PROFESSOR.toString())

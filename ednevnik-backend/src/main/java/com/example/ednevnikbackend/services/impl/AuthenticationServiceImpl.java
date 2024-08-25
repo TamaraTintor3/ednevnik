@@ -11,6 +11,7 @@ import com.example.ednevnikbackend.exceptions.WrongCredentialsException;
 import com.example.ednevnikbackend.models.*;
 import com.example.ednevnikbackend.services.AuthenticationService;
 import com.example.ednevnikbackend.services.EmailService;
+import com.example.ednevnikbackend.services.SchoolClassService;
 import com.example.ednevnikbackend.services.UserService;
 import com.fasterxml.uuid.Generators;
 import io.jsonwebtoken.Jwts;
@@ -57,6 +58,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private ParentDAO parentDAO;
+
+    @Autowired
+    SchoolClassService schoolClassService;
 
     @Autowired
     private ProfessorDAO professorDAO;
@@ -176,12 +180,30 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public void updateProfessorStatus(Integer userId, Integer schoolClassId) {
         Professor professor = professorDAO.getProfessorByUser_UserId(userId);
-        SchoolClass schoolClass = schoolClassDAO.findById(schoolClassId)
+        SchoolClass newSchoolClass = schoolClassDAO.findById(schoolClassId)
                 .orElseThrow(() -> new IllegalArgumentException("SchoolClass not found with id: " + schoolClassId));
 
         if (professor != null) {
+            SchoolYear currentSchoolYear = schoolClassService.findCurrentSchoolYear();
+
+
+            if (professor.getSchoolClass() != null) {
+                SchoolClass currentClass = professor.getSchoolClass();
+
+
+                if (currentClass.getSchoolYear().equals(currentSchoolYear)) {
+
+                    if (currentClass.getSchoolClassId().equals(schoolClassId)) {
+                        throw new IllegalArgumentException("Professor is already assigned to this class in the current school year.");
+                    }
+
+                    throw new IllegalArgumentException("Professor is already assigned to another school class in the current school year.");
+                }
+            }
+
+
             professor.setClassProfessor(true);
-            professor.setSchoolClass(schoolClass);
+            professor.setSchoolClass(newSchoolClass);
             professorDAO.save(professor);
         } else {
             throw new IllegalArgumentException("Professor not found with userId: " + userId);
