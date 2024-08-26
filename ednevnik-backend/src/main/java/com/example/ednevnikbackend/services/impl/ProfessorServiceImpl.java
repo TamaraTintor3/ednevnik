@@ -73,14 +73,6 @@ public class ProfessorServiceImpl implements ProfessorService {
         return professorDAO.getProfessorsBySubjectsEmpty().stream().map(el -> modelMapper.map(el,ProfessorDTO.class)).collect(Collectors.toList());
     }
 
-    @Override
-    public ProfessorDTO getProfessorById(Integer id) {
-        return modelMapper.map(professorDAO.findByProfessorId(id), ProfessorDTO.class);
-    }
 
-    @Override
-    public List<ProfessorDTO> getProfessorsWithoutSubject(){
-        return professorDAO.getProfessorsBySubjectsEmpty().stream().map(el -> modelMapper.map(el,ProfessorDTO.class)).collect(Collectors.toList());
-    }
 }
 
