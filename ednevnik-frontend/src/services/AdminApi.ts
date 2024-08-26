@@ -83,6 +83,7 @@ export const updateProfessorStatus = (userId: number, isClassProfessor: boolean)
 };
 
 
+
 export const getAllParents=()=>{
     return axiosInstance.get("/api/parents");
 }

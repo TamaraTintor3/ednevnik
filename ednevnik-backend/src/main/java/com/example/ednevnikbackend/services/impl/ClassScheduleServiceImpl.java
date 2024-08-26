@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -61,18 +62,19 @@ public class ClassScheduleServiceImpl implements ClassScheduleService {
     public Integer getClassScheduleIdForLoggedInParent(Integer userId) {
         Parent parent = parentDAO.findByUser_UserId(userId);
 
-        Student student = studentDAO.findByParent_ParentId(parent.getParentId());
+        List<Student> students = studentDAO.findAllByParent_ParentId(parent.getParentId());
 
         SchoolYear currentSchoolYear = schoolClassService.findCurrentSchoolYear();
 
-        SchoolClass schoolClass = student.getSchoolClass();
-        if (!schoolClass.getSchoolYear().equals(currentSchoolYear)) {
-            throw new RuntimeException("Učenik nije upisan u odeljenje za trenutnu školsku godinu");
+        for (Student student : students) {
+            SchoolClass schoolClass = student.getSchoolClass();
+            if (schoolClass.getSchoolYear().equals(currentSchoolYear)) {
+                ClassSchedule classSchedule = classScheduleDAO.findBySchoolClassSchoolClassId(schoolClass.getSchoolClassId())
+                        .orElseThrow(() -> new RuntimeException("Raspored časova nije pronađen za dato odeljenje"));
+
+                return classSchedule.getClassScheduleId();
+            }
         }
-
-        ClassSchedule classSchedule = classScheduleDAO.findBySchoolClassSchoolClassId(schoolClass.getSchoolClassId())
-                .orElseThrow(() -> new RuntimeException("Raspored časova nije pronađen za dato odeljenje"));
-
-        return classSchedule.getClassScheduleId();
+        throw new RuntimeException("Nijedan učenik nije upisan u odeljenje za trenutnu školsku godinu");
     }
 }
