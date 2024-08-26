@@ -9,7 +9,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 interface StudentClass {
   studentClassId?: number;
-  studentId: number;
+  studentStudentId: number;
   schoolClassId?: number; 
   behavior: string;
   finalGrade: number;
@@ -21,7 +21,7 @@ const StudentBehaviorComponent = () => {
   const { studentId } = useParams();
   console.log(studentId);
   const [studentClass, setStudentClass] = useState<StudentClass>({
-    studentId: Number(studentId),
+    studentStudentId: Number(studentId),
     behavior: '',
     finalGrade: 0,
     schoolClassId: locationSchoolClassId
@@ -40,7 +40,7 @@ const StudentBehaviorComponent = () => {
             const data = response.data[0];
             setStudentClass({
               ...data,
-              studentId: Number(studentId),
+              studentStudentId: Number(studentId),
               schoolClassId: data.schoolClass?.schoolClassId || locationSchoolClassId
             });
             setIsNew(false);
