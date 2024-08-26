@@ -29,7 +29,7 @@ const StudentGradesComponent = (props: any) => {
   const {schoolClassYear} = state;
   const {schoolClassYearSemester} = state;
   React.useEffect(() => {
-    console.log("scJer" + state.studentId)
+    console.log("scJer" + state.schoolYearId)
     getStudentDetails(state.studentId)
       .then((student) => {
         setStudent(student.data);

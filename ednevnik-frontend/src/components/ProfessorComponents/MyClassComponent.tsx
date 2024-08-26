@@ -28,7 +28,7 @@ const MyClassComponent = () => {
     getMyClass({ userId: authentication?.userId })
       .then((response: any) => {
         console.log(authentication?.userId);
-        console.log(response.data.students)
+        console.log(response.data)
         setSchoolClass(response.data);
       })
       .catch((error) => {
@@ -85,7 +85,7 @@ const MyClassComponent = () => {
     console.log(student);
     navigate("/student-grades", {
       state: {
-        schoolYearId: schoolClass.schoolClassId,
+        schoolYearId: schoolClass.schoolYearId,
         studentId: student.studentId,
         schoolClassName : schoolClass.name,
         schoolClassYear : schoolClass.schoolYearYear,
