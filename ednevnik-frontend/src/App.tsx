@@ -46,6 +46,7 @@ import AddClassProfessorComponent from "./components/AdministratorComponents/Add
 
 
 
+
 function App(props: any) {
 
   const authentication = useAuth();
