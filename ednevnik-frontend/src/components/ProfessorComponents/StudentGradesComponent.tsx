@@ -29,11 +29,12 @@ const StudentGradesComponent = (props: any) => {
   const {schoolClassYear} = state;
   const {schoolClassYearSemester} = state;
   React.useEffect(() => {
+    console.log("scJer" + state.studentId)
     getStudentDetails(state.studentId)
       .then((student) => {
         setStudent(student.data);
         getStudentGradesBySubjects(state.schoolYearId, state.studentId)
-          .then((response) => {
+          .then((response) => {console.log(response.data)
             setGrades(response.data);
           })
           .catch((error) => {

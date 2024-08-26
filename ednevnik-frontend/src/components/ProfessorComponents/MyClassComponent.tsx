@@ -28,6 +28,7 @@ const MyClassComponent = () => {
     getMyClass({ userId: authentication?.userId })
       .then((response: any) => {
         console.log(authentication?.userId);
+        console.log(response.data.students)
         setSchoolClass(response.data);
       })
       .catch((error) => {
