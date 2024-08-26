@@ -126,6 +126,7 @@ public class SubjectGradesServiceImpl implements SubjectGradesService {
         List<GradesDTO> response=new ArrayList<>();
 
         List<SubjectGrades> grades= subjectGradesDAO.getSubjectGradesBySchoolYear_SchoolYearIdAndStudent_StudentId(schoolYearId, studentId);
+      //  System.out.println(grades);
         Map<String,List<SubjectGrades>> map= grades.stream().collect(Collectors.groupingBy((g)->g.getSubject().getName()));
         for (Map.Entry<String,List<SubjectGrades>> entry : map.entrySet()) {
             List<SingleSubjectGradeDTO> gradesWritten=new ArrayList<>();

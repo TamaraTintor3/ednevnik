@@ -70,7 +70,9 @@ public class StudentClassServiceImpl implements StudentClassService {
 
     @Override
     public List<StudentClassDTO> getStudentClassesByParentId(Integer parentId) {
-        return studentClassDAO.findByStudent_Parent_ParentId(parentId).stream().map(el -> modelMapper.map(el,StudentClassDTO.class)).collect(Collectors.toList());
+        List<StudentClassDTO> res =  studentClassDAO.findByStudent_Parent_ParentId(parentId).stream().map(el -> modelMapper.map(el,StudentClassDTO.class)).collect(Collectors.toList());
+        System.out.println(res);
+        return res;
 
     }
 

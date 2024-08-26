@@ -63,6 +63,7 @@ const TableFinalGrades = (props: TableFinalGradesProps) => {
 
 
     return (
+        <div>
         <Table>
             <TableHead >
                 <TableCell style={{padding:'16px', backgroundColor:'#d6d6d6',  fontWeight: 'bold'}}>Predmet</TableCell> 
@@ -83,7 +84,7 @@ const TableFinalGrades = (props: TableFinalGradesProps) => {
                     })
                 }
             </TableBody>
-        </Table>
+        </Table></div>
     )
 }
 
@@ -94,6 +95,7 @@ const StudentDetailsParentComponent = () => {
     const [parentId, setParentId] = useState(0);
     const [studentClasses, setStudentClasses] = useState<any>([]);
     const [finalGrades, setFinalGrades] = useState<IFinalGrades[]>([]);
+    let index = 0;
     const columns = [
         { header: "Predmet", field: "subjectName" },
         { header: "Profesor", field: "professorFullName" },
@@ -104,6 +106,7 @@ const StudentDetailsParentComponent = () => {
     useEffect(() => {
         getParentByUserId(authentication?.getUserId()).then((resp) => {
             getStudentClassesByParentId(resp.data.parentId).then((respClasses => {
+                console.log(respClasses.data);
                 setStudentClasses(respClasses.data);
 
             }))
@@ -116,6 +119,7 @@ const StudentDetailsParentComponent = () => {
 
                     getStudentGradesBySubjects(year.data.schoolYearId, response?.data.studentId==null?0:response?.data.studentId).then((finalResponse) => {
 
+                        console.log("------" + finalResponse.data[0]);
                         setGrades(finalResponse.data);
                     })
                 })
@@ -152,7 +156,7 @@ const StudentDetailsParentComponent = () => {
 
                 </Tabs>
             </Box>
-            <CustomTabPanel value={value} index={0}>
+            <CustomTabPanel value={value} index={index}>
                 <GenericGradesTable
                     columns={columns}
                     data={grades}
@@ -161,7 +165,7 @@ const StudentDetailsParentComponent = () => {
 
             </CustomTabPanel>
             {studentClasses.map((c: any) =>
-                <CustomTabPanel value={value} index={c.studentClassId}>
+                <CustomTabPanel value={value} index={++index}>
 
 
                     <TableFinalGrades schoolYearId={c.schoolClassSchoolYearId} studentId={c.studentStudentId}></TableFinalGrades>

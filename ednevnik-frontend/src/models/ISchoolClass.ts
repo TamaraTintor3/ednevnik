@@ -8,6 +8,7 @@ export default interface ISchoolClass {
   schoolYearYear: string;
   schoolYearSemester: number;
   students: IStudent[];
+  schoolYearId : number;
 }
 
 export const initialClasses: ISchoolClass[] = [];
@@ -18,4 +19,5 @@ export const initialClass: ISchoolClass = {
   schoolYearYear: "",
   schoolYearSemester: 1,
   students: [],
+  schoolYearId : 0
 };

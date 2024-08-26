@@ -65,7 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private ProfessorDAO professorDAO;
 
-    @Value("900000")
+    @Value("9000000")
     private String tokenExpirationTime;
 
     @Value("${authorization.token.secret}")
