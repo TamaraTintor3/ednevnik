@@ -20,7 +20,7 @@ public class ProfessorController {
     private ProfessorService professorService;
 
     @PostMapping("/class")
-    public SchoolClassDTO getProfessorsClass(@RequestBody ClassProfessorDTO classProfessorDTO){
+    public SchoolClassDTO getProfessorsClass(@RequestBody ClassProfessorDTO classProfessorDTO) {
         return professorService.getProfessorsSchoolClass(classProfessorDTO);
     }
 
@@ -34,5 +34,13 @@ public class ProfessorController {
     public ProfessorInfoDTO getClassProfessorBySchoolClassId(@PathVariable Integer schoolClassId) {
         return professorService.getClassProfessorBySchoolClassId(schoolClassId);
 
+    }
+    @GetMapping("/byId/{id}")
+    public ProfessorDTO getById (@PathVariable Integer id){
+        return professorService.getProfessorById(id);
+    }
+    @GetMapping("/getProfessorsWithoutSubject")
+    public List<ProfessorDTO> getProfessorsWithoutSubject () {
+        return professorService.getProfessorsWithoutSubject();
     }
 }

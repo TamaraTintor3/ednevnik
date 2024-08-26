@@ -12,5 +12,7 @@ public class SubjectDTO {
 
     private String name;
 
+    private ProfessorDTO professor;
+
 
 }

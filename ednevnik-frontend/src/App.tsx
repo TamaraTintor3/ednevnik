@@ -37,8 +37,13 @@ import StudentDetailsParentComponent from "./components/ParentComponents/Student
 
 import ParentInboxComponent from "./components/ParentComponents/ParentInboxComponent";
 import ProfessorInboxComponent from "./components/ProfessorComponents/ProfessorInboxComponent";
+import AddProfessorToClassComponent from "./components/AdministratorComponents/AddProfessorToClassComponent";
+import { Subject } from "@mui/icons-material";
+import SubjectsComponent from "./components/AdministratorComponents/SubjectsComponent";
+import AddSubject from "./components/AdministratorComponents/AddSubject";
 
 import AddClassProfessorComponent from "./components/AdministratorComponents/AddClassProfessorComponent";
+
 
 
 
@@ -97,6 +102,12 @@ function App(props: any) {
           <Route path="/displaySchedule" element={<DisplayScheduleComponent/>} />
           <Route path="/parent-messages" element={<ParentInboxComponent/>} />
           <Route path="/professor-messages" element={<ProfessorInboxComponent/>} />
+          <Route path="/professor-messages" element={<ProfessorInboxComponent/>} />
+          <Route path="/subjects" element={<SubjectsComponent/>} />
+          <Route path="/addSubject" element={<AddSubject/>} />
+          <Route path="/addProfessorToClass/:id" element={<AddProfessorToClassComponent/>} />
+
+          
 
           <Route path="/addClassProffesor/:id" element={<AddClassProfessorComponent/>} />
 

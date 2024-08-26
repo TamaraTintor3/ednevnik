@@ -21,3 +21,8 @@ export const assignClassToProfessor = async (userId: number, schoolClassId: numb
 export const getProfessorBySchoolClassId = (schoolClassId: number) => {
   return axiosInstance.get(`/api/professors/school-class/${schoolClassId}`);
 };
+
+export const getProfessorById = (id:number) => axiosInstance.get("/api/professors/byId" + id)
+
+
+export const getProfessorsWithoutSubject = () => axiosInstance.get("/api/professors/getProfessorsWithoutSubject")

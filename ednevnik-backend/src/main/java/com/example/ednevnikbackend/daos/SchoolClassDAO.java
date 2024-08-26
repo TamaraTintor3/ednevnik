@@ -8,4 +8,5 @@ public interface SchoolClassDAO extends JpaRepository<SchoolClass,Integer> {
 
     //SchoolClass getSchoolClassBySchoolYear_SchoolYearIdAndS
 
+    SchoolClass findBySchoolClassId(Integer id);
 }
